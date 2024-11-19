@@ -20,21 +20,22 @@ int	main()
 #include <stdlib.h>
 #include <readline/readline.h>
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <readline/readline.h>
+
 int main()
 {
     char *line;
-    int i;
-    for(i = 0; i < 5; i++) {
-        line = readline("Ingresa una línea de texto: ");
-        add_history(line);
-    }
-    while(1) {
-        line = readline("Ingresa una línea de texto (o presiona ctrl + c para salir): ");
-        if(line != NULL) {
-            printf("La línea ingresada es: %s\n", line);
-        } else {
-            break;
-        }
-    }
+
+    // Mostrar el prompt al usuario y leer la línea de entrada
+    line = readline("Ingresa una línea de texto: ");
+
+    // Imprimir la línea de entrada
+    printf("La línea ingresada es: %s\n", line);
+
+    // Liberar la memoria asignada para la línea de entrada
+    free(line);
+
     return 0;
 }
