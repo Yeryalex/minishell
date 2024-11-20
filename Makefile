@@ -3,37 +3,46 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yrodrigu <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2024/11/19 20:31:21 by yrodrigu         ###   ########.fr        #
+#    Updated: 2024/11/20 11:29:38 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-CFILES =	main.c	
 
-OFILES = $(CFILES:.c=.o)
 
 NAME = minishell
 
-all: $(NAME)
+HEADER = inc/minishell.h 
+LIBFT = libft/libft.a
+CFLAGS = -Wall -Werror -Wextra
+CC = gcc
 
-$(NAME): $(OFILES)
-	@$(CC) $(CFLAGS) $(OFILES) -lreadline -o $(NAME)
+CFILES =	main.c	
 
-%.o: %.c minishell.h 
-	@$(CC) $(CFLAGS) -c $<
+
+
+OBJS = $(addprefix src/, $(CFILES:.c=.o))
+
+all: library $(NAME) Makefile
+
+$(NAME): $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -lm -lz -o $(NAME)
+
+%.o: %.c $(HEADER) 
+	@$(CC) $(CFLAGS) -O3 -c $< -o $@
+
+library:
+	@make -C libft
 
 clean:
-	@rm -f $(OFILES)
+	@make clean -C libft
+	@rm -f $(OBJS)
 
 fclean: clean
+	@make fclean -C libft
 	@rm -f $(NAME)
 
 re: fclean all
 
-all: $(NAME) 
-	@./$(NAME)
-
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re library
