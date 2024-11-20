@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2024/11/20 11:29:38 by rbuitrag         ###   ########.fr        #
+#    Updated: 2024/11/20 13:07:05 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ LIBFT = libft/libft.a
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc
 
-CFILES =	main.c	
+CFILES =	main.c \
+		minishell.c	
 
 
 

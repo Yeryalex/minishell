@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:53:25 by rbuitrag          #+#    #+#             */
-/*   Updated: 2024/11/20 12:57:25 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:06:23 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int ac, char **argv)
 	
 	if (ac != 1)
 	{
-		printf(stderr, "Error: No parámetros al arrancar minishell.\n");
+		printf("Error: No parámetros al arrancar minishell.\n");
 		return (EXIT_FAILURE);
 	}
 	while (1)
