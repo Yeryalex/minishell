@@ -102,7 +102,7 @@ Utilizamos la libreria readline de GNU que ya está permitido su uso. ver manual
 Esta libreria, a su vez, nos proporciona el historial que solicita la consigna.
 
 # Análisis lexicológico
-Esta etapa consiste en identificar tokens. Leemos caracter a caracter la línea que obtubimos en el paso anterior y guardamos en una estructura clasificando en word o token siguiendo las reglas de encomillado de bash.
+Esta etapa consiste en identificar tokens. Leemos caracter a caracter la línea que obtuvimos en el paso anterior y guardamos en una estructura clasificando en word o token siguiendo las reglas de encomillado de bash.
 
 # Análisis sintáctico
 La lista de nodos generada por el paso anterior se libera y se generan nuevos nodos para la instancia de ejecución. Aquí también, revisamos si hay redirecciones y generamos los file descriptors para cada uno de los procesos que vayamos a ejecutar más adelante. Cada nodo que generemos es el conjunto de word y token hasta llegar a un PIPE en caso de encontrar uno.
