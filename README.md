@@ -122,7 +122,7 @@ Por último, ejecutamos uno a uno todos los nodos que generamos, liberamos memor
 
 Implementación
 
-El programa se ejecuta sin argumentos (y arrojará un error si se utiliza alguno). El programa consta esencialmente de dos funciones que se llaman entre sí indefinidamente. La primera minishell_looprealiza las funciones de minishell, la otra limpia y prepara la siguiente línea. En minishell_loop, aparece un símbolo del sistema, que se implementa a través de readline . Esto también nos permitió usar la función history incorporada. Una vez que se ha ingresado una línea, verifica si hay comillas sin cerrar. Si no encuentra ninguna, envía la línea al analizador léxico.
+El programa se ejecuta sin argumentos (y arrojará un error si se utiliza alguno). El programa consta esencialmente de dos funciones que se llaman entre sí indefinidamente. La primera minishell_loop realiza las funciones de minishell, la otra limpia y prepara la siguiente línea. En minishell_loop, aparece un símbolo del sistema, que se implementa a través de readline . Esto también nos permitió usar la función history incorporada. Una vez que se ha ingresado una línea, verifica si hay comillas sin cerrar. Si no encuentra ninguna, envía la línea al analizador léxico.
 
 El analizador léxico
 
@@ -161,7 +161,7 @@ Lo primero que hace el analizador es recorrer la lista del analizador léxico ha
 
 analizador 001 El analizador toma la t_lexerlista (izquierda) y la convierte en la t_simple_cmds lista (derecha)
 
-Para cada comando, primero comprueba si hay redirecciones, que almacena en la *redirectionslista enlazada, que contiene tanto el token como el nombre de archivo o delimitador en el caso de un documento heredado. Cuando se añaden los nodos a la *redirections lista, se eliminan de la lista del analizador léxico. A continuación, comprueba si la primera palabra es una función incorporada, en cuyo caso almacena un puntero de función a la función correspondiente, más sobre esto a continuación. Como las redirecciones se han eliminado de la lista del analizador léxico, el analizador puede combinar fácilmente todas las palabras restantes en una matriz 2D, que es un argumento ejecutivo obligatorio. También facilita el manejo de situaciones en las que las palabras pueden estar separadas por redirecciones, por ejemplo:
+Para cada comando, primero comprueba si hay redirecciones, que almacena en la *redirections lista enlazada, que contiene tanto el token como el nombre de archivo o delimitador en el caso de un documento heredado. Cuando se añaden los nodos a la *redirections lista, se eliminan de la lista del analizador léxico. A continuación, comprueba si la primera palabra es una función incorporada, en cuyo caso almacena un puntero de función a la función correspondiente, más sobre esto a continuación. Como las redirecciones se han eliminado de la lista del analizador léxico, el analizador puede combinar fácilmente todas las palabras restantes en una matriz 2D, que es un argumento ejecutivo obligatorio. También facilita el manejo de situaciones en las que las palabras pueden estar separadas por redirecciones, por ejemplo:
 
 cat > file -e
 Como > y file ya se eliminaron de la lista del analizador léxico cuando se agregaron a la lista de redirecciones, todo lo que queda es caty -e, que luego se pueden agregar fácilmente a una matriz.
