@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/10 12:18:38 by rbuitrag          #+#    #+#              #
-#    Updated: 2024/02/09 12:41:33 by rbuitrag         ###   ########.fr        #
+#    Updated: 2024/11/25 17:36:38 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libft.a
 
 HEADER = libft.h
 
-CC = gcc
+CC = cc
 
 FLAGS = -Wall -Wextra -Werror -c
 	
@@ -44,7 +44,7 @@ clean:
 	rm -f $(OFILES)
 
 fclean: clean
-	rm -f $(NAME) $(OFILES) a.out
+	rm -f  $(NAME) $(OFILES) a.out
 
 re : fclean all
 
