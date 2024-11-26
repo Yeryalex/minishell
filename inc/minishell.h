@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2024/11/26 16:28:34 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:48:42 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void    prompt_loop(void);
 void		add_token(t_tokens **head, t_tokens *new_token);
 t_type		determine_type(char c);
 t_tokens	*create_token(const char *value, t_type type);
-t_tokens	**parse_input(const char *input);
+t_tokens	*parse_input(const char *input);
 char		*read_input(void);
 
 

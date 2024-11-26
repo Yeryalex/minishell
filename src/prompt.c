@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2024/11/26 16:27:05 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:08:10 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_ispace(char c)
 {
-	return ((c >= 9 && c= 13) || c == 32);
+	return ((c >= 9 && c <= 13) || c == 32);
 }
 
 int	ft_istoken(char c)
@@ -31,7 +31,7 @@ void	add_token(t_tokens **head, t_tokens *new_token)
 		*head = new_token;
 	else
 	{
-		temp = *head;t_tokens    **parse_input(const char *input) 
+		temp = *head;
 		while (temp->next)
 			temp = temp->next;
 		temp->next = new_token;
@@ -71,9 +71,9 @@ t_tokens	*create_token(const char *value, t_type type)
 	return (new_token);
 }
 
-t_tokens	**parse_input(const char *input)
+t_tokens	*parse_input(const char *input)
 {
-	char		**cmd;
+	const char		*start;
 	t_tokens	*head;
 	char		*word;
 	char		token_char[2];
@@ -98,9 +98,9 @@ t_tokens	**parse_input(const char *input)
 		else
 		{
 			start = input;
-			while (*input && !ft_ispace(*input) ** !ft_istoken(*input))
+			while (*input && !ft_ispace(*input) && !ft_istoken(*input))
 				input++;
-			word = ft_strndup(start, input - start);
+			word = ft_strndup(start, (input + 1 - start));
 			if (!word)
 				return (NULL);
 			add_token(&head, create_token(word, WORD));
@@ -110,22 +110,23 @@ t_tokens	**parse_input(const char *input)
 	return (head);
 }
 
-char	*read_input(void)
+/*char	*read_input(void)
 {
 	char	*input;
 	
-	inpu = readline(CYAN "minishell> " RESET);
+	input = readline(CYAN "minishell> " RESET);
 	if (input && *input)
 		add_history(input);
 	return (input);
-}
+}*/
 
 void	prompt_loop(void)
 {
-	char		*input;
+	char		*input = "ls -l | grep main > output.txt";
 	t_tokens	*commands;
+	t_tokens	*tmp;
 	
-	while (1)
+	/*while (1)
 	{
 		input = read_input();
 		if (!input)
@@ -137,5 +138,15 @@ void	prompt_loop(void)
 			free_tokens(commands);
 		}
 		free(input);
-	}
+	}*/
+
+	commands = parse_input(input);
+	tmp = commands;
+	printf(GREEN "Prompt ejemplo %s\n", input);
+	while (tmp)
+    {
+        printf(GRAY "Value: %s, Type: %d\n", tmp->value, tmp->token);
+        tmp = tmp->next;
+    }
+    free_tokens(commands);
 }
