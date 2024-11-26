@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2024/11/25 17:37:49 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:28:34 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,17 @@ typedef struct s_tokens
 
 
 /*          MAIN FUNCTIONS         */
+void    prompt_loop(void);
 
 /*          LEXER FUNCTIONS         */
+void		add_token(t_tokens **head, t_tokens *new_token);
+t_type		determine_type(char c);
+t_tokens	*create_token(const char *value, t_type type);
+t_tokens	**parse_input(const char *input);
+char		*read_input(void);
+
+
+
 
 /*          STRUCT FUNCTIONS         */
 
@@ -70,7 +79,11 @@ typedef struct s_tokens
 /*          EXECUTOR FUNCTIONS         */
 
 /*          AUXILIARS FUNCTIONS         */
+char	*ft_strndup(const char *s, size_t n);
+int		ft_istoken(char c);
+int		ft_ispace(char c);
 
 /*          FREE FUNCTIONS         */
+void	free_tokens(t_tokens *head);
 
 #endif
