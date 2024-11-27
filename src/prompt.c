@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2024/11/26 17:08:10 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:10:40 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ void	add_token(t_tokens **head, t_tokens *new_token)
 		while (temp->next)
 			temp = temp->next;
 		temp->next = new_token;
-		new_token->prev = temp;
 	}
 }
 
 // Determina el tipo de token basado en un carácter
+
+
 t_type	determine_type(char c)
 {
 	if (c == '|')
@@ -67,7 +68,6 @@ t_tokens	*create_token(const char *value, t_type type)
 	}
 	new_token->token = type;
 	new_token->next = NULL;
-	new_token->prev = NULL;
 	return (new_token);
 }
 
@@ -110,7 +110,7 @@ t_tokens	*parse_input(const char *input)
 	return (head);
 }
 
-/*char	*read_input(void)
+char	*read_input(void)
 {
 	char	*input;
 	
@@ -118,27 +118,41 @@ t_tokens	*parse_input(const char *input)
 	if (input && *input)
 		add_history(input);
 	return (input);
-}*/
+}
 
 void	prompt_loop(void)
 {
-	char		*input = "ls -l | grep main > output.txt";
+	char		*input;
 	t_tokens	*commands;
 	t_tokens	*tmp;
 	
-	/*while (1)
+	//input = readline("minishel42~");
+
+	while (1)
 	{
 		input = read_input();
 		if (!input)
 			break ;
 		commands = parse_input(input);
+
+  	tmp = commands;
+ 	 printf(GREEN "Prompt ejemplo %s\n", input);
+ 	 while (tmp)
+ 	 {
+      	printf(GRAY "Value: %s, Type: %d\n", tmp->value, tmp->token);
+    	  tmp = tmp->next;
+ 	 }
+  	free_tokens(commands);
+	}
+/*
 		if (commands)
 		{
+			printf("%s\n", commands->value);
 			//execute_commands(commands);
 			free_tokens(commands);
 		}
 		free(input);
-	}*/
+	}
 
 	commands = parse_input(input);
 	tmp = commands;
@@ -148,5 +162,5 @@ void	prompt_loop(void)
         printf(GRAY "Value: %s, Type: %d\n", tmp->value, tmp->token);
         tmp = tmp->next;
     }
-    free_tokens(commands);
+    free_tokens(commands);*/
 }

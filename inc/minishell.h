@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2024/11/26 16:48:42 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:03:25 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@
 # define RED "\033[31m"
 # define BLUE "\033[94m"
 # define GRAY "\033[90m"
+# define RESET "\033[0m"
 
-// Definimos una lista para tipo de palabra y luego controlarla (provisional)
 typedef enum e_type
 {
+	NONE,
 	PIPE,  // |
 	GTHAN, // >
 	STHAN, // <
@@ -38,16 +39,12 @@ typedef enum e_type
 	WORD,
 }	t_type;
 
-// En la siguiente estructura deberemos guardar su tipo para trabajar con ellas después
 typedef struct s_tokens
 {
 	char			*value;
 	t_type			token;
 	struct s_tokens	*next;
-	struct s_tokens	*prev;
 }	t_tokens;
-
-
 
 /*          MAIN FUNCTIONS         */
 void    prompt_loop(void);
