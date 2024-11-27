@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2024/11/25 17:41:45 by rbuitrag         ###   ########.fr        #
+#    Updated: 2024/11/26 16:31:45 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,10 @@ CFLAGS = -Wall -Werror -Wextra
 CC = cc
 
 CFILES =	main.c \
-			
+			prompt.c \
+			utils.c \
 
+			
 
 
 OBJS = $(addprefix src/, $(CFILES:.c=.o))
