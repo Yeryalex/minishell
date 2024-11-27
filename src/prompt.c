@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2024/11/27 20:10:40 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2024/11/27 21:03:12 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ t_tokens	*parse_input(const char *input)
 	{
 		while (ft_ispace(*input))
 			input++;
-		if (*input == '\0')
-			break ;
+		//if (*input == '\0')
+		//	break ;
 		if (ft_istoken(*input))
 		{
 			token_char[0] = *input;
@@ -97,14 +97,17 @@ t_tokens	*parse_input(const char *input)
 		}
 		else
 		{
-			start = input;
-			while (*input && !ft_ispace(*input) && !ft_istoken(*input))
-				input++;
-			word = ft_strndup(start, (input + 1 - start));
-			if (!word)
-				return (NULL);
-			add_token(&head, create_token(word, WORD));
-			free (word);
+				start = input;
+				while (*input && !ft_ispace(*input) && !ft_istoken(*input))
+					input++;
+				if (*input == '\0')
+					word = ft_strndup(start, (input - start));
+				else
+					word = ft_strndup(start, (input + 1 - start));
+				if (!word)
+					return (NULL);
+				add_token(&head, create_token(word, WORD));
+				free (word);
 		}
 	}
 	return (head);
