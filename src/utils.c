@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:59:53 by rbuitrag          #+#    #+#             */
-/*   Updated: 2024/11/26 16:51:34 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/11/28 12:42:44 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strndup(const char *s, size_t n)
 	dup = (char *)malloc(len + 1);
 	if (!dup)
 		return (NULL);
-	ft_strlcpy(dup, s, len);
+	ft_strlcpy(dup, s, len + 1);
 	dup[len] = '\0';
 	return (dup);
 }

@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2024/11/27 21:03:12 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/11/28 12:46:25 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	add_token(t_tokens **head, t_tokens *new_token)
 }
 
 // Determina el tipo de token basado en un carácter
-
 
 t_type	determine_type(char c)
 {
@@ -100,10 +99,7 @@ t_tokens	*parse_input(const char *input)
 				start = input;
 				while (*input && !ft_ispace(*input) && !ft_istoken(*input))
 					input++;
-				if (*input == '\0')
-					word = ft_strndup(start, (input - start));
-				else
-					word = ft_strndup(start, (input + 1 - start));
+				word = ft_strndup(start, (input - start));
 				if (!word)
 					return (NULL);
 				add_token(&head, create_token(word, WORD));
