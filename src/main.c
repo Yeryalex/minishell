@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2024/11/26 16:53:17 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/11/28 12:47:26 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int main(int ac, char **argv, char **env)
 	
 	if (ac != 1)
 	{
-		perror("Must not have parameters.\n");
-		return (EXIT_FAILURE);
+		perror("Error ./minishel without arguments");
+		return (0);
 	}
 	prompt_loop();
- 	return (EXIT_SUCCESS);
-} 
+ 	return (0);
+}
