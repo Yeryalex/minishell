@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:59:53 by rbuitrag          #+#    #+#             */
-/*   Updated: 2024/11/29 08:29:55 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/11/29 11:39:56 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ void	ft_free_tokens(t_tokens **head)
 {
 	t_tokens	*temp;
 
-	while (head)
+	while (*head)
 	{
-		temp = head->next;
-		free(head->value);
-		free(head);
-		head = temp;
+		temp = (*head)->next;
+		free((*head)->value);
+		free(*head);
+		head = &temp;
 	}
-	head = NULL;
+	*head = NULL;
 }
 
 // tengo que revisar el ultimo nodo para guardarlo tambien
@@ -62,7 +62,7 @@ void	*ft_exit_error(char quote)
 }
 
 // Necesito que recoja el total de chars en word
-char	*ft_get_word(char **input)
+char	*ft_get_word(const char **input)
 {
 	int		i;
 	char	*value;
@@ -89,7 +89,7 @@ char	*ft_get_word(char **input)
 }
 
 // recogemos el valor para el nodo, ahora necesaroi porque pilla +de 1 caracter version anterior
-char	*ft_get_value(char **input)
+char	*ft_get_value(const char **input)
 {
 	char	*value;
 	int		i;

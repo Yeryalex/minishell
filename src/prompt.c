@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2024/11/29 08:31:20 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/11/29 11:16:57 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_tokens	*ft_create_node(const char **input)
 		free(new_node);
 		return (NULL);
 	}
-	new_node->token = ft_determine_type(value);
+	new_node->token = ft_determine_type(new_node->value);
 	new_node->next = NULL;
 	return (new_node);
 }

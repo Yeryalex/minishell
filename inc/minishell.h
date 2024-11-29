@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2024/11/28 16:40:42 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/11/29 11:34:34 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ t_tokens	*ft_create_node(const char **value);
 t_tokens	*ft_lexer_input(const char *input);
 char		*read_input(void);
 int			ft_addlast_node(t_tokens **lexer, t_tokens *current_node);
-char		*ft_get_word(char **line);
-char		*ft_get_value(char **line)
+char		*ft_get_word(const char **line);
+char		*ft_get_value(const char **line);
 
 
 
