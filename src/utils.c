@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:59:53 by rbuitrag          #+#    #+#             */
-/*   Updated: 2024/11/29 12:27:45 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2024/11/29 12:43:19 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	ft_free_tokens(t_tokens **head)
 		free((*head)->value);
 		//free((*head)->token);
 		free(*head);
-		head = &temp;
+		*head = temp;
 	}
-	head = NULL;
+	*head = NULL;
 }
 
 // tengo que revisar el ultimo nodo para guardarlo tambien
