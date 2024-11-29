@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2024/11/29 11:16:57 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2024/11/29 12:21:15 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	prompt_loop(void)
  	 while (tmp)
  	 {
       		printf(GRAY "Value: %s, Type: %d\n", tmp->value, tmp->token);
-    	  	tmp = tmp->next;
+			tmp = tmp->next;
  	 }
   	ft_free_tokens(&commands);
 	}

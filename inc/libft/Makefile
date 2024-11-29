@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/10 12:18:38 by rbuitrag          #+#    #+#              #
-#    Updated: 2024/11/25 17:36:38 by rbuitrag         ###   ########.fr        #
+#    Updated: 2024/11/29 12:04:04 by yrodrigu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,16 +35,16 @@ all : $(NAME)
 OFILES = $(FILES:.c=.o)
 	
 $(NAME): $(OFILES)
-	ar rc $(NAME) $(OFILES)
+	@ar rc $(NAME) $(OFILES)
 
 %.o:%.c $(HEADER) Makefile
-	$(CC) $(FLAGS) $<	
+	@$(CC) $(FLAGS) $<	
 
 clean:
-	rm -f $(OFILES)
+	@rm -f $(OFILES)
 
 fclean: clean
-	rm -f  $(NAME) $(OFILES) a.out
+	@rm -f  $(NAME) $(OFILES) a.out
 
 re : fclean all
 
