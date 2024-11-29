@@ -3,110 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2024/11/28 12:46:25 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/11/29 08:31:20 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	ft_ispace(char c)
+int	ft_isspace(char c)
 {
 	return ((c >= 9 && c <= 13) || c == 32);
 }
 
-int	ft_istoken(char c)
+// Determina el tipo de token basado en un carácter (ok revisado dejar funcionando)
+t_type	ft_determine_type(char *value)
 {
-	return (c == '|' || c == '<' || c == '>');
-}
-
-// Agrega un token al final de la lista doblemente enlazada
-void	add_token(t_tokens **head, t_tokens *new_token)
-{
-	t_tokens	*temp;
-
-	if (!*head)
-		*head = new_token;
-	else
-	{
-		temp = *head;
-		while (temp->next)
-			temp = temp->next;
-		temp->next = new_token;
-	}
-}
-
-// Determina el tipo de token basado en un carácter
-
-t_type	determine_type(char c)
-{
-	if (c == '|')
+	if (!ft_strncmp(value, "|", 1))
 		return (PIPE);
-	else if (c == '>')
+	else if (!ft_strncmp(value, ">", 1))
+	{
+		if (!ft_strncmp(value, ">>", 2))
+			return (APPEND);
 		return (GTHAN);
-	else if (c == '<')
+	}
+	else if (!ft_strncmp(value, "<", 1))
+	{
+		if (!ft_strncmp(value, "<<", 2))
+			return (H_DOC);
 		return (STHAN);
-	return (WORD);
+	}
+	else
+		return (WORD);
 }
 
-// Crea un nuevo nodo de token
-t_tokens	*create_token(const char *value, t_type type)
+// Crea un nuevo nodo de token (create node para que valga para todo es redudante crear token y nodos es lo mismo
+t_tokens	*ft_create_node(const char **input)
 {
-	t_tokens	*new_token;
+	t_tokens	*new_node;
 
-	new_token = (t_tokens *)malloc(sizeof(t_tokens));
-	if (!new_token)
+	new_node = (t_tokens *)malloc(sizeof(t_tokens));
+	if (!new_node)
 		return (NULL);
-	new_token->value = ft_strdup(value);
-	if (!new_token->value)
+	new_node->value = ft_get_value(input);
+	if (!new_node->value)
 	{
-		free(new_token);
+		free(new_node);
 		return (NULL);
 	}
-	new_token->token = type;
-	new_token->next = NULL;
-	return (new_token);
+	new_node->token = ft_determine_type(value);
+	new_node->next = NULL;
+	return (new_node);
 }
 
-t_tokens	*parse_input(const char *input)
+// Este es nuestro lexer el anteriormente llamado parser_input (así ya lo podemos montar y esctuturar mejor)
+t_tokens	*ft_lexer_input(const char *input)
 {
-	const char		*start;
-	t_tokens	*head;
-	char		*word;
-	char		token_char[2];
-
-	head = NULL;
+	t_tokens	*node;
+	t_tokens	*lexer;
+	
+	lexer = NULL;
 
 	if (!input)
 		return (NULL);
 	while(*input)
 	{
-		while (ft_ispace(*input))
-			input++;
-		//if (*input == '\0')
-		//	break ;
-		if (ft_istoken(*input))
+		while (ft_isspace(*input))
 		{
-			token_char[0] = *input;
-			token_char[1] = '\0';
-			add_token(&head, create_token(token_char, determine_type(*input)));
 			input++;
+			continue ;
 		}
-		else
+		node = ft_create_node(&input);
+		if (!node || (node && ft_addlast_node(&lexer, node)))
 		{
-				start = input;
-				while (*input && !ft_ispace(*input) && !ft_istoken(*input))
-					input++;
-				word = ft_strndup(start, (input - start));
-				if (!word)
-					return (NULL);
-				add_token(&head, create_token(word, WORD));
-				free (word);
+			ft_free_tokens(&lexer);
+			return (NULL);
 		}
 	}
-	return (head);
+	return (lexer);
 }
 
 char	*read_input(void)
@@ -132,34 +107,15 @@ void	prompt_loop(void)
 		input = read_input();
 		if (!input)
 			break ;
-		commands = parse_input(input);
+		commands = ft_lexer_input(input);
 
   	tmp = commands;
  	 printf(GREEN "Prompt ejemplo %s\n", input);
  	 while (tmp)
  	 {
-      	printf(GRAY "Value: %s, Type: %d\n", tmp->value, tmp->token);
-    	  tmp = tmp->next;
+      		printf(GRAY "Value: %s, Type: %d\n", tmp->value, tmp->token);
+    	  	tmp = tmp->next;
  	 }
-  	free_tokens(commands);
+  	ft_free_tokens(&commands);
 	}
-/*
-		if (commands)
-		{
-			printf("%s\n", commands->value);
-			//execute_commands(commands);
-			free_tokens(commands);
-		}
-		free(input);
-	}
-
-	commands = parse_input(input);
-	tmp = commands;
-	printf(GREEN "Prompt ejemplo %s\n", input);
-	while (tmp)
-    {
-        printf(GRAY "Value: %s, Type: %d\n", tmp->value, tmp->token);
-        tmp = tmp->next;
-    }
-    free_tokens(commands);*/
 }

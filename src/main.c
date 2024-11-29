@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2024/11/28 12:47:26 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/11/28 13:05:45 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,15 @@ int main(int ac, char **argv, char **env)
 	(void)argv;
 	(void)env;
 	
+	if (!isatty(STDIN_FILENO))
+	{
+		perror("./minishell");
+		exit(EXIT_FAILURE);
+	}
 	if (ac != 1)
 	{
 		perror("Error ./minishel without arguments");
-		return (0);
+		return (EXIT_FAILURE);
 	}
 	prompt_loop();
  	return (0);

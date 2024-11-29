@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2024/11/27 20:03:25 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2024/11/28 16:40:42 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,13 @@ typedef struct s_tokens
 void    prompt_loop(void);
 
 /*          LEXER FUNCTIONS         */
-void		add_token(t_tokens **head, t_tokens *new_token);
-t_type		determine_type(char c);
-t_tokens	*create_token(const char *value, t_type type);
-t_tokens	*parse_input(const char *input);
+t_type		ft_determine_type(char *value);
+t_tokens	*ft_create_node(const char **value);
+t_tokens	*ft_lexer_input(const char *input);
 char		*read_input(void);
+int			ft_addlast_node(t_tokens **lexer, t_tokens *current_node);
+char		*ft_get_word(char **line);
+char		*ft_get_value(char **line)
 
 
 
@@ -76,11 +78,11 @@ char		*read_input(void);
 /*          EXECUTOR FUNCTIONS         */
 
 /*          AUXILIARS FUNCTIONS         */
-char	*ft_strndup(const char *s, size_t n);
-int		ft_istoken(char c);
-int		ft_ispace(char c);
+int		ft_isspace(char c);
+void	*ft_exit_error(char quote);
+int		ft_is_metacharacter(int c);
 
 /*          FREE FUNCTIONS         */
-void	free_tokens(t_tokens *head);
+void	ft_free_tokens(t_tokens **lexer);
 
 #endif
