@@ -277,3 +277,6 @@ Autores
 
 # Más resources
 https://github.com/karisti/42_minishell?tab=readme-ov-file#resources
+
+# Uso de Valgrind en el programa
+valgrind --leak-check=full --track-fds=yes --show-leaks-kinds=all --suppressions=.ignore_readline -q ./minishell
