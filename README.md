@@ -159,17 +159,17 @@ Luego, el analizador léxico se envía al analizador, que agrupa los distintos n
 
 Lo primero que hace el analizador es recorrer la lista del analizador léxico hasta que encuentra una tubería (pipe). Luego, toma todos los nodos anteriores a la tubería como un solo comando y crea un nodo en la t_simple_cmds estructura. Si no encuentra una tubería, toma todos los nodos (restantes) como un solo comando.
 
-analizador 001 El analizador toma la t_lexerlista (izquierda) y la convierte en la t_simple_cmds lista (derecha)
+analizador 001 El analizador toma la t_lexer lista (izquierda) y la convierte en la t_simple_cmds lista (derecha)
 
 Para cada comando, primero comprueba si hay redirecciones, que almacena en la *redirections lista enlazada, que contiene tanto el token como el nombre de archivo o delimitador en el caso de un documento heredado. Cuando se añaden los nodos a la *redirections lista, se eliminan de la lista del analizador léxico. A continuación, comprueba si la primera palabra es una función incorporada, en cuyo caso almacena un puntero de función a la función correspondiente, más sobre esto a continuación. Como las redirecciones se han eliminado de la lista del analizador léxico, el analizador puede combinar fácilmente todas las palabras restantes en una matriz 2D, que es un argumento ejecutivo obligatorio. También facilita el manejo de situaciones en las que las palabras pueden estar separadas por redirecciones, por ejemplo:
 
 cat > file -e
-Como > y file ya se eliminaron de la lista del analizador léxico cuando se agregaron a la lista de redirecciones, todo lo que queda es caty -e, que luego se pueden agregar fácilmente a una matriz.
+Como > y file ya se eliminaron de la lista del analizador léxico cuando se agregaron a la lista de redirecciones, todo lo que queda es cat y -e, que luego se pueden agregar fácilmente a una matriz.
 
 Este proceso se repite hasta el final de la lista del analizador léxico.
 
 # Elementos incorporados
-Como se explicó anteriormente, manejamos las funciones incorporadas almacenando un puntero de función en el t_simple_cmds. Esto lo logramos enviando la primera palabra de un comando a una función builtin_arrque recorre una matriz estática de las diferentes funciones incorporadas. Si encuentra una función correspondiente, la devuelve al analizador; de lo contrario, devuelve NULL. Para mí, esta fue una forma de aprender sobre punteros de función, con los que nunca había trabajado antes. Además, al determinar la función incorporada en la etapa del analizador, simplifica enormemente el ejecutor, ya que ejecutar la función incorporada requiere solo dos líneas de código:
+Como se explicó anteriormente, manejamos las funciones incorporadas almacenando un puntero de función en el t_simple_cmds. Esto lo logramos enviando la primera palabra de un comando a una función builtin_arr que recorre una matriz estática de las diferentes funciones incorporadas. Si encuentra una función correspondiente, la devuelve al analizador; de lo contrario, devuelve NULL. Para mí, esta fue una forma de aprender sobre punteros de función, con los que nunca había trabajado antes. Además, al determinar la función incorporada en la etapa del analizador, simplifica enormemente el ejecutor, ya que ejecutar la función incorporada requiere solo dos líneas de código:
 
 	if (cmd->builtin != NULL)
   		cmd->builtin(tools, cmd);
@@ -207,7 +207,7 @@ Como se explicó anteriormente, manejamos las funciones incorporadas almacenando
 Cuando el analizador devuelve la t_simple_cmds lista a minishell_loop, se realiza una comprobación sencilla para determinar cuántos comandos hay, ya que son manejados por diferentes funciones. Sin embargo, con la excepción de unas pocas funciones integradas, los comandos son ejecutados en última instancia por la misma función handle_cmd, que encuentra y, si tiene éxito, ejecuta el comando.
 
 # Expansor
-Antes de que se maneje un nodo t_simple_cmds, se lo expande. El expansor toma las variables, identificadas por $, y las reemplaza con su valor de las variables de entorno. De modo que $USERse convierte en mgraaf, y $?se reemplaza con el código de salida.
+Antes de que se maneje un nodo t_simple_cmds, se lo expande. El expansor toma las variables, identificadas por $, y las reemplaza con su valor de las variables de entorno. De modo que $USERse convierte en mgraaf, y $? se reemplaza con el código de salida.
 
 # Heredoc
 Antes de crear un proceso secundario, el proceso principal ejecuta heredocs. Nosotros manejamos heredocs creando un archivo temporal para escribir la entrada. El nombre del archivo se almacena en el t_simple_cmds nodo relacionado para que pueda usarse para reemplazar STDIN. Si hay varios heredocs en un solo t_simple_cmds nodo, entonces el nombre del archivo que se almacena finalmente será el del último heredoc. El uso de un archivo tiene limitaciones y problemas de seguridad, sin embargo, sentimos que era la forma más simple de lidiar con esto y es similar a cómo lo hace bash.
@@ -223,8 +223,8 @@ Básicamente para cada comando sucede lo siguiente:
 El comando se expande.
 Se crea una tubería(pipe) con end[0]y end[1], excepto el último comando.
 Se crea un proceso secundario fork(). En el proceso secundario:
-Con excepción del primer comando, dup2reemplaza STDINcon la salida del comando anterior.
-Con excepción del último comando, dup2reemplaza STDOUTcon end[1].
+Con excepción del primer comando, dup2 reemplaza STDINcon la salida del comando anterior.
+Con excepción del último comando, dup2 reemplaza STDOUTcon end[1].
 En el caso de redirecciones, el STDINo STDOUTse reemplaza con sus respectivos descriptores de archivo.
 handle_cmdEncuentra y ejecuta el comando.
 end[0]se almacena para el siguiente comando.
