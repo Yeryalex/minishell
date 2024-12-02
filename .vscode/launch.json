@@ -1,24 +1,32 @@
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "C/C++ Runner: Debug Session",
-      "type": "cppdbg",
-      "request": "launch",
-      "args": [],
-      "stopAtEntry": false,
-      "externalConsole": true,
-      "cwd": "//wsl.localhost/Ubuntu/home/rbuitrag/Cursus42/Circle_3/minishell",
-      "program": "//wsl.localhost/Ubuntu/home/rbuitrag/Cursus42/Circle_3/minishell/build/Debug/outDebug",
-      "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
-      "setupCommands": [
-        {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
-        }
-      ]
-    }
-  ]
-}
+	"version": "0.2.0",
+	"configurations": [
+	  {
+		"name": "Debug Minishell",
+		"type": "cppdbg",
+		"request": "launch",
+		"program": "${workspaceFolder}/minishell",  // Ruta del ejecutable
+		"args": [],  // Argumentos para pasar a tu minishell si es necesario
+		"stopAtEntry": false,
+		"cwd": "${workspaceFolder}",  // Directorio de trabajo
+		"environment": [],
+		"externalConsole": false,
+		"MIMode": "gdb",
+		"miDebuggerPath": "/usr/bin/gdb",  // Ruta del depurador (puede variar según el sistema)
+		"setupCommands": [
+		  {
+			"description": "Habilitar impresión de tipos para GDB",
+			"text": "-enable-pretty-printing",
+			"ignoreFailures": true
+		  }
+		],
+		"preLaunchTask": "compilar",  // Nombre de la tarea de compilación
+		"internalConsoleOptions": "openOnSessionStart",
+		"logging": {
+		  "engineLogging": true,
+		  "trace": true
+		}
+	  }
+	]
+  }
+  

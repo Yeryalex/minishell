@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2024/11/29 11:34:34 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2024/11/29 13:52:30 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ typedef enum e_type
 	PIPE,  // |
 	GTHAN, // >
 	STHAN, // <
-	H_DOC, // HEREDOC
-	APPEND, 
+	H_DOC, // << HEREDOC
+	APPEND, // >> 
 	WORD,
 }	t_type;
 
@@ -45,6 +45,20 @@ typedef struct s_tokens
 	t_type			token;
 	struct s_tokens	*next;
 }	t_tokens;
+
+typedef struct s_cmds
+{
+	char			**cmd;
+	//char			**builting;
+	char			*full_path;
+	t_tokens		*redirections;
+	struct s_cmds 	*next;
+	struct s_cmds	*prev;
+	
+
+	
+
+} t_cmds;
 
 /*          MAIN FUNCTIONS         */
 void    prompt_loop(void);
@@ -58,7 +72,8 @@ int			ft_addlast_node(t_tokens **lexer, t_tokens *current_node);
 char		*ft_get_word(const char **line);
 char		*ft_get_value(const char **line);
 
-
+/*			PARSER FUNCTIONS		*/
+t_cmds	*ft_parser(t_tokens *lexer);
 
 
 /*          STRUCT FUNCTIONS         */

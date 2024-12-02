@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int	ft_isspace(char c)
 {
@@ -127,9 +127,10 @@ void	prompt_loop(void)
  	 	printf(GREEN "Prompt ejemplo %s\n", input);
  	 	while (tmp)
  		{
-      			printf(GRAY "Value: %s, Type: %d\n", tmp->value, tmp->token);
+      		printf(GRAY "Value: %s, Type: %d\n", tmp->value, tmp->token);
 			tmp = tmp->next;
 	 	}
+		ft_parser(tmp);
 	}
   	ft_free_tokens(&commands);
   	ft_free_tokens(&tmp);

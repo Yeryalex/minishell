@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 /*
 // Función para liberar la memoria de los tokens
@@ -70,7 +70,7 @@ void	*ft_exit_error(char quote)
 }
 
 /*
- * // Necesito que recoja el total de chars en word
+ * // Necesito que recoja el total de chars en word y controlo comillas sin cerrar
  */
 char	*ft_get_word(const char **input)
 {
@@ -99,8 +99,7 @@ char	*ft_get_word(const char **input)
 }
 
 /*
-// recogemos el valor para el nodo, ahora necesario porque pilla
-//  +de 1 caracter version anterior
+// recogemos el valor para el nodo WORD hasta los space
 */
 char	*ft_get_value(const char **input)
 {

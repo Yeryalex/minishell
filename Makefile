@@ -15,12 +15,13 @@ NAME = minishell
 
 HEADER = inc/minishell.h 
 LIBFT = inc/libft/libft.a
-CFLAGS = -Wall -Werror -Wextra
-CC = cc
+CFLAGS = -Wall -Werror -Wextra -fsanitize=leak -g
 
 CFILES =	main.c \
-			prompt.c \
-			utils.c \
+			lexer/prompt.c \
+			lexer/lexer_utils.c \
+			parser/parser.c \
+
 
 GREEN = "\033[92m"
 RESET = "\033[0m"
@@ -37,7 +38,7 @@ $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) -g $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 
 %.o: %.c $(HEADER) Makefile
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -g -c $< -o $@
 
 library:
 	@make -C inc/libft --silent
