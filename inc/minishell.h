@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2024/11/29 13:52:30 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:06:30 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,23 @@ typedef struct s_tokens
 	struct s_tokens	*next;
 }	t_tokens;
 
+typedef struct s_dir
+{
+	int		heredoc;
+	int		fd;
+	char	*filename;
+
+}	t_dir;
+
 typedef struct s_cmds
 {
-	char			**cmd;
+	char			**cmd_array;
 	//char			**builting;
 	char			*full_path;
-	t_tokens		*redirections;
+	t_dir			*fd_in;
+	t_dir			*fd_out;
 	struct s_cmds 	*next;
 	struct s_cmds	*prev;
-	
-
-	
-
 } t_cmds;
 
 /*          MAIN FUNCTIONS         */
@@ -74,6 +79,7 @@ char		*ft_get_value(const char **line);
 
 /*			PARSER FUNCTIONS		*/
 t_cmds	*ft_parser(t_tokens *lexer);
+t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count);
 
 
 /*          STRUCT FUNCTIONS         */

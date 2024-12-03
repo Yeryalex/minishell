@@ -130,7 +130,7 @@ void	prompt_loop(void)
       		printf(GRAY "Value: %s, Type: %d\n", tmp->value, tmp->token);
 			tmp = tmp->next;
 	 	}
-		ft_parser(tmp);
+		ft_parser(commands);
 	}
   	ft_free_tokens(&commands);
   	ft_free_tokens(&tmp);

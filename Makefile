@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2024/11/29 12:29:25 by yrodrigu         ###   ########.fr        #
+#    Updated: 2024/12/03 13:31:47 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 
 HEADER = inc/minishell.h 
 LIBFT = inc/libft/libft.a
-CFLAGS = -Wall -Werror -Wextra -fsanitize=leak -g
+CFLAGS = -Wall -Werror -Wextra -g
 
 CFILES =	main.c \
 			lexer/prompt.c \
