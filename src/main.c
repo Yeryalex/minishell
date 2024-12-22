@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2024/11/29 19:42:23 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2024/12/22 11:25:09 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int main(int ac, char **argv, char **env)
 {
+	t_env	*env_list;
+
 	(void)argv;
 	(void)env;
 	
@@ -27,6 +29,7 @@ int main(int ac, char **argv, char **env)
 		perror("Error ./minishel without arguments");
 		return (EXIT_FAILURE);
 	}
+	env_list = ft_env_init(env);
 	prompt_loop();
  	return (0);
 }
