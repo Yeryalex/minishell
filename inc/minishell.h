@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2024/12/22 12:24:12 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/10 13:06:35 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ typedef struct s_cmds
 
 typedef struct s_env
 {
-<<<<<<< HEAD
-	int				export;
+	int				exported;
 	char			key;
 	char			value;
 	struct s_env	*next;
@@ -83,12 +82,6 @@ typedef struct s_utils
 	struct s_utils	*next;
 	struct s_utils	*prev;
 } t_utils;
-=======
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
->>>>>>> 7f28b3ae1f0acf86087ff21e16fb467bde059652
 
 /*          MAIN FUNCTIONS         */
 void    prompt_loop(void);
@@ -116,12 +109,10 @@ t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count);
 /*          SIGNAL FUNCTIONS         */
 
 /*          ENV FUNCTIONS         */
-<<<<<<< HEAD
 t_env		*ft_init_env(char **env);
 t_env		*ft_create_node_env(char **env);
-=======
-t_env    *ft_env_init(char **env);
->>>>>>> 7f28b3ae1f0acf86087ff21e16fb467bde059652
+int			*ft_clear_lstenv(t_env *env);
+void    	ft_add_env_tolst(t_env **lst_env, t_env *new_node);
 
 /*          EXPORT FUNCTIONS         */
 
