@@ -78,7 +78,7 @@ t_cmds *ft_parser(t_tokens *lexer)
 	last_cmd = NULL;
 	new_cmd = NULL;
 	count_tokens = 0;
-	// Validación inicial: verifica si el primer token es un PIPE
+	// Validacion inicial: verifica si el primer token es un PIPE
 	if (parser && parser->token == PIPE)
 	{
     	perror("syntax error near unexpected token `|\'\n");
@@ -138,4 +138,4 @@ t_cmds *ft_parser(t_tokens *lexer)
 }
 
 /* hacer full path y redirecciones, porque ahora va creando nodos en t_cmds*/
-/* controlar que PIPE no esta al inicio y no al final sin nada*/
+/* pipes no al final sin nada*/

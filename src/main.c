@@ -15,8 +15,10 @@
 int main(int ac, char **argv, char **env)
 {
 	(void)argv;
-	(void)env;
+	char	**environ;
+	int		i;
 	
+	i = 0;
 	if (!isatty(STDIN_FILENO))
 	{
 		perror("./minishell");
@@ -26,6 +28,17 @@ int main(int ac, char **argv, char **env)
 	{
 		perror("Error ./minishel without arguments");
 		return (EXIT_FAILURE);
+	}
+	if (!env)
+		environ = ft_init_env(env);
+	else
+	{
+		environ = env;
+		while (environ[i])
+		{
+   			printf("%s Num linea: %d\n", environ[i], i);
+   			i++;
+   		}
 	}
 	prompt_loop();
  	return (0);

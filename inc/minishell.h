@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../inc/libft/libft.h"
@@ -57,13 +58,30 @@ typedef struct s_dir
 typedef struct s_cmds
 {
 	char			**cmd_array;
-	//char			**builting;
 	char			*full_path;
 	t_dir			*fd_in;
 	t_dir			*fd_out;
 	struct s_cmds 	*next;
 	struct s_cmds	*prev;
 } t_cmds;
+
+typedef struct s_env
+{
+	int				export;
+	char			key;
+	char			value;
+	struct s_env	*next;
+} t_env;
+
+typedef struct s_utils
+{
+	t_env 			*envlst;
+	char			**environ;
+	int				stdin;
+	int				stdout;
+	struct s_utils	*next;
+	struct s_utils	*prev;
+} t_utils;
 
 /*          MAIN FUNCTIONS         */
 void    prompt_loop(void);
@@ -91,6 +109,8 @@ t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count);
 /*          SIGNAL FUNCTIONS         */
 
 /*          ENV FUNCTIONS         */
+t_env		*ft_init_env(char **env);
+t_env		*ft_create_node_env(char **env);
 
 /*          EXPORT FUNCTIONS         */
 

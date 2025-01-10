@@ -115,7 +115,7 @@ void	prompt_loop(void)
 	input = NULL;
 	while (1)
 	{
-| 	input = read_input();
+ 		input = read_input();
 		if (!input)
 		{
 			free(input);
