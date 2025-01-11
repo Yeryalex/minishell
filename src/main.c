@@ -14,9 +14,10 @@
 
 int main(int ac, char **argv, char **env)
 {
-	(void)argv;
 	t_env	*environ;
+	char	*environ2;
 	int		i;
+	(void)argv;
 	
 	i = 0;
 	if (!isatty(STDIN_FILENO))
@@ -29,18 +30,31 @@ int main(int ac, char **argv, char **env)
 		perror("Error ./minishel without arguments");
 		return (EXIT_FAILURE);
 	}
-	if (!*env)
+	//if (!env)
+	//{
+	
 		environ = ft_init_env(env);
-	else
-	{
-		environ = (t_env *)env;
-		/*/while (environ[i])
+		while (environ)
 		{
-   			printf("%s Num linea: %d\n", environ[i], i);
-   			i++;
-
-   		}*/
-	}
+			printf(" Variable env propia: %s = %s\n", environ->key, environ->value);
+			environ = environ->next;
+		}
+		environ2 = getenv(*env);
+		while (environ2)
+		{
+			printf(" Variable env 2 getenv %c\n", environ2[0]);
+			environ2++;
+		}
+	//}
+	//else
+	//{
+		while (*env)
+		{
+			printf(" Variable env sys: %s\n", env[0]);
+			env++;
+		}
+	//}
+	//ft_print_env_list(environ);
 	prompt_loop();
  	return (0);
 }

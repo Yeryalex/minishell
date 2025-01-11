@@ -68,10 +68,10 @@ typedef struct s_cmds
 typedef struct s_env
 {
 	int				exported;
-	char			key;
-	char			value;
+	char			*key;
+	char			*value;
 	struct s_env	*next;
-} t_env;
+}	t_env;
 
 typedef struct s_utils
 {
@@ -81,7 +81,7 @@ typedef struct s_utils
 	int				stdout;
 	struct s_utils	*next;
 	struct s_utils	*prev;
-} t_utils;
+}	t_utils;
 
 /*          MAIN FUNCTIONS         */
 void    prompt_loop(void);
@@ -110,11 +110,17 @@ t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count);
 
 /*          ENV FUNCTIONS         */
 t_env		*ft_init_env(char **env);
-t_env		*ft_create_node_env(char **env);
-int			*ft_clear_lstenv(t_env *env);
+t_env		*ft_create_node_env(char *env);
+int			ft_clear_lstenv(t_env *env);
 void    	ft_add_env_tolst(t_env **lst_env, t_env *new_node);
+char		*ft_get_env_value(char *key_value);
+char		*ft_get_env_key(char *str);
+
 
 /*          EXPORT FUNCTIONS         */
+void		*ft_print_stderr(char *str);
+//int			ft_print_env(t_env *env_list, int fd);
+void 		ft_print_env_list(t_env *env);
 
 /*          EXPAND FUNCTIONS         */
 

@@ -122,7 +122,11 @@ void	prompt_loop(void)
 			break ;
 		}
 		commands = ft_lexer_input(input);
-
+		if (!commands)
+        {
+            free(input);
+            continue;
+        }
   		tmp = commands;
  	 	printf(GREEN "Prompt ejemplo %s\n", input);
  	 	while (tmp)

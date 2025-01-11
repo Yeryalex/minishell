@@ -12,32 +12,31 @@
 
 #include "../../inc/minishell.h"
 
-int	*ft_clear_lstenv(t_env *env)
+int	ft_clear_lstenv(t_env *envs)
 {
 	t_env	*tmp;
 
-	while (env)
+	while (envs)
 	{
-		tmp = env->next;
-		free (env->key);
-		if (env->value)
-			free (env->value);
-		free (env);
-		env = tmp;
+		tmp = envs->next;
+		free (envs->key);
+		if (envs->value)
+			free (envs->value);
+		free (envs);
+		envs = tmp;
 	}
 	return (1);
 }
 
-t_env	*ft_create_node_env(char **env)
+t_env	*ft_create_node_env(char *envs)
 {
 	t_env	*env_node;
 	
-
 	env_node = (t_env *)malloc(sizeof(t_env));
 	if (!env_node)
 		return (NULL);
-	env_node->key = ft_strdup(ft_split(*env, '=')[0]);
-	env_node->value = ft_strdup(ft_split(*env, '=')[1]);
+	env_node->key = ft_get_env_key(envs);
+	env_node->value = ft_get_env_value(envs);
 	if (!env_node->value)
 		env_node->exported = 0;
 	else
@@ -48,7 +47,6 @@ t_env	*ft_create_node_env(char **env)
 		else
 			env_node->value = ft_strdup(env_node->value + 1);
 	}
-	env_node->prev = NULL;
 	env_node->next = NULL;
 	return (env_node);
 }
@@ -68,26 +66,26 @@ void	ft_add_env_tolst(t_env **lst_env, t_env *new_node)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new_node;
-		new_node->prev = tmp;
+		//new_node->prev = tmp;
 	}
 }
 
-t_env		*ft_init_env(char **env)
+t_env		*ft_init_env(char **envs)
 {
 	t_env	*new_node;
 	t_env	*lst_env;
 
 	lst_env = NULL;
-	while (*env)
+	while (*envs)
 	{
-		new_node = ft_create_node_env(*env);
+		new_node = ft_create_node_env(*envs);
 		if (!new_node)
 		{
 			ft_clear_lstenv(lst_env);
 			return (NULL);
 		}
 		ft_add_env_tolst(&lst_env, new_node);
-		env++;
+		envs++;
 	}
 	return (lst_env);
 }

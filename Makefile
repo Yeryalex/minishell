@@ -22,7 +22,7 @@ CFILES =	main.c \
 			lexer/lexer_utils.c \
 			parser/parser.c \
 			utils/init_env.c \
-			utils/env.c \
+			utils/env_export.c \
 
 
 
