@@ -45,6 +45,7 @@ typedef struct s_tokens
 	char			*value;
 	t_type			token;
 	struct s_tokens	*next;
+	struct s_tokens	*prev;
 }	t_tokens;
 
 typedef struct s_dir

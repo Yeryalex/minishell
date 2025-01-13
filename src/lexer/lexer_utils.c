@@ -46,7 +46,7 @@ int	ft_addlast_node(t_tokens **lexer, t_tokens *current_node)
 	while (tmp_node->next)
 		tmp_node = tmp_node->next;
 	tmp_node->next = current_node;
-	//current_node->prev = tmp_node;
+	current_node->prev = tmp_node;
 	return (0);
 }
 
