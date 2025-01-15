@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2024/12/01 17:00:08 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/15 10:23:59 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ void	prompt_loop(void)
 			tmp = tmp->next;
 	 	}
 		ft_parser(commands);
+		// Aqui mando el expanser para que llenemos cmd_array para exec
+
 	}
   	ft_free_tokens(&commands);
   	ft_free_tokens(&tmp);

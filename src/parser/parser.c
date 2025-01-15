@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
+/*   Updated: 2025/01/15 10:28:18 by rbuitrag         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 t_cmds *ft_create_node_cmd(t_tokens *lexer, int count)
@@ -87,7 +99,7 @@ t_cmds *ft_parser(t_tokens *lexer)
 	while (parser)
 	{
     	if (parser->token == WORD)
-    	   	count_tokens++;  // Aumenta el contador cuando se encuentra un token de tipo WORD
+    	   	count_tokens++;  // +contador token de tipo WORD
     	else if (parser->token == PIPE)
     	{
         	if (count_tokens > 0)
@@ -97,7 +109,7 @@ t_cmds *ft_parser(t_tokens *lexer)
             	if (!new_cmd)
                 return (NULL);
             	printf("Nuevo nodo de comando creado: %s\n", new_cmd->cmd_array[0]);
-               	if (last_cmd)  // Si ya hay un nodo anterior, lo enlazamos con el nuevo
+               	if (last_cmd)  // Si nodo anterior, lo enlazamos con el nuevo
                 	last_cmd->next = new_cmd;
             	else
                 	all_cmds = new_cmd;  // Si es el primer nodo, lo asignamos como inicio de la lista

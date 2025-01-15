@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:59:53 by rbuitrag          #+#    #+#             */
-/*   Updated: 2024/12/01 17:03:27 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/15 10:29:41 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	*ft_exit_error(char quote)
 }
 
 /*
- * // Necesito que recoja el total de chars en word y controlo comillas sin cerrar
+ * // Recoge el total de chars en word y controlo comillas sin cerrar
  */
 char	*ft_get_word(const char **input)
 {
