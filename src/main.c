@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/10 13:04:22 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:21:17 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ int main(int ac, char **argv, char **env)
 		}
 	//}
 	//ft_print_env_list(environ);
-	prompt_loop();
+	prompt_loop(environ);
  	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/15 10:23:59 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:31:56 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,11 @@ char	*read_input(void)
 	return (input);
 }
 
-void	prompt_loop(void)
+void	prompt_loop(t_env *environ)
 {
 	char		*input;
 	t_tokens	*commands;
-	t_tokens	*tmp;
+	t_cmds	*tmp;
 	
 	input = NULL;
 	while (1)
@@ -127,18 +127,20 @@ void	prompt_loop(void)
             free(input);
             continue;
         }
-  		tmp = commands;
+  		tmp = (t_cmds *)commands;
  	 	printf(GREEN "Prompt ejemplo %s\n", input);
- 	 	while (tmp)
+ 	 	/*while (tmp)
  		{
       		printf(GRAY "Value: %s, Type: %d\n", tmp->value, tmp->token);
 			tmp = tmp->next;
-	 	}
+	 	}*/
 		ft_parser(commands);
 		// Aqui mando el expanser para que llenemos cmd_array para exec
+		tmp = ft_expand_tokens(commands, environ);
+        if (tmp)
+            execute_commands(tmp);
 
 	}
   	ft_free_tokens(&commands);
-  	ft_free_tokens(&tmp);
-	free(input);
+  	free(input);
 }

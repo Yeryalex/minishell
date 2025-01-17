@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/10 13:06:35 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:33:00 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct s_utils
 }	t_utils;
 
 /*          MAIN FUNCTIONS         */
-void    prompt_loop(void);
+void    prompt_loop(t_env *environ);
 
 /*          LEXER FUNCTIONS         */
 t_type		ft_determine_type(char *value);
@@ -124,6 +124,11 @@ void		*ft_print_stderr(char *str);
 void 		ft_print_env_list(t_env *env);
 
 /*          EXPAND FUNCTIONS         */
+t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env);
+char **ft_split_path(const char *path);
+char *ft_validate_command(char **paths, const char *command);
+void execute_commands(t_cmds *cmds);
+
 
 /*          EXECUTOR FUNCTIONS         */
 

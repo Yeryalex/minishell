@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/01/10 12:18:26 by rbuitrag         ###   ########.fr        #
+#    Updated: 2025/01/17 11:17:28 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,10 @@ CFILES =	main.c \
 			parser/parser.c \
 			utils/init_env.c \
 			utils/env_export.c \
-
+			expanser/expanser.c \
+			expanser/split_path.c \
+			expanser/utils_expanser.c \
+			
 
 
 GREEN = "\033[92m"
