@@ -148,7 +148,7 @@ void	prompt_loop(t_env *environ, char *path)
 	t_tokens	*commands;
 	t_cmds	*tmp;
 	t_utils *utils;
-	//char **env;
+	char **env;
 	
 	input = NULL;
 	utils = (t_utils *)malloc(sizeof(t_utils));
@@ -158,7 +158,7 @@ void	prompt_loop(t_env *environ, char *path)
         return ;
 	}
     utils->environ = environ;
-	//env = ft_list_to_char(utils->environ);
+	env = ft_list_to_char(utils->environ);
 	//printf("Env de utils en prompt, %s\n", env[0]);
 	while (1)
 	{
@@ -184,7 +184,7 @@ void	prompt_loop(t_env *environ, char *path)
                 current = current->next;
             }
             //Ejecutar los comandos
-           	execute_commands(tmp);
+           	execute_commands(tmp, env);
     }
   	ft_free_tokens(&commands);
   	free(input);

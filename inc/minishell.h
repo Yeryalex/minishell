@@ -129,7 +129,7 @@ void 		ft_print_env_list(t_env *env);
 t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env);
 char **ft_split_path(const char *path);
 char *ft_validate_command(char **paths, const char *command);
-void execute_commands(t_cmds *cmds);
+void execute_commands(t_cmds *cmd, char **env);
 char    *ft_get_path(char *path, char *cmd);
 
 

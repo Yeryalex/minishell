@@ -111,18 +111,8 @@ char    *ft_get_path(char *path, char *cmd) // full_path, cmd->cmd_array[0]
 }
 
 /* Lo quitare con el de Yeri es solo pruebas*/
-void execute_commands(t_cmds *cmds)
+void    execute_commands(t_cmds *cmd, char **env)
 {
-    while (cmds)
-    {
-        if (fork() == 0)
-        {
-            execve(cmds->cmd_array[0], cmds->cmd_array, NULL);
-            perror("execve");
-            exit(EXIT_FAILURE);
-        }
-        else
-            break ;
-        cmds = cmds->next;
-    }
+     if (execve(cmd->full_path, cmd->cmd_array, env) == -1)
+        printf("Error in execve\n");
 }
