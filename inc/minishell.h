@@ -76,16 +76,17 @@ typedef struct s_env
 
 typedef struct s_utils
 {
-	t_env 			*envlst;
-	char			**environ;
+	t_env 			*environ;
+//	char			**environ;
 	int				stdin;
 	int				stdout;
+	int				check_env;
 	struct s_utils	*next;
 	struct s_utils	*prev;
 }	t_utils;
 
 /*          MAIN FUNCTIONS         */
-void    prompt_loop(t_env *environ);
+void    prompt_loop(t_env *environ, char *path);
 
 /*          LEXER FUNCTIONS         */
 t_type		ft_determine_type(char *value);
@@ -97,8 +98,8 @@ char		*ft_get_word(const char **line);
 char		*ft_get_value(const char **line);
 
 /*			PARSER FUNCTIONS		*/
-t_cmds	*ft_parser(t_tokens *lexer);
-t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count);
+t_cmds	*ft_parser(t_tokens *lexer, char *path);
+t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count, char *cmd_path);
 
 
 /*          STRUCT FUNCTIONS         */
@@ -116,6 +117,7 @@ int			ft_clear_lstenv(t_env *env);
 void    	ft_add_env_tolst(t_env **lst_env, t_env *new_node);
 char		*ft_get_env_value(char *key_value);
 char		*ft_get_env_key(char *str);
+char		*ft_get_paths_from_env(t_env *environ);
 
 
 /*          EXPORT FUNCTIONS         */
@@ -128,6 +130,7 @@ t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env);
 char **ft_split_path(const char *path);
 char *ft_validate_command(char **paths, const char *command);
 void execute_commands(t_cmds *cmds);
+char    *ft_get_path(char *path, char *cmd);
 
 
 /*          EXECUTOR FUNCTIONS         */

@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/17 11:31:56 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/21 12:20:11 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,60 @@ char	*read_input(void)
 	return (input);
 }
 
-void	prompt_loop(t_env *environ)
+static int ft_lstsize(t_env *env)
+{
+    int size = 0;
+
+    while (env)
+    {
+        size++;
+        env = env->next;
+    }
+    return size;
+}
+
+/* esta funcion captura de t_env a t_utils environ para usar en todos los procesos como char ** */
+char **ft_list_to_char(t_env *env)
+{
+
+    char    **char_env;
+    int     size;
+    char    *key_value;
+
+    size = ft_lstsize(env);
+    char_env = (char **)malloc(sizeof(char *) * (size + 1));
+    if (!char_env)
+        return (NULL);
+    while (env)
+    {
+        key_value = ft_strjoin(ft_strdup(env->key), "=");
+        key_value = ft_strjoin(key_value, ft_strdup(env->value));
+        *char_env = key_value;
+
+        char_env++;
+        env = env->next;
+    }
+    return (char_env - size);
+}
+
+void	prompt_loop(t_env *environ, char *path)
 {
 	char		*input;
 	t_tokens	*commands;
 	t_cmds	*tmp;
+	t_utils *utils;
+	//char **env;
 	
 	input = NULL;
+	utils = (t_utils *)malloc(sizeof(t_utils));
+    if (!utils)
+	{
+		free(utils);
+        return ;
+	}
+    utils->environ = environ;
+	//env = ft_list_to_char(utils->environ);
+	//printf("Env de utils en prompt, %s\n", env[0]);
 	while (1)
 	{
  		input = read_input();
@@ -127,20 +174,18 @@ void	prompt_loop(t_env *environ)
             free(input);
             continue;
         }
-  		tmp = (t_cmds *)commands;
- 	 	printf(GREEN "Prompt ejemplo %s\n", input);
- 	 	/*while (tmp)
- 		{
-      		printf(GRAY "Value: %s, Type: %d\n", tmp->value, tmp->token);
-			tmp = tmp->next;
-	 	}*/
-		ft_parser(commands);
-		// Aqui mando el expanser para que llenemos cmd_array para exec
-		tmp = ft_expand_tokens(commands, environ);
-        if (tmp)
-            execute_commands(tmp);
-
-	}
+  		printf(GREEN "Prompt ejemplo %s\n", input);
+ 	 	tmp = ft_parser(commands, path);
+		//to_expand = ft_expand_tokens(commands, environ);
+		    t_cmds *current = tmp;
+            while (current)
+            {
+                printf(RED "Value: %s, Full Path: %s\n", current->cmd_array[0], current->full_path);
+                current = current->next;
+            }
+            //Ejecutar los comandos
+           	execute_commands(tmp);
+    }
   	ft_free_tokens(&commands);
   	free(input);
 }

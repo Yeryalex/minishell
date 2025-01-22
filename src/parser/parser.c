@@ -12,25 +12,26 @@
 
 #include "../../inc/minishell.h"
 
-t_cmds *ft_create_node_cmd(t_tokens *lexer, int count)
+t_cmds *ft_create_node_cmd(t_tokens *lexer, int count, char *path)
 {
-    t_cmds *node_cmd;
+	t_cmds *node_cmd;
     int i;
 
-    if (!lexer || count <= 0)
+	if (!lexer || count <= 0)
         return (NULL);
 
     node_cmd = (t_cmds *)malloc(sizeof(t_cmds));
     if (!node_cmd)
+	{
+		free(node_cmd);
         return (NULL);
-
+	}
     node_cmd->cmd_array = (char **)malloc((count + 1) * sizeof(char *));
     if (!node_cmd->cmd_array)
     {
-        free(node_cmd);
+        free(node_cmd->cmd_array);
         return (NULL);
     }
-
     i = 0;
     while (lexer && lexer->token != PIPE && i < count)
     {
@@ -44,13 +45,12 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count)
             free(node_cmd);
             return (NULL);
         }
-        printf("cmd values %s posicion %d\n", node_cmd->cmd_array[i], i);
         i++;
         lexer = lexer->next;
     }
-
-    node_cmd->cmd_array[i] = NULL; // Finaliza el array de comandos
-    node_cmd->next = NULL; // Inicializa siguiente nodo como NULL
+	node_cmd->full_path = path;
+	node_cmd->cmd_array[i] = NULL;
+    node_cmd->next = NULL;
     return (node_cmd);
 }
 
@@ -71,18 +71,20 @@ void print_find_cmd(t_cmds	*find_cmd)
 			printf(GRAY "Value CMD: %s\n", print->cmd_array[i]);
 			i++;
 		}
+		printf(RED "Path value CMD: %s\n", print->full_path);
 		print = print->next;
 	}
 }
 
-t_cmds *ft_parser(t_tokens *lexer)
+t_cmds *ft_parser(t_tokens *lexer, char *path)
 {
     t_cmds *all_cmds;
     t_cmds *last_cmd;
 	t_cmds *new_cmd;
     t_tokens *head_parser; 
     t_tokens *parser;
-    int count_tokens = 0;
+	char *cmd_path;
+	int count_tokens = 0;
 
     head_parser = lexer;
 	parser = lexer;
@@ -96,56 +98,53 @@ t_cmds *ft_parser(t_tokens *lexer)
     	perror("syntax error near unexpected token `|\'\n");
     	return (NULL);
 	}
+	cmd_path = path;
 	while (parser)
 	{
     	if (parser->token == WORD)
-    	   	count_tokens++;  // +contador token de tipo WORD
+    	   	count_tokens++;
     	else if (parser->token == PIPE)
     	{
         	if (count_tokens > 0)
         	{
-            	// Creación del nodo de comando antes de reajustar el puntero
-            	new_cmd = ft_create_node_cmd(head_parser, count_tokens);
+				// Creación del nodo de comando antes de reajustar el puntero
+            	new_cmd = ft_create_node_cmd(head_parser, count_tokens, cmd_path);
             	if (!new_cmd)
                 return (NULL);
-            	printf("Nuevo nodo de comando creado: %s\n", new_cmd->cmd_array[0]);
-               	if (last_cmd)  // Si nodo anterior, lo enlazamos con el nuevo
+            	if (last_cmd)  
                 	last_cmd->next = new_cmd;
             	else
-                	all_cmds = new_cmd;  // Si es el primer nodo, lo asignamos como inicio de la lista
-            	last_cmd = new_cmd;  // Actualizamos last_cmd para el próximo nodo
+                	all_cmds = new_cmd;
+            	last_cmd = new_cmd;
         	}
 			else
         	{
-            	// PIPE sin tokens antes: error de sintaxis
             	perror("syntax error near unexpected token `|\'\n");
             	return (NULL);
         	}
-           	// Reajusta el puntero a los tokens después del PIPE
-        	head_parser = parser->next;
-        	count_tokens = 0;  // Reinicia el contador de tokens para el siguiente comando
+			head_parser = parser->next;
+        	count_tokens = 0;
     	}
-    	parser = parser->next;  // Avanza al siguiente token
+		
+    	parser = parser->next;
 	}
-	// Después de terminar, aseguramos que los tokens restantes se procesen
-	if (count_tokens > 0)  // Si hay tokens pendientes para procesar, se crea un nodo
+	if (count_tokens > 0)
 	{
-    	new_cmd = ft_create_node_cmd(head_parser, count_tokens);
+    	new_cmd = ft_create_node_cmd(head_parser, count_tokens, cmd_path);
     	if (!new_cmd)
         	return (NULL);
     	if (last_cmd)
         	last_cmd->next = new_cmd;
     	else
-        	all_cmds = new_cmd;  // Si es el primer nodo, lo asignamos como inicio de la lista
-    	printf("Nuevo nodo de comando creado al final: %s\n", new_cmd->cmd_array[0]);
-	}
+        	all_cmds = new_cmd;
+    	}
 	else if (parser && parser->token == PIPE) // PIPE al final: error de sintaxis
 	{
     	perror("syntax error near unexpected token `|\'\n");
     	return (NULL);
 	}
 	// Imprime la lista final de comandos para depuración
-	print_find_cmd(all_cmds);
+	//print_find_cmd(all_cmds);
 	return (all_cmds);
 }
 

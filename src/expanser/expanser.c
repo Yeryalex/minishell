@@ -9,7 +9,7 @@
 /*   Updated: 2025/01/17 11:32:00 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+/*
 #include "../../inc/minishell.h"
 
 static char	*get_env_value(t_env *envs, char *key_value)
@@ -40,14 +40,17 @@ t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env)
     paths = ft_split_path(path_value);
     if (!paths)
         return (NULL);
-
+    printf("Llega expanser 1\n");
     while (tokens)
     {
         new_cmd = (t_cmds *)malloc(sizeof(t_cmds));
         if (!new_cmd)
+        {
+            free (new_cmd);
             return (NULL);
-
+        }
         command_path = ft_validate_command(paths, tokens->value);
+        printf(RED "Valor de comand path expanser %s\n", command_path);
         if (command_path)
         {
             new_cmd->cmd_array = (char **)malloc(2 * sizeof(char *));
@@ -72,6 +75,12 @@ t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env)
 		i++;
 	}
     free(paths);
-
+    t_cmds *print = head;
+    while (print)
+        {
+            printf(RED "Value: %s, Full Path: %s\n", print->cmd_array[0], print->full_path);
+            print = print->next;
+        }
     return (head);
 }
+*/

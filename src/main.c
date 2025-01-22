@@ -15,9 +15,10 @@
 int main(int ac, char **argv, char **env)
 {
 	t_env	*environ;
-	char	*environ2;
+	t_utils	*utils;
 	int		i;
 	(void)argv;
+	char *full_path;
 	
 	i = 0;
 	if (!isatty(STDIN_FILENO))
@@ -30,31 +31,20 @@ int main(int ac, char **argv, char **env)
 		perror("Error ./minishel without arguments");
 		return (EXIT_FAILURE);
 	}
+	utils = malloc(sizeof(t_utils));
+	if (!utils)
+	{
+		perror("Error to asign memory for utils\n");
+		free(utils);
+		return (1);
+	}
 	//if (!env)
 	//{
-	
 		environ = ft_init_env(env);
-		while (environ)
-		{
-			printf(" Variable env propia: %s = %s\n", environ->key, environ->value);
-			environ = environ->next;
-		}
-		environ2 = getenv(*env);
-		while (environ2)
-		{
-			printf(" Variable env 2 getenv %c\n", environ2[0]);
-			environ2++;
-		}
-	//}
-	//else
-	//{
-		while (*env)
-		{
-			printf(" Variable env sys: %s\n", env[0]);
-			env++;
-		}
-	//}
-	//ft_print_env_list(environ);
-	prompt_loop(environ);
+		full_path = ft_get_paths_from_env(environ);
+		
+	//elsels
+	//	utils->check_env = 0;
+	prompt_loop(environ, full_path);
  	return (0);
 }
