@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2024/11/29 12:29:25 by yrodrigu         ###   ########.fr        #
+#    Updated: 2025/01/23 10:14:35 by yrodrigu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,20 @@ NAME = minishell
 HEADER = inc/minishell.h 
 LIBFT = inc/libft/libft.a
 CFLAGS = -Wall -Werror -Wextra
-CC = cc
+#-g -fsanitize=address -fsanitize=leak
 
 CFILES =	main.c \
-			prompt.c \
-			utils.c \
+			lexer/prompt.c \
+			lexer/lexer_utils.c \
+			parser/parser.c \
+			utils/init_env.c \
+			utils/env_export.c \
+			expanser/expanser.c \
+			expanser/split_path.c \
+			expanser/utils_expanser.c \
+			executor/ft_executor.c\
+			
+
 
 GREEN = "\033[92m"
 RESET = "\033[0m"
@@ -37,7 +46,7 @@ $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) -g $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 
 %.o: %.c $(HEADER) Makefile
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -g -c $< -o $@
 
 library:
 	@make -C inc/libft --silent

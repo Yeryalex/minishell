@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2024/11/29 11:34:34 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/23 10:12:54 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 # include "../inc/libft/libft.h"
 
 # define CYAN "\033[96m"
@@ -34,8 +36,8 @@ typedef enum e_type
 	PIPE,  // |
 	GTHAN, // >
 	STHAN, // <
-	H_DOC, // HEREDOC
-	APPEND, 
+	H_DOC, // << HEREDOC
+	APPEND, // >> 
 	WORD,
 }	t_type;
 
@@ -44,10 +46,48 @@ typedef struct s_tokens
 	char			*value;
 	t_type			token;
 	struct s_tokens	*next;
+	struct s_tokens	*prev;
 }	t_tokens;
 
+typedef struct s_dir
+{
+	int		heredoc;
+	int		fd;
+	char	*filename;
+
+}	t_dir;
+
+typedef struct s_cmds
+{
+	char			**cmd_array;
+	char			*full_path;
+	t_dir			*fd_in;
+	t_dir			*fd_out;
+	struct s_cmds 	*next;
+	struct s_cmds	*prev;
+} t_cmds;
+
+typedef struct s_env
+{
+	int				exported;
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
+typedef struct s_utils
+{
+	t_env 			*environ;
+//	char			**environ;
+	int				stdin;
+	int				stdout;
+	int				check_env;
+	struct s_utils	*next;
+	struct s_utils	*prev;
+}	t_utils;
+
 /*          MAIN FUNCTIONS         */
-void    prompt_loop(void);
+void    prompt_loop(t_env *environ, char *path);
 
 /*          LEXER FUNCTIONS         */
 t_type		ft_determine_type(char *value);
@@ -58,7 +98,9 @@ int			ft_addlast_node(t_tokens **lexer, t_tokens *current_node);
 char		*ft_get_word(const char **line);
 char		*ft_get_value(const char **line);
 
-
+/*			PARSER FUNCTIONS		*/
+t_cmds	*ft_parser(t_tokens *lexer, char *path);
+t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count, char *cmd_path);
 
 
 /*          STRUCT FUNCTIONS         */
@@ -70,13 +112,30 @@ char		*ft_get_value(const char **line);
 /*          SIGNAL FUNCTIONS         */
 
 /*          ENV FUNCTIONS         */
+t_env		*ft_init_env(char **env);
+t_env		*ft_create_node_env(char *env);
+int			ft_clear_lstenv(t_env *env);
+void    	ft_add_env_tolst(t_env **lst_env, t_env *new_node);
+char		*ft_get_env_value(char *key_value);
+char		*ft_get_env_key(char *str);
+char		*ft_get_paths_from_env(t_env *environ);
+
 
 /*          EXPORT FUNCTIONS         */
+void		*ft_print_stderr(char *str);
+//int			ft_print_env(t_env *env_list, int fd);
+void 		ft_print_env_list(t_env *env);
 
 /*          EXPAND FUNCTIONS         */
+t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env);
+char **ft_split_path(const char *path);
+char *ft_validate_command(char **paths, const char *command);
+void execute_commands(t_cmds *cmd, char **env);
+char    *ft_get_path(char *path, char *cmd);
+
 
 /*          EXECUTOR FUNCTIONS         */
-
+void	ft_executor(t_cmds *cmd, t_utils *utils, char **env);
 /*          AUXILIARS FUNCTIONS         */
 int		ft_isspace(char c);
 void	*ft_exit_error(char quote);

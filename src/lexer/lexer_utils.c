@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:59:53 by rbuitrag          #+#    #+#             */
-/*   Updated: 2024/11/29 12:43:19 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/15 10:29:41 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
+/*
 // Función para liberar la memoria de los tokens
+*/
 void	ft_free_tokens(t_tokens **head)
 {
 	t_tokens	*temp;
@@ -28,7 +30,9 @@ void	ft_free_tokens(t_tokens **head)
 	*head = NULL;
 }
 
+/*
 // tengo que revisar el ultimo nodo para guardarlo tambien
+*/
 int	ft_addlast_node(t_tokens **lexer, t_tokens *current_node)
 {
 	t_tokens	*tmp_node;
@@ -42,7 +46,7 @@ int	ft_addlast_node(t_tokens **lexer, t_tokens *current_node)
 	while (tmp_node->next)
 		tmp_node = tmp_node->next;
 	tmp_node->next = current_node;
-	//current_node->prev = tmp_node;
+	current_node->prev = tmp_node;
 	return (0);
 }
 
@@ -53,7 +57,10 @@ int	ft_is_metacharacter(int c)
 	return (0);
 }
 
-// vamso a controlar la salida de que me falten comillas, 
+/*
+//
+// vamos a controlar la salida si le faltan comillas,
+*/ 
 void	*ft_exit_error(char quote)
 {
 	ft_putstr_fd("minishell: Error! unclosed quote ", 2);
@@ -62,7 +69,9 @@ void	*ft_exit_error(char quote)
 	return (NULL);
 }
 
-// Necesito que recoja el total de chars en word
+/*
+ * // Recoge el total de chars en word y controlo comillas sin cerrar
+ */
 char	*ft_get_word(const char **input)
 {
 	int		i;
@@ -89,7 +98,9 @@ char	*ft_get_word(const char **input)
 	return (value);
 }
 
-// recogemos el valor para el nodo, ahora necesaroi porque pilla +de 1 caracter version anterior
+/*
+// recogemos el valor para el nodo WORD hasta los space
+*/
 char	*ft_get_value(const char **input)
 {
 	char	*value;
