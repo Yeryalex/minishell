@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/17 11:33:00 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/23 10:12:54 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 # include "../inc/libft/libft.h"
 
 # define CYAN "\033[96m"
@@ -134,7 +135,7 @@ char    *ft_get_path(char *path, char *cmd);
 
 
 /*          EXECUTOR FUNCTIONS         */
-
+void	ft_executor(t_cmds *cmd, t_utils *utils, char **env);
 /*          AUXILIARS FUNCTIONS         */
 int		ft_isspace(char c);
 void	*ft_exit_error(char quote);

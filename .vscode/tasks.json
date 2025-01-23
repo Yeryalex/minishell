@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+	  {
+		"label": "compilar",
+		"type": "shell",
+		"command": "make", 
+		"group": {
+		  "kind": "build",
+		  "isDefault": true
+		},
+		"problemMatcher": ["$gcc"],
+		"detail": "Tarea para compilar el proyecto minishell"
+	  }
+	]
+  }
+  
