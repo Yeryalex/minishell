@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/24 09:00:39 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/24 11:06:36 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,15 @@ typedef struct s_env
 typedef struct s_utils
 {
 	t_env 			*environ;
-//	char			**environ;
 	int				stdin;
 	int				stdout;
-	int				check_env;
+	char			*builtins[8];
 	struct s_utils	*next;
 	struct s_utils	*prev;
 }	t_utils;
 
 /*          MAIN FUNCTIONS         */
-void    prompt_loop(t_env *environ, char *path);
+void    prompt_loop(t_utils *utils, char *path);
 
 /*          LEXER FUNCTIONS         */
 t_type		ft_determine_type(char *value);
@@ -142,11 +141,15 @@ int		ft_isspace(char c);
 void	*ft_exit_error(char quote);
 int		ft_is_metacharacter(int c);
 
+/* UTILS FUNCTIONS */
+
+void	init_utils(t_utils *utils, t_env *env);
+
 /*          FREE FUNCTIONS         */
 void	ft_free_tokens(t_tokens **lexer);
 void    ft_free_cmd(t_cmds *cmd);
 void    *ft_free_one_to_cmd(t_cmds *cmd);
 void    *ft_free_redir(t_dir *node);
-
+void	ft_free_array(char **array);
 
 #endif
