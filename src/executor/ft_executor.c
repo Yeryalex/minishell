@@ -136,10 +136,11 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 	int	fd[2];
 	int	prev_read;
 	int	i;
-
+	
 	(void)utils;
 	i = 0;
 	prev_read = -1;
+
 	while (current)
     {
     	if (current->next && pipe(fd) == -1)
