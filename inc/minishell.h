@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/23 10:12:54 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/24 09:00:39 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ typedef struct s_cmds
 {
 	char			**cmd_array;
 	char			*full_path;
-	t_dir			*fd_in;
-	t_dir			*fd_out;
+	t_dir			*redir_in;
+	t_dir			*redir_out;
 	struct s_cmds 	*next;
 	struct s_cmds	*prev;
 } t_cmds;
@@ -101,6 +101,7 @@ char		*ft_get_value(const char **line);
 /*			PARSER FUNCTIONS		*/
 t_cmds	*ft_parser(t_tokens *lexer, char *path);
 t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count, char *cmd_path);
+void    ft_addlast_pnode(t_cmds **list, t_cmds *node);
 
 
 /*          STRUCT FUNCTIONS         */
@@ -143,5 +144,9 @@ int		ft_is_metacharacter(int c);
 
 /*          FREE FUNCTIONS         */
 void	ft_free_tokens(t_tokens **lexer);
+void    ft_free_cmd(t_cmds *cmd);
+void    *ft_free_one_to_cmd(t_cmds *cmd);
+void    *ft_free_redir(t_dir *node);
+
 
 #endif
