@@ -6,7 +6,7 @@
 /*   By: yrodrigu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/23 10:12:13 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/24 11:20:21 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -136,10 +136,11 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 	int	fd[2];
 	int	prev_read;
 	int	i;
-
+	
 	(void)utils;
 	i = 0;
 	prev_read = -1;
+
 	while (current)
     {
     	if (current->next && pipe(fd) == -1)

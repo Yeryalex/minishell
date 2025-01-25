@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/23 10:13:47 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/25 10:08:13 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,24 +142,15 @@ char **ft_list_to_char(t_env *env)
     return (char_env - size);
 }
 
-void	prompt_loop(t_env *environ, char *path)
+void	prompt_loop(t_utils *utils, char *path)
 {
 	char		*input;
 	t_tokens	*commands;
-	t_cmds	*tmp;
-	t_utils *utils;
+	t_cmds	*cmd;
 	char **env;
 	
 	input = NULL;
-	utils = (t_utils *)malloc(sizeof(t_utils));
-    if (!utils)
-	{
-		free(utils);
-        return ;
-	}
-    utils->environ = environ;
 	env = ft_list_to_char(utils->environ);
-	//printf("Env de utils en prompt, %s\n", env[0]);
 	while (1)
 	{
  		input = read_input();
@@ -174,17 +165,9 @@ void	prompt_loop(t_env *environ, char *path)
             free(input);
             continue;
         }
-  		printf(GREEN "Prompt ejemplo %s\n", input);
- 	 	tmp = ft_parser(commands, path);
-		//to_expand = ft_expand_tokens(commands, environ);
-		    t_cmds *current = tmp;
-            while (current)
-            {
-                printf(RED "Value: %s, Full Path: %s\n", current->cmd_array[0], current->full_path);
-                current = current->next;
-            }
-            //Ejecutar los comandos
-           	ft_executor(tmp, utils, env);
+ 	 	cmd = ft_parser(commands, path);
+
+		ft_executor(cmd, utils, env);
     }
   	ft_free_tokens(&commands);
   	free(input);

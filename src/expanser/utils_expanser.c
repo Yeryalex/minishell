@@ -6,38 +6,13 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:16:01 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/17 11:16:05 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/24 10:47:05 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-
-/*char *ft_validate_command(char **paths, const char *command)
-{
-    char *full_path;
-    int i = 0;
-
-    while (paths[i])
-    {
-        full_path = malloc(ft_strlen(paths[i]) + ft_strlen(command) + 2);
-        if (!full_path)
-        {
-            free (full_path);
-            return (NULL);
-        }
-        strcpy(full_path, paths[i]);
-        strcat(full_path, "/");
-        strcat(full_path, command);
-        if (access(full_path, F_OK | X_OK) == 0)
-            return (full_path);
-        free(full_path);
-        i++;
-    }
-    return (NULL);
-}*/
-
-static void ft_free_array(char **array)
+void ft_free_array(char **array)
 {
     int i = 0;
 
@@ -65,23 +40,15 @@ static char	*get_env_value(t_env *env, char *key)
 
 char	*ft_get_paths_from_env(t_env *environ)
 {
-	char	**paths;
 	char	*path_env;
 
 	path_env = get_env_value(environ, "PATH");
     if (!path_env)
-    {
-        free(path_env);
-		return (NULL);
-    }
-    paths = ft_split(path_env, ':');
-	if (!paths)
-		return (NULL);
+		return (free(path_env), NULL);
     return (path_env);
 }
 
-
-char    *ft_get_path(char *path, char *cmd) // full_path, cmd->cmd_array[0]
+char    *ft_get_path(char *path, char *cmd)
 {
     char    **path_dir;
     char    *path_to_exec;
@@ -108,11 +75,4 @@ char    *ft_get_path(char *path, char *cmd) // full_path, cmd->cmd_array[0]
         i++;
     }
     return (ft_free_array(path_dir), path_to_exec);
-}
-
-/* Lo quitare con el de Yeri es solo pruebas*/
-void    execute_commands(t_cmds *cmd, char **env)
-{
-     if (execve(cmd->full_path, cmd->cmd_array, env) == -1)
-        printf("Error in execve\n");
 }

@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/23 11:16:03 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/24 11:07:11 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,11 @@ int main(int ac, char **argv, char **env)
 		free(utils);
 		return (1);
 	}
-	//if (!env)
-	//{
-		environ = ft_init_env(env);
-		full_path = ft_get_paths_from_env(environ);
-		
-	//elsels
-	//	utils->check_env = 0;
-	prompt_loop(environ, full_path);
+
+	environ = ft_init_env(env);
+	full_path = ft_get_paths_from_env(environ);
+	init_utils(utils, environ);		
+	prompt_loop(utils, full_path);
+	free(utils);
  	return (0);
 }
