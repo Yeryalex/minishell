@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:59:53 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/15 10:29:41 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/25 11:41:42 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_free_tokens(t_tokens **head)
 	{
 		temp = (*head)->next;
 		free((*head)->value);
-		//free((*head)->token);
+		free((void*)(*head)->token);
 		free(*head);
 		*head = temp;
 	}
@@ -94,6 +94,8 @@ char	*ft_get_word(const char **input)
 	if (quote != 0)
 		return (ft_exit_error(quote));
 	value = ft_substr(*input, 0, i);
+	if (!value)
+		return (free(value), NULL);
 	*input = *input + i;
 	return (value);
 }
@@ -117,5 +119,7 @@ char	*ft_get_value(const char **input)
 	}
 	else
 		value = ft_get_word(input);
+	if (!value)
+		return(free(value), NULL);
 	return (value);
 }

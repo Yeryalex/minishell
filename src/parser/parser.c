@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/25 10:28:24 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/25 11:34:28 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,19 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
     int i;
 
 	if (!lexer || count_tokens <= 0)
-	{
-		ft_free_tokens(&lexer);
-        return (NULL);
-	}
+		return (ft_free_tokens(&lexer), NULL);
     node_cmd = (t_cmds *)malloc(sizeof(t_cmds));
     if (!node_cmd)
 		ft_free_cmd(node_cmd);
     node_cmd->cmd_array = (char **)malloc((count_tokens + 1) * sizeof(char *));
     if (!node_cmd->cmd_array)
-        ft_free_cmd(node_cmd);
+        return(ft_free_cmd(node_cmd), NULL);
     i = 0;
     while (lexer && lexer->token != PIPE && i < count_tokens)
     {
         node_cmd->cmd_array[i] = ft_strdup(lexer->value);
         if (!node_cmd->cmd_array[i])
-			ft_free_cmd(node_cmd);
+			return(ft_free_cmd(node_cmd), NULL);
         i++;
         lexer = lexer->next;
     }
@@ -98,5 +95,8 @@ t_cmds *ft_parser(t_tokens *lexer, char *path)
     	perror("syntax error near unexpected token `|\'\n");
     	return (NULL);
 	}
+	//ft_free_cmd(new_cmd) hace SEVFa;
+	//ft_free_tokens(&head_parser);
+	//ft_free_tokens(&parser);
 	return (all_cmds);
 }

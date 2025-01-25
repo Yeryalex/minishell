@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/25 10:45:03 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/25 11:05:30 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ t_tokens	*ft_create_node(const char **input)
 
 	new_node = (t_tokens *)malloc(sizeof(t_tokens));
 	if (!new_node)
-	{
-		return (NULL);
-		free (new_node);
-	}
+		return (ft_free_tokens(&new_node), NULL);
 	new_node->value = ft_get_value(input);
 	if (!new_node->value)
 	{
@@ -66,10 +63,6 @@ t_tokens	*ft_create_node(const char **input)
 	return (new_node);
 }
 
-/*
-// Este es nuestro lexer el anteriormente llamado parser_input (así ya lo podemos
-//  montar y esctuturar mejor)
-//  */
 t_tokens	*ft_lexer_input(const char *input)
 {
 	t_tokens	*node;
@@ -118,7 +111,7 @@ static int ft_lstsize(t_env *env)
     return size;
 }
 
-/* esta funcion captura de t_env a t_utils environ para usar en todos los procesos como char ** */
+/* esta funcion captura de t_env a t_utils ** */
 char **ft_list_to_char(t_env *env)
 {
     char    **char_env;
@@ -170,13 +163,19 @@ void	prompt_loop(t_utils *utils, char *path)
 		commands = ft_lexer_input(input);
 		if (!commands)
         {
+			ft_free_tokens(&commands);
             free(input);
             continue;
         }
  	 	cmd = ft_parser(commands, path);
-
+		if (!cmd)
+		{
+			ft_free_cmd(cmd);
+			continue;
+		}
 		ft_executor(cmd, utils, env);
     }
   	ft_free_tokens(&commands);
+	ft_free_cmd(cmd);
   	free(input);
 }

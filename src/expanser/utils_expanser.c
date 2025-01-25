@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:16:01 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/24 10:47:05 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/25 11:18:45 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char    *ft_get_path(char *path, char *cmd)
 
     path_dir = ft_split(path, ':');
     if (!path_dir)
-        return NULL;
+        return (ft_free_array(path_dir), NULL);
     i = 0;
     while(path_dir[i])
     {
