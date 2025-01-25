@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/25 11:34:28 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/25 17:41:28 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
 	node_cmd->full_path = ft_get_path(path, node_cmd->cmd_array[0]);
 	node_cmd->cmd_array[count_tokens] = NULL;
     node_cmd->next = NULL;
+	if (!node_cmd)
+		return (ft_free_cmd(node_cmd), NULL);
     return (node_cmd);
 }
 
@@ -87,13 +89,25 @@ t_cmds *ft_parser(t_tokens *lexer, char *path)
 	{
     	new_cmd = ft_create_node_cmd(head_parser, count_tokens, cmd_path);
     	if (!new_cmd)
+		{
+			ft_free_tokens(&head_parser);
+			free(cmd_path);
 			return (ft_free_cmd(new_cmd), NULL);
+		}
 		ft_addlast_pnode(&all_cmds, new_cmd);
     }
 	else if (parser && parser->token == PIPE)
 	{
     	perror("syntax error near unexpected token `|\'\n");
     	return (NULL);
+	}
+	if (!all_cmds)
+	{
+		ft_free_tokens(&head_parser);
+		ft_free_cmd(new_cmd);
+		ft_free_cmd(all_cmds);
+		free(cmd_path);
+		return (NULL);
 	}
 	//ft_free_cmd(new_cmd) hace SEVFa;
 	//ft_free_tokens(&head_parser);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expanser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:16:01 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/25 11:18:45 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/25 17:51:17 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ char    *ft_get_path(char *path, char *cmd)
     char    *tmp;
     int     i;
 
+    if (!path || !cmd)
+        return (NULL);
     path_dir = ft_split(path, ':');
     if (!path_dir)
         return (ft_free_array(path_dir), NULL);

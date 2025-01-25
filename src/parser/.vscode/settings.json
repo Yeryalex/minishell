@@ -1,8 +1,4 @@
 {
-  "files.associations": {
-    "minishell.h": "c"
-  },
-  "makefile.configureOnOpen": false,
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
   "C_Cpp_Runner.debuggerPath": "gdb",
