@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/24 12:32:30 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/25 10:28:24 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
 t_cmds *ft_parser(t_tokens *lexer, char *path)
 {
     t_cmds *all_cmds;
-    //t_cmds *last_cmd;
-	t_cmds *new_cmd;
+ 	t_cmds *new_cmd;
     t_tokens *head_parser; 
     t_tokens *parser;
 	char *cmd_path;
@@ -56,10 +55,8 @@ t_cmds *ft_parser(t_tokens *lexer, char *path)
     head_parser = lexer;
 	parser = lexer;
 	all_cmds = NULL;
-	//last_cmd = NULL;
 	new_cmd = NULL;
 	count_tokens = 0;
-	// Validacion inicial: verifica si el primer token es un PIPE
 	if (parser && parser->token == PIPE)
 	{
     	perror("syntax error near unexpected token `|\'\n");
@@ -77,11 +74,6 @@ t_cmds *ft_parser(t_tokens *lexer, char *path)
             	new_cmd = ft_create_node_cmd(head_parser, count_tokens, cmd_path);
             	if (!new_cmd)
 					return(ft_free_cmd(new_cmd), NULL);
-            	/*if (last_cmd)  
-                	last_cmd->next = new_cmd;
-            	else
-                	all_cmds = new_cmd;
-            	last_cmd = new_cmd;*/
 				ft_addlast_pnode(&all_cmds, new_cmd);
         	}
 			else
@@ -92,7 +84,6 @@ t_cmds *ft_parser(t_tokens *lexer, char *path)
 			head_parser = parser->next;
         	count_tokens = 0;
     	}
-		
     	parser = parser->next;
 	}
 	if (count_tokens > 0)
@@ -100,10 +91,6 @@ t_cmds *ft_parser(t_tokens *lexer, char *path)
     	new_cmd = ft_create_node_cmd(head_parser, count_tokens, cmd_path);
     	if (!new_cmd)
 			return (ft_free_cmd(new_cmd), NULL);
-		/*if (last_cmd)
-        	last_cmd->next = new_cmd;
-    	else
-        	all_cmds = new_cmd;*/
 		ft_addlast_pnode(&all_cmds, new_cmd);
     }
 	else if (parser && parser->token == PIPE)
@@ -111,6 +98,5 @@ t_cmds *ft_parser(t_tokens *lexer, char *path)
     	perror("syntax error near unexpected token `|\'\n");
     	return (NULL);
 	}
-	//free(cmd_path);
 	return (all_cmds);
 }

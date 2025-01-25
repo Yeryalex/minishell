@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/25 10:08:13 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/25 10:45:03 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,12 @@ static int ft_lstsize(t_env *env)
 /* esta funcion captura de t_env a t_utils environ para usar en todos los procesos como char ** */
 char **ft_list_to_char(t_env *env)
 {
-
     char    **char_env;
     int     size;
     char    *key_value;
+	char	*dup_key;
+	char	*dup_value;
+	char	*temp;
 
     size = ft_lstsize(env);
     char_env = (char **)malloc(sizeof(char *) * (size + 1));
@@ -132,10 +134,16 @@ char **ft_list_to_char(t_env *env)
         return (NULL);
     while (env)
     {
-        key_value = ft_strjoin(ft_strdup(env->key), "=");
-        key_value = ft_strjoin(key_value, ft_strdup(env->value));
-        *char_env = key_value;
-
+		dup_key = ft_strdup(env->key);
+		dup_value = ft_strdup(env->value);
+        key_value = ft_strjoin(dup_key, "=");
+       	if (!key_value)
+			return (NULL);
+		temp = ft_strjoin(key_value, dup_value);
+		free(key_value);
+		free(dup_key);
+		free(dup_value);
+        *char_env = temp;
         char_env++;
         env = env->next;
     }
