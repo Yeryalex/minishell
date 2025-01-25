@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/25 09:04:35 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/25 10:08:13 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,14 +166,7 @@ void	prompt_loop(t_utils *utils, char *path)
             continue;
         }
  	 	cmd = ft_parser(commands, path);
-		t_cmds *temp;
-		temp = cmd;
-		while (temp)
-		{
-			printf(CYAN "%s\n", temp->cmd_array[0]);
-			printf(GRAY "%s\n", temp->full_path);
-			temp = temp->next;
-		}
+
 		ft_executor(cmd, utils, env);
     }
   	ft_free_tokens(&commands);
