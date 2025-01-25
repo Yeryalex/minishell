@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/24 11:06:36 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/25 11:37:35 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,10 @@ void    ft_addlast_pnode(t_cmds **list, t_cmds *node);
 
 /*          REDIR FUNCTIONS         */
 
-/*          BUILTINS FUNCTIONS         */
-
+/*          BUILTINS FUNCTION:S         */
+int		ft_echo(char **cmd, int fd);
+int		ft_env(t_utils *utils, int fd);
+int		ft_pwd(t_env *env);
 /*          SIGNAL FUNCTIONS         */
 
 /*          ENV FUNCTIONS         */
@@ -144,7 +146,7 @@ int		ft_is_metacharacter(int c);
 /* UTILS FUNCTIONS */
 
 void	init_utils(t_utils *utils, t_env *env);
-
+char	*get_value_from_env(t_env *env, char *key);
 /*          FREE FUNCTIONS         */
 void	ft_free_tokens(t_tokens **lexer);
 void    ft_free_cmd(t_cmds *cmd);
