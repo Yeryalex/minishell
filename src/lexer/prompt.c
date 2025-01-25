@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/24 11:21:35 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/25 09:04:35 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,8 @@ void	prompt_loop(t_utils *utils, char *path)
 		temp = cmd;
 		while (temp)
 		{
-			printf("%s\n", temp->cmd_array[0]);
+			printf(CYAN "%s\n", temp->cmd_array[0]);
+			printf(GRAY "%s\n", temp->full_path);
 			temp = temp->next;
 		}
 		ft_executor(cmd, utils, env);
