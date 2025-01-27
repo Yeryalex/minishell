@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/27 11:05:54 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/27 21:44:05 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,11 @@ char	*read_input(void)
 {
 	char	*input;
 	
-	input = readline(CYAN "minishell> " RESET);
+	input = readline(CYAN "minishell~> " RESET);
 	if (input && *input)
 		add_history(input);
+		else
+			ft_putstr_fd("exit\n", 1);
 	return (input);
 }
 
@@ -163,30 +165,19 @@ void	prompt_loop(t_utils *utils, char *path)
  		input = read_input();
 		if (!input)
 		{
-			ft_putstr_fd("exit\n", 1);
 			free(input);
 			break ;
 		}
 		commands = ft_lexer_input(input);
 		if (!commands)
         {
-			ft_free_tokens(&commands);
+            ft_free_tokens(&commands);
             continue;
         }
  	 	cmd = ft_parser(commands, path);
-		if (!cmd)
-		{
-			ft_free_cmd(cmd);
-			continue;
-		}
 		ft_executor(cmd, utils, env);
-		
-			//ft_free_array(cmd->cmd_array);
-		//	ft_free_cmd(cmd);
     }
-  	ft_free_tokens(&commands);
-	ft_free_cmd(cmd);
-	ft_free_utils(utils);
-	ft_free_array(env);
-  	free(input);
+  	  	free(input);
+		ft_free_cmd(cmd);
+		ft_free_tokens(&commands);
 }
