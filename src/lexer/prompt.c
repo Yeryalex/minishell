@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/25 11:05:30 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/27 11:05:54 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,11 @@ t_tokens	*ft_lexer_input(const char *input)
 		if (!node || (node && ft_addlast_node(&lexer, node)))
 		{
 			ft_free_tokens(&lexer);
+			ft_free_tokens(&node);
 			return (NULL);
 		}
 	}
+	//ft_free_tokens(&node);
 	return (lexer);
 }
 
@@ -124,8 +126,11 @@ char **ft_list_to_char(t_env *env)
     size = ft_lstsize(env);
     char_env = (char **)malloc(sizeof(char *) * (size + 1));
     if (!char_env)
+	{
+		ft_free_array(char_env);
         return (NULL);
-    while (env)
+	}
+	while (env)
     {
 		dup_key = ft_strdup(env->key);
 		dup_value = ft_strdup(env->value);
@@ -137,6 +142,7 @@ char **ft_list_to_char(t_env *env)
 		free(dup_key);
 		free(dup_value);
         *char_env = temp;
+		free(temp);
         char_env++;
         env = env->next;
     }
@@ -157,6 +163,7 @@ void	prompt_loop(t_utils *utils, char *path)
  		input = read_input();
 		if (!input)
 		{
+			ft_putstr_fd("exit\n", 1);
 			free(input);
 			break ;
 		}
@@ -164,7 +171,6 @@ void	prompt_loop(t_utils *utils, char *path)
 		if (!commands)
         {
 			ft_free_tokens(&commands);
-            free(input);
             continue;
         }
  	 	cmd = ft_parser(commands, path);
@@ -174,8 +180,12 @@ void	prompt_loop(t_utils *utils, char *path)
 			continue;
 		}
 		ft_executor(cmd, utils, env);
+		
+			//ft_free_array(cmd->cmd_array);
+		//	ft_free_cmd(cmd);
     }
   	ft_free_tokens(&commands);
 	ft_free_cmd(cmd);
+//	ft_free_array(env);
   	free(input);
 }

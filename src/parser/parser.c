@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/25 17:41:28 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/27 11:30:18 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
     {
         node_cmd->cmd_array[i] = ft_strdup(lexer->value);
         if (!node_cmd->cmd_array[i])
-			return(ft_free_cmd(node_cmd), NULL);
+			return (ft_free_cmd(node_cmd), NULL);
         i++;
         lexer = lexer->next;
     }
@@ -40,6 +40,20 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
 	if (!node_cmd)
 		return (ft_free_cmd(node_cmd), NULL);
     return (node_cmd);
+}
+
+static void	*free_cmd_array(char **cmd_array)
+{
+	int		i;
+
+	if (cmd_array)
+	{
+		i = 0;
+		while (cmd_array[i])
+			free (cmd_array[i++]);
+		free(cmd_array);
+	}
+	return (NULL);
 }
 
 t_cmds *ft_parser(t_tokens *lexer, char *path)
@@ -73,7 +87,9 @@ t_cmds *ft_parser(t_tokens *lexer, char *path)
             	new_cmd = ft_create_node_cmd(head_parser, count_tokens, cmd_path);
             	if (!new_cmd)
 					return(ft_free_cmd(new_cmd), NULL);
-				ft_addlast_pnode(&all_cmds, new_cmd);
+				if (!new_cmd->cmd_array)
+					new_cmd->cmd_array = free_cmd_array(new_cmd->cmd_array);
+			//	free(new_cmd);
         	}
 			else
         	{
@@ -101,14 +117,14 @@ t_cmds *ft_parser(t_tokens *lexer, char *path)
     	perror("syntax error near unexpected token `|\'\n");
     	return (NULL);
 	}
-	if (!all_cmds)
+/*	if (!all_cmds)
 	{
 		ft_free_tokens(&head_parser);
 		ft_free_cmd(new_cmd);
 		ft_free_cmd(all_cmds);
 		free(cmd_path);
 		return (NULL);
-	}
+	}*/
 	//ft_free_cmd(new_cmd) hace SEVFa;
 	//ft_free_tokens(&head_parser);
 	//ft_free_tokens(&parser);

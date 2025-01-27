@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/25 17:22:29 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/27 09:04:31 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int main(int ac, char **argv, char **env)
 	full_path = ft_get_paths_from_env(environ);
 	init_utils(utils, environ);		
 	prompt_loop(utils, full_path);
-	free(utils);
+//	free(utils);
+//	free(env);
+//	free(full_path);
  	return (0);
 }

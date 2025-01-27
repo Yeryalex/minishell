@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:36:31 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/24 10:14:55 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/27 11:21:21 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	*ft_free_one_to_cmd(t_cmds *cmd)
 		while (cmd->cmd_array[i])
 			free (cmd->cmd_array[i++]);
 		free(cmd->cmd_array);
-		cmd->cmd_array = NULL;
+		//cmd->cmd_array = NULL;
 	}
 	if (cmd->full_path)
 		free (cmd->full_path);

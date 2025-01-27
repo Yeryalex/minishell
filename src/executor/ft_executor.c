@@ -6,7 +6,7 @@
 /*   By: yrodrigu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/24 11:20:21 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/27 10:23:33 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -162,11 +162,12 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 		current = current->next;
      }
  
-     printf("Number of process = %i\n", i);
+	 printf("Number of process = %i\n", i);
      while (i-- > 0)
      {
          wait(NULL);
      }
+
 }
 
 
