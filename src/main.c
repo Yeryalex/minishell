@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/24 11:07:11 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/27 21:46:57 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ int main(int ac, char **argv, char **env)
 {
 	t_env	*environ;
 	t_utils	*utils;
-	int		i;
 	(void)argv;
 	char *full_path;
 	
-	i = 0;
 	if (!isatty(STDIN_FILENO))
 	{
 		perror("./minishell");
