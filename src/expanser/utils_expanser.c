@@ -12,21 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-void ft_free_array(char **array)
-{
-    int i = 0;
-
-    if (!array)
-        return;
-
-    while (array[i])
-    {
-        free(array[i]);
-        i++;
-    }
-    free(array);
-}
-
 static char	*get_env_value(t_env *env, char *key)
 {
 	while (env)

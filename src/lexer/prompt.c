@@ -186,6 +186,7 @@ void	prompt_loop(t_utils *utils, char *path)
     }
   	ft_free_tokens(&commands);
 	ft_free_cmd(cmd);
-//	ft_free_array(env);
+	ft_free_utils(utils);
+	ft_free_array(env);
   	free(input);
 }
