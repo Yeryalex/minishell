@@ -6,7 +6,7 @@
 /*   By: yrodrigu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/25 11:44:09 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/27 12:26:28 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -20,7 +20,7 @@ void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
 	}
 	if (cmd->next)
 	{
-		dup2(fd[1], STDOUT_FILENO);;
+		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);	
 	}
 }
