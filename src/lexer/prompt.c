@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/27 11:05:54 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/27 21:44:05 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ char	*read_input(void)
 {
 	char	*input;
 	
-	input = readline(CYAN "minishell> " RESET);
+	input = readline(CYAN "minishell~> " RESET);
 	if (input && *input)
 		add_history(input);
 	else
