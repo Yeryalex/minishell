@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:44:57 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/28 20:03:47 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/28 21:18:31 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -47,6 +47,24 @@ void	ft_sort_env(t_env *env)
 	}
 }
 
+t_env *ft_add_node_env(char **cmd_array, t_env *env)
+{
+	int i;
+	t_env	*node;
+	t_env	*temp;
+	
+	i = 0;
+	temp = env;
+	while (temp->next)
+		temp = temp->next;
+	node = (t_env *)malloc(sizeof(t_env));
+	node->key = ft_split(cmd_array[1], '=')[0];
+	node->value = ft_split(cmd_array[1], '=')[1];
+	node->next = NULL;
+	temp->next = node;		
+	return (env);
+}
+
 t_env	*ft_copy_envlst(t_env *env)
 {
 	t_env *new_node;
@@ -75,14 +93,14 @@ t_env	*ft_copy_envlst(t_env *env)
 int	ft_export(t_cmds *cmd, t_env *env)
 {
 	t_env *env_copy;
-	(void)cmd;
-	printf("This is the argument of export = %s\n", cmd->cmd_array[1]);
+	if (cmd->cmd_array[1])
+		ft_add_node_env(cmd->cmd_array, env);
 	env_copy = ft_copy_envlst(env);
 	ft_sort_env(env_copy);
 	while (env_copy)
 	{
-		printf("%s", env_copy->key);
-		printf("=%s\n", env_copy->value);
+		printf("declare -x %s", env_copy->key);
+		printf("=\"%s\"\n", env_copy->value);
 		env_copy = env_copy->next;
 	}
 	return (0);
