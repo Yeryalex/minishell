@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/01/27 17:51:35 by rbuitrag         ###   ########.fr        #
+#    Updated: 2025/01/28 13:53:04 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,11 @@ CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address -fsanitize=leak -fsanitize=
 CFILES =	main.c \
 			lexer/prompt.c \
 			lexer/lexer_utils.c \
+			lexer/lexer.c \
+			lexer/env_utils.c \
+			lexer/init_lexer.c \
+			lexer/read_input.c \
+			lexer/lexer_get_values.c \
 			parser/parser.c \
 			parser/parser_utils.c \
 			utils/init_env.c \

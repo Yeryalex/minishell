@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:59:53 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/25 11:41:42 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:49:12 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,6 @@ void	ft_free_tokens(t_tokens **head)
 	*head = NULL;
 }
 
-/*
-// tengo que revisar el ultimo nodo para guardarlo tambien
-*/
-int	ft_addlast_node(t_tokens **lexer, t_tokens *current_node)
-{
-	t_tokens	*tmp_node;
-
-	if (!*lexer)
-	{
-		*lexer = current_node;
-		return (0);
-	}
-	tmp_node = *lexer;
-	while (tmp_node->next)
-		tmp_node = tmp_node->next;
-	tmp_node->next = current_node;
-	current_node->prev = tmp_node;
-	return (0);
-}
-
 int	ft_is_metacharacter(int c)
 {
 	if (!ft_isspace(c) && !ft_strchr("<>|", c))
@@ -58,7 +38,6 @@ int	ft_is_metacharacter(int c)
 }
 
 /*
-//
 // vamos a controlar la salida si le faltan comillas,
 */ 
 void	*ft_exit_error(char quote)
@@ -69,57 +48,75 @@ void	*ft_exit_error(char quote)
 	return (NULL);
 }
 
-/*
- * // Recoge el total de chars en word y controlo comillas sin cerrar
- */
-char	*ft_get_word(char **input)
+// Valida que las comillas sean pares y estén correctamente cerradas
+static int	ft_validate_quotes(const char *value)
 {
+	char	quote_type;
 	int		i;
-	char	*value;
-	char	quote;
+	int		opened;
 
 	i = 0;
-	quote = 0;
-	while ((*input)[i] && (ft_is_metacharacter((*input)[i]) || quote != 0))
+	opened = 0;
+	while (value[i])
 	{
-		if ((*input)[i] == '"' || (*input)[i] == '\'')
+		if (value[i] == '\'' || value[i] == '"')
 		{
-			if (quote == 0)
-				quote = (*input)[i];
-			else if ((*input)[i] == quote)
-				quote = 0;
+			quote_type = value[i];
+			opened++;
+			i++;
+			while (value[i] && value[i] != quote_type)
+				i++;
+			if (value[i] == quote_type)
+				opened--;
 		}
-		++i;
+		if (value[i])
+			i++;
 	}
-	if (quote != 0)
-		return (ft_exit_error(quote));
-	value = ft_substr(*input, 0, i);
-	if (!value)
-		return (free(value), NULL);
-	*input = *input + i;
-	return (value);
+	// Si no se cerraron correctamente las comillas
+	if (opened > 0)
+	{
+		printf("Unexpected close quote\n");
+		return (0);
+	}
+	return (1);
 }
 
-/*
-// recogemos el valor para el nodo WORD hasta los space
-*/
-char	*ft_get_value(char **input)
+char	*ft_remove_quotes(const char *value)
 {
-	char	*value;
-	int		i;
+	char	*trimmed;
+	char	*result;
 
-	i = 0;
-	if (ft_strchr("<>|", **input))
-	{
-		++i;
-		if (!ft_strncmp(*input, "<<", 2) || !ft_strncmp(*input, ">>", 2))
-			++i;
-		value = ft_substr(*input, 0, i);
-		*input += i;
-	}
-	else
-		value = ft_get_word(input);
 	if (!value)
-		return(free(value), NULL);
-	return (value);
+		return (NULL);
+
+	// Validar las comillas primero
+	if (!ft_validate_quotes(value))
+		return (NULL);
+
+	// Trim comillas simples y dobles
+	trimmed = ft_strtrim(value, "\'\"");
+	if (!trimmed)
+		return (NULL);
+
+	// Duplicar el valor sin las comillas
+	result = ft_strdup(trimmed);
+	free(trimmed);
+	return (result);
+}
+
+void	ft_skip_spaces_and_quotes(char **input)
+{
+	char	quote_type;
+
+	while (**input && ft_isspace(**input))
+		(*input)++;
+	if (**input == '\'' || **input == '"')
+	{
+		quote_type = **input;
+		(*input)++;
+		while (**input && **input != quote_type)
+			(*input)++;
+		if (**input == quote_type)
+			(*input)++;
+	}
 }

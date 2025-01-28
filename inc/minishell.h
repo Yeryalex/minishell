@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/27 17:50:49 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:11:22 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ char		*read_input(void);
 int			ft_addlast_node(t_tokens **lexer, t_tokens *current_node);
 char		*ft_get_word(char **line);
 char		*ft_get_value(char **line);
+char		*read_input(void);
+t_tokens	*ft_init_node(void);
+
 
 /*			PARSER FUNCTIONS		*/
 t_cmds	*ft_parser(t_tokens *lexer, char *path);
@@ -120,6 +123,7 @@ void    	ft_add_env_tolst(t_env **lst_env, t_env *new_node);
 char		*ft_get_env_value(char *key_value);
 char		*ft_get_env_key(char *str);
 char		*ft_get_paths_from_env(t_env *environ);
+char		**ft_list_to_char(t_env *env);
 
 
 /*          EXPORT FUNCTIONS         */
@@ -141,6 +145,8 @@ void	ft_executor(t_cmds *cmd, t_utils *utils, char **env);
 int		ft_isspace(char c);
 void	*ft_exit_error(char quote);
 int		ft_is_metacharacter(int c);
+void	ft_skip_spaces_and_quotes(char **input);
+char	*ft_remove_quotes(const char *value);
 
 /* UTILS FUNCTIONS */
 
