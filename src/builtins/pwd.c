@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:32:09 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/25 11:43:46 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/28 10:59:59 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"

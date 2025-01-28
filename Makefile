@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/01/25 11:36:52 by yrodrigu         ###   ########.fr        #
+#    Updated: 2025/01/28 12:42:32 by yrodrigu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,7 @@ CFILES =	main.c \
 			builtins/echo.c\
 			builtins/env.c\
 			builtins/pwd.c\
-			
-
+			builtins/export.c\
 
 GREEN = "\033[92m"
 RESET = "\033[0m"

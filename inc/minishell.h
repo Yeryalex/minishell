@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/25 11:37:35 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:41:58 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ void    ft_addlast_pnode(t_cmds **list, t_cmds *node);
 int		ft_echo(char **cmd, int fd);
 int		ft_env(t_utils *utils, int fd);
 int		ft_pwd(t_env *env);
+int		ft_export(t_env *env);
+
 /*          SIGNAL FUNCTIONS         */
 
 /*          ENV FUNCTIONS         */
