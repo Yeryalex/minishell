@@ -45,25 +45,24 @@ t_type	ft_determine_type(char *value)
 // Crea un nuevo nodo de token (create node para que valga para todo
 //  es redudante crear token y nodos es lo mismo
 */  
-t_tokens	*ft_create_node(const char **input)
+t_tokens *ft_create_node(char **input)
 {
-	t_tokens	*new_node;
-
-	new_node = (t_tokens *)malloc(sizeof(t_tokens));
-	if (!new_node)
-		return (ft_free_tokens(&new_node), NULL);
-	new_node->value = ft_get_value(input);
-	if (!new_node->value)
-	{
-		free(new_node);
-		return (NULL);
-	}
-	new_node->token = ft_determine_type(new_node->value);
+    t_tokens *new_node = (t_tokens *)malloc(sizeof(t_tokens));
+    if (!new_node)
+        return (ft_free_tokens(&new_node), NULL);
+    new_node->prev = NULL;
 	new_node->next = NULL;
-	return (new_node);
+	new_node->value = ft_get_value(input);
+    if (!new_node->value)
+    {
+        free(new_node);
+        return (NULL);
+    }
+    new_node->token = ft_determine_type(new_node->value);
+    return (new_node);
 }
 
-t_tokens	*ft_lexer_input(const char *input)
+t_tokens	*ft_lexer_input(char *input)
 {
 	t_tokens	*node;
 	t_tokens	*lexer;
@@ -83,12 +82,48 @@ t_tokens	*ft_lexer_input(const char *input)
 		if (!node || (node && ft_addlast_node(&lexer, node)))
 		{
 			ft_free_tokens(&lexer);
-			ft_free_tokens(&node);
 			return (NULL);
 		}
 	}
 	//ft_free_tokens(&node);
 	return (lexer);
+	/*t_tokens *node;
+    t_tokens *lexer;
+    t_tokens *last_node;
+
+    lexer = NULL;
+    last_node = NULL;
+
+    if (!input)
+        return (NULL);
+
+    while (*input)
+    {
+        while (ft_isspace(*input))
+            input++;
+
+        if (*input)
+        {
+            node = ft_create_node(&input);
+            if (!node)
+            {
+                ft_free_tokens(&lexer);
+                return (NULL);
+            }
+
+            if (!lexer)
+                lexer = node;
+            else
+            {
+                last_node->next = node;
+                node->prev = last_node;
+            }
+            last_node = node;
+        }
+    }
+
+    return (lexer);*/
+
 }
 
 char	*read_input(void)
@@ -98,6 +133,8 @@ char	*read_input(void)
 	input = readline(CYAN "minishell> " RESET);
 	if (input && *input)
 		add_history(input);
+	else
+		return(NULL);
 	return (input);
 }
 
@@ -134,20 +171,39 @@ char **ft_list_to_char(t_env *env)
     {
 		dup_key = ft_strdup(env->key);
 		dup_value = ft_strdup(env->value);
+		if (!dup_key || !dup_value)
+        {
+            free(dup_key);
+            free(dup_value);
+            ft_free_array(char_env);
+            return (NULL);
+        }
         key_value = ft_strjoin(dup_key, "=");
        	if (!key_value)
-			return (NULL);
+        {
+            free(dup_value);
+            ft_free_array(char_env);
+            return (NULL);
+        }
 		temp = ft_strjoin(key_value, dup_value);
-		free(key_value);
-		free(dup_key);
-		free(dup_value);
-        *char_env = temp;
-		free(temp);
+		if (!temp)
+        {
+			free(key_value);
+			free(dup_key);
+			free(dup_value);
+            ft_free_array(char_env);
+            return (NULL);
+        }
+	    *char_env = temp;
+		//free(temp);
         char_env++;
         env = env->next;
     }
+	*char_env = NULL;
+	free(temp);
     return (char_env - size);
 }
+
 
 void	prompt_loop(t_utils *utils, char *path)
 {
@@ -157,36 +213,27 @@ void	prompt_loop(t_utils *utils, char *path)
 	char **env;
 	
 	input = NULL;
+	cmd = NULL;
 	env = ft_list_to_char(utils->environ);
 	while (1)
 	{
  		input = read_input();
 		if (!input)
 		{
-			ft_putstr_fd("exit\n", 1);
-			free(input);
+			//free(input);
 			break ;
 		}
 		commands = ft_lexer_input(input);
 		if (!commands)
         {
-			ft_free_tokens(&commands);
+            ft_free_tokens(&commands);
             continue;
         }
  	 	cmd = ft_parser(commands, path);
-		if (!cmd)
-		{
-			ft_free_cmd(cmd);
-			continue;
-		}
-		ft_executor(cmd, utils, env);
-		
-			//ft_free_array(cmd->cmd_array);
-		//	ft_free_cmd(cmd);
+		if (cmd)
+			ft_executor(cmd, utils, env);
     }
-  	ft_free_tokens(&commands);
-	ft_free_cmd(cmd);
-	ft_free_utils(utils);
-	ft_free_array(env);
-  	free(input);
+  	  	free(input);
+		ft_free_cmd(cmd);
+		ft_free_tokens(&commands);
 }

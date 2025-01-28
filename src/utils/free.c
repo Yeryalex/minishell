@@ -16,8 +16,8 @@ void	*ft_free_redir(t_dir *node)
 {
 	if (node)
 	{
-		if (node->fd >= 0)
-			close (node->fd);
+		//if (node->fd >= 0)
+		//	close (node->fd);
 		//if (node->here_doc && !access(node->filename, F_OK))
 		//	unlink(node->filename);
 		free (node->filename);

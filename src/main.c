@@ -41,6 +41,8 @@ int main(int ac, char **argv, char **env)
 	full_path = ft_get_paths_from_env(environ);
 	init_utils(utils, environ);		
 	prompt_loop(utils, full_path);
-	//	free(full_path);
+	free(full_path);
+	free(environ);
+	ft_free_utils(utils);
  	return (0);
 }
