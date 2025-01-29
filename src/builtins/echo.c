@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 10:50:55 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/28 20:42:21 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/29 08:10:10 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -23,6 +23,8 @@ int	ft_is_option(char *str)
 		{
 			if (str[i] == 'n')
 				i++;
+			else
+				break ;
 		}
 		if (!str[i])
 			return (0);

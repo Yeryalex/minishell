@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:44:57 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/28 21:18:31 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/29 12:54:55 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -47,21 +47,111 @@ void	ft_sort_env(t_env *env)
 	}
 }
 
+int	ft_exist_char(char *str)
+{
+	int i;
+	int char_num;
+	i = 0;
+	char_num = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			char_num++;
+		i++;
+	}
+	if (char_num == 1)
+		return (1);
+	else if (char_num > 1)
+		return (char_num);
+	return (0);
+}
+
+char	*ft_add_equals(int count)
+{
+	char *equals;
+	int i;
+
+	i = 0;
+	equals = (char *)malloc(sizeof(char) * count);
+	if (!equals)
+		return (NULL);
+	while (i < count)
+	{
+		equals[i] = '=';
+		i++;
+	}
+	equals[i] = '\0';
+	return (equals);
+}
+
+t_env	*ft_find_key_env(t_env *env, char *key_value)
+{
+	t_env	*temp;
+	int i;
+
+	i = 0;
+	temp = env;
+	while (temp)
+	{	if (!ft_strcmp(temp->key, key_value))
+			return (temp);
+		temp = temp->next;
+	}
+	return (NULL);
+}
+
 t_env *ft_add_node_env(char **cmd_array, t_env *env)
 {
 	int i;
 	t_env	*node;
 	t_env	*temp;
+	char	**key_value;
 	
-	i = 0;
-	temp = env;
-	while (temp->next)
-		temp = temp->next;
-	node = (t_env *)malloc(sizeof(t_env));
-	node->key = ft_split(cmd_array[1], '=')[0];
-	node->value = ft_split(cmd_array[1], '=')[1];
-	node->next = NULL;
-	temp->next = node;		
+	i = 1;
+	while (cmd_array && cmd_array[i])
+	{
+		node = (t_env *)malloc(sizeof(t_env));
+		node->next = NULL;
+		int	add_equals = ft_exist_char(cmd_array[i]);
+		if (add_equals)
+		{
+		
+			key_value = ft_split(cmd_array[i], '=');
+			t_env *temp = ft_find_key_env(env, key_value[0]);
+			if (!temp)
+			{
+				node->key = key_value[0];
+				if (add_equals == 1)
+				{
+					if (key_value[1])
+						node->value = key_value[1];
+					else
+						node->value = NULL;
+				}
+				else 
+					node->value = ft_strjoin(ft_add_equals(add_equals - 1), key_value[1]);
+			}
+			else
+			{
+				if (temp->value)
+					free(temp->value);
+				if (key_value[1])
+					temp->value = ft_strdup(key_value[1]);
+				else
+					key_value = NULL;
+				break ;
+			}
+		}
+		else
+		{
+			node->key = ft_strdup(cmd_array[i]);
+			node->value = NULL;
+		}
+        temp = env;
+        while (temp->next)
+			temp = temp->next;
+		temp->next = node;
+		i++;
+	}
 	return (env);
 }
 
@@ -77,7 +167,8 @@ t_env	*ft_copy_envlst(t_env *env)
 		if(!new_node)
 			return (NULL);
 		new_node->key = ft_strdup(env->key);
-		new_node->value = ft_strdup(env->value);
+		if (env->value)
+			new_node->value = ft_strdup(env->value);
 		new_node->next = NULL;
 
 		if (!new_env)
@@ -93,15 +184,23 @@ t_env	*ft_copy_envlst(t_env *env)
 int	ft_export(t_cmds *cmd, t_env *env)
 {
 	t_env *env_copy;
+
 	if (cmd->cmd_array[1])
 		ft_add_node_env(cmd->cmd_array, env);
-	env_copy = ft_copy_envlst(env);
-	ft_sort_env(env_copy);
-	while (env_copy)
+	else
 	{
-		printf("declare -x %s", env_copy->key);
-		printf("=\"%s\"\n", env_copy->value);
-		env_copy = env_copy->next;
+		env_copy = ft_copy_envlst(env);
+		ft_sort_env(env_copy);
+		t_env *temp = env_copy;
+		while (temp)
+		{
+			printf("declare -x %s", temp->key);
+			if (temp->value)
+				printf("=\"%s\"\n", temp->value);
+			else 
+				printf("\n");
+			temp = temp->next;
+		}
 	}
 	return (0);
 }
