@@ -46,8 +46,10 @@ void	prompt_loop(t_utils *utils, char *path)
             continue;
         }
  	 	cmd = ft_parser(commands, path);
+		//ft_free_tokens(&commands);
+		//free(path);
 		ft_executor(cmd, utils, env);
     }
-  	ft_free_tokens(&commands);
+  	//ft_free_tokens(&commands);
   	free(input);
 }

@@ -13,17 +13,131 @@ $(NAME)	Makefile	/^$(NAME): $(OBJS)$/;"	t
 $(NAME)	inc/libft/Makefile	/^$(NAME): $(OFILES)$/;"	t
 %.o	Makefile	/^%.o: %.c $(HEADER) Makefile$/;"	t
 %.o	inc/libft/Makefile	/^%.o:%.c $(HEADER) Makefile$/;"	t
+0	.vscode/c_cpp_properties.json	/^        ""$/;"	s	array:configurations.0.compilerArgs
+0	.vscode/c_cpp_properties.json	/^        "${workspaceFolder}\/**"$/;"	s	array:configurations.0.includePath
+0	.vscode/c_cpp_properties.json	/^    {$/;"	o	array:configurations
 0	.vscode/launch.json	/^	  {$/;"	o	array:configurations
+0	.vscode/settings.json	/^    "*",$/;"	s	array:C_Cpp_Runner.includeSearch
+0	.vscode/settings.json	/^    "**\/build",$/;"	s	array:C_Cpp_Runner.excludeSearch
+0	.vscode/settings.json	/^    "-Wall",$/;"	s	array:C_Cpp_Runner.warnings
+0	.vscode/settings.json	/^    "\/W4",$/;"	s	array:C_Cpp_Runner.msvcWarnings
 0	.vscode/tasks.json	/^		"problemMatcher": ["$gcc"],$/;"	s	array:tasks.0.problemMatcher
 0	.vscode/tasks.json	/^	  {$/;"	o	array:tasks
+0	src/parser/.vscode/c_cpp_properties.json	/^        ""$/;"	s	array:configurations.0.compilerArgs
+0	src/parser/.vscode/c_cpp_properties.json	/^        "${workspaceFolder}\/**"$/;"	s	array:configurations.0.includePath
+0	src/parser/.vscode/c_cpp_properties.json	/^    {$/;"	o	array:configurations
+0	src/parser/.vscode/launch.json	/^        {$/;"	o	array:configurations.0.setupCommands
+0	src/parser/.vscode/launch.json	/^    {$/;"	o	array:configurations
+0	src/parser/.vscode/settings.json	/^    "*",$/;"	s	array:C_Cpp_Runner.includeSearch
+0	src/parser/.vscode/settings.json	/^    "**\/build",$/;"	s	array:C_Cpp_Runner.excludeSearch
+0	src/parser/.vscode/settings.json	/^    "-Wall",$/;"	s	array:C_Cpp_Runner.warnings
+0	src/parser/.vscode/settings.json	/^    "\/W4",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+1	.vscode/settings.json	/^    "**\/*"$/;"	s	array:C_Cpp_Runner.includeSearch
+1	.vscode/settings.json	/^    "**\/build\/**",$/;"	s	array:C_Cpp_Runner.excludeSearch
+1	.vscode/settings.json	/^    "-Wextra",$/;"	s	array:C_Cpp_Runner.warnings
+1	.vscode/settings.json	/^    "\/permissive-",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+1	src/parser/.vscode/settings.json	/^    "**\/*"$/;"	s	array:C_Cpp_Runner.includeSearch
+1	src/parser/.vscode/settings.json	/^    "**\/build\/**",$/;"	s	array:C_Cpp_Runner.excludeSearch
+1	src/parser/.vscode/settings.json	/^    "-Wextra",$/;"	s	array:C_Cpp_Runner.warnings
+1	src/parser/.vscode/settings.json	/^    "\/permissive-",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+10	.vscode/settings.json	/^    "\/w14906",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+10	src/parser/.vscode/settings.json	/^    "\/w14906",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+11	.vscode/settings.json	/^    "\/w14263",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+11	src/parser/.vscode/settings.json	/^    "\/w14263",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+12	.vscode/settings.json	/^    "\/w44265",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+12	src/parser/.vscode/settings.json	/^    "\/w44265",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+13	.vscode/settings.json	/^    "\/w14928"$/;"	s	array:C_Cpp_Runner.msvcWarnings
+13	src/parser/.vscode/settings.json	/^    "\/w14928"$/;"	s	array:C_Cpp_Runner.msvcWarnings
+2	.vscode/settings.json	/^    "**\/.*",$/;"	s	array:C_Cpp_Runner.excludeSearch
+2	.vscode/settings.json	/^    "-Wpedantic",$/;"	s	array:C_Cpp_Runner.warnings
+2	.vscode/settings.json	/^    "\/w14242",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+2	src/parser/.vscode/settings.json	/^    "**\/.*",$/;"	s	array:C_Cpp_Runner.excludeSearch
+2	src/parser/.vscode/settings.json	/^    "-Wpedantic",$/;"	s	array:C_Cpp_Runner.warnings
+2	src/parser/.vscode/settings.json	/^    "\/w14242",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+3	.vscode/settings.json	/^    "**\/.*\/**",$/;"	s	array:C_Cpp_Runner.excludeSearch
+3	.vscode/settings.json	/^    "-Wshadow",$/;"	s	array:C_Cpp_Runner.warnings
+3	.vscode/settings.json	/^    "\/w14287",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+3	src/parser/.vscode/settings.json	/^    "**\/.*\/**",$/;"	s	array:C_Cpp_Runner.excludeSearch
+3	src/parser/.vscode/settings.json	/^    "-Wshadow",$/;"	s	array:C_Cpp_Runner.warnings
+3	src/parser/.vscode/settings.json	/^    "\/w14287",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+4	.vscode/settings.json	/^    "**\/.vscode",$/;"	s	array:C_Cpp_Runner.excludeSearch
+4	.vscode/settings.json	/^    "-Wformat=2",$/;"	s	array:C_Cpp_Runner.warnings
+4	.vscode/settings.json	/^    "\/w14296",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+4	src/parser/.vscode/settings.json	/^    "**\/.vscode",$/;"	s	array:C_Cpp_Runner.excludeSearch
+4	src/parser/.vscode/settings.json	/^    "-Wformat=2",$/;"	s	array:C_Cpp_Runner.warnings
+4	src/parser/.vscode/settings.json	/^    "\/w14296",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+5	.vscode/settings.json	/^    "**\/.vscode\/**"$/;"	s	array:C_Cpp_Runner.excludeSearch
+5	.vscode/settings.json	/^    "-Wcast-align",$/;"	s	array:C_Cpp_Runner.warnings
+5	.vscode/settings.json	/^    "\/w14311",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+5	src/parser/.vscode/settings.json	/^    "**\/.vscode\/**"$/;"	s	array:C_Cpp_Runner.excludeSearch
+5	src/parser/.vscode/settings.json	/^    "-Wcast-align",$/;"	s	array:C_Cpp_Runner.warnings
+5	src/parser/.vscode/settings.json	/^    "\/w14311",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+6	.vscode/settings.json	/^    "-Wconversion",$/;"	s	array:C_Cpp_Runner.warnings
+6	.vscode/settings.json	/^    "\/w14826",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+6	src/parser/.vscode/settings.json	/^    "-Wconversion",$/;"	s	array:C_Cpp_Runner.warnings
+6	src/parser/.vscode/settings.json	/^    "\/w14826",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+7	.vscode/settings.json	/^    "-Wsign-conversion",$/;"	s	array:C_Cpp_Runner.warnings
+7	.vscode/settings.json	/^    "\/w44062",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+7	src/parser/.vscode/settings.json	/^    "-Wsign-conversion",$/;"	s	array:C_Cpp_Runner.warnings
+7	src/parser/.vscode/settings.json	/^    "\/w44062",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+8	.vscode/settings.json	/^    "-Wnull-dereference"$/;"	s	array:C_Cpp_Runner.warnings
+8	.vscode/settings.json	/^    "\/w44242",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+8	src/parser/.vscode/settings.json	/^    "-Wnull-dereference"$/;"	s	array:C_Cpp_Runner.warnings
+8	src/parser/.vscode/settings.json	/^    "\/w44242",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+9	.vscode/settings.json	/^    "\/w14905",$/;"	s	array:C_Cpp_Runner.msvcWarnings
+9	src/parser/.vscode/settings.json	/^    "\/w14905",$/;"	s	array:C_Cpp_Runner.msvcWarnings
 APPEND	inc/minishell.h	/^	APPEND, \/\/ >> $/;"	e	enum:e_type
 Análisis lexicológico	README.md	/^# Análisis lexicológico$/;"	c
 Análisis sintáctico	README.md	/^# Análisis sintáctico$/;"	c
 BLUE	inc/minishell.h	/^# define BLUE /;"	d
 CC	inc/libft/Makefile	/^CC = cc$/;"	m
 CFILES	Makefile	/^CFILES =	main.c \\$/;"	m
-CFLAGS	Makefile	/^CFLAGS = -Wall -Werror -Wextra$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address -fsanitize=leak -fsanitize=undefined$/;"	m
 CYAN	inc/minishell.h	/^# define CYAN /;"	d
+C_Cpp_Runner.cCompilerPath	.vscode/settings.json	/^  "C_Cpp_Runner.cCompilerPath": "gcc",$/;"	s
+C_Cpp_Runner.cCompilerPath	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.cCompilerPath": "gcc",$/;"	s
+C_Cpp_Runner.cStandard	.vscode/settings.json	/^  "C_Cpp_Runner.cStandard": "",$/;"	s
+C_Cpp_Runner.cStandard	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.cStandard": "",$/;"	s
+C_Cpp_Runner.compilerArgs	.vscode/settings.json	/^  "C_Cpp_Runner.compilerArgs": [],$/;"	a
+C_Cpp_Runner.compilerArgs	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.compilerArgs": [],$/;"	a
+C_Cpp_Runner.cppCompilerPath	.vscode/settings.json	/^  "C_Cpp_Runner.cppCompilerPath": "g++",$/;"	s
+C_Cpp_Runner.cppCompilerPath	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.cppCompilerPath": "g++",$/;"	s
+C_Cpp_Runner.cppStandard	.vscode/settings.json	/^  "C_Cpp_Runner.cppStandard": "",$/;"	s
+C_Cpp_Runner.cppStandard	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.cppStandard": "",$/;"	s
+C_Cpp_Runner.debuggerPath	.vscode/settings.json	/^  "C_Cpp_Runner.debuggerPath": "gdb",$/;"	s
+C_Cpp_Runner.debuggerPath	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.debuggerPath": "gdb",$/;"	s
+C_Cpp_Runner.enableWarnings	.vscode/settings.json	/^  "C_Cpp_Runner.enableWarnings": true,$/;"	b
+C_Cpp_Runner.enableWarnings	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.enableWarnings": true,$/;"	b
+C_Cpp_Runner.excludeSearch	.vscode/settings.json	/^  "C_Cpp_Runner.excludeSearch": [$/;"	a
+C_Cpp_Runner.excludeSearch	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.excludeSearch": [$/;"	a
+C_Cpp_Runner.includePaths	.vscode/settings.json	/^  "C_Cpp_Runner.includePaths": [],$/;"	a
+C_Cpp_Runner.includePaths	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.includePaths": [],$/;"	a
+C_Cpp_Runner.includeSearch	.vscode/settings.json	/^  "C_Cpp_Runner.includeSearch": [$/;"	a
+C_Cpp_Runner.includeSearch	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.includeSearch": [$/;"	a
+C_Cpp_Runner.linkerArgs	.vscode/settings.json	/^  "C_Cpp_Runner.linkerArgs": [],$/;"	a
+C_Cpp_Runner.linkerArgs	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.linkerArgs": [],$/;"	a
+C_Cpp_Runner.msvcBatchPath	.vscode/settings.json	/^  "C_Cpp_Runner.msvcBatchPath": "C:\/Program Files\/Microsoft Visual Studio\/VR_NR\/Community\/V/;"	s
+C_Cpp_Runner.msvcBatchPath	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.msvcBatchPath": "C:\/Program Files\/Microsoft Visual Studio\/VR_NR\/Community\/V/;"	s
+C_Cpp_Runner.msvcSecureNoWarnings	.vscode/settings.json	/^  "C_Cpp_Runner.msvcSecureNoWarnings": false$/;"	b
+C_Cpp_Runner.msvcSecureNoWarnings	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.msvcSecureNoWarnings": false$/;"	b
+C_Cpp_Runner.msvcWarnings	.vscode/settings.json	/^  "C_Cpp_Runner.msvcWarnings": [$/;"	a
+C_Cpp_Runner.msvcWarnings	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.msvcWarnings": [$/;"	a
+C_Cpp_Runner.showCompilationTime	.vscode/settings.json	/^  "C_Cpp_Runner.showCompilationTime": false,$/;"	b
+C_Cpp_Runner.showCompilationTime	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.showCompilationTime": false,$/;"	b
+C_Cpp_Runner.useAddressSanitizer	.vscode/settings.json	/^  "C_Cpp_Runner.useAddressSanitizer": false,$/;"	b
+C_Cpp_Runner.useAddressSanitizer	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.useAddressSanitizer": false,$/;"	b
+C_Cpp_Runner.useLeakSanitizer	.vscode/settings.json	/^  "C_Cpp_Runner.useLeakSanitizer": false,$/;"	b
+C_Cpp_Runner.useLeakSanitizer	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.useLeakSanitizer": false,$/;"	b
+C_Cpp_Runner.useLinkTimeOptimization	.vscode/settings.json	/^  "C_Cpp_Runner.useLinkTimeOptimization": false,$/;"	b
+C_Cpp_Runner.useLinkTimeOptimization	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.useLinkTimeOptimization": false,$/;"	b
+C_Cpp_Runner.useMsvc	.vscode/settings.json	/^  "C_Cpp_Runner.useMsvc": false,$/;"	b
+C_Cpp_Runner.useMsvc	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.useMsvc": false,$/;"	b
+C_Cpp_Runner.useUndefinedSanitizer	.vscode/settings.json	/^  "C_Cpp_Runner.useUndefinedSanitizer": false,$/;"	b
+C_Cpp_Runner.useUndefinedSanitizer	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.useUndefinedSanitizer": false,$/;"	b
+C_Cpp_Runner.warnings	.vscode/settings.json	/^  "C_Cpp_Runner.warnings": [$/;"	a
+C_Cpp_Runner.warnings	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.warnings": [$/;"	a
+C_Cpp_Runner.warningsAsError	.vscode/settings.json	/^  "C_Cpp_Runner.warningsAsError": false,$/;"	b
+C_Cpp_Runner.warningsAsError	src/parser/.vscode/settings.json	/^  "C_Cpp_Runner.warningsAsError": false,$/;"	b
 Comando único	README.md	/^# Comando único$/;"	c
 Copiado e inspirado este pedazo de tutorial, de dos grandes entre otros:	README.md	/^# Copiado e inspirado este pedazo de tutorial, de dos grandes entre otros:$/;"	c
 Deberá implementar los built-ins:	README.md	/^# Deberá implementar los built-ins:$/;"	c
@@ -51,6 +165,7 @@ Las funciones incorporadas (según el tema) son:	README.md	/^# Las funciones inc
 Lectura del input	README.md	/^# Lectura del input$/;"	c
 MAGENTA	inc/minishell.h	/^# define MAGENTA /;"	d
 MIMode	.vscode/launch.json	/^		"MIMode": "gdb",$/;"	s	object:configurations.0
+MIMode	src/parser/.vscode/launch.json	/^      "MIMode": "gdb",$/;"	s	object:configurations.0
 MINISHELL_H	inc/minishell.h	/^# define MINISHELL_H$/;"	d
 Mapa mental (todo lo anterior en imagen)	README.md	/^# Mapa mental (todo lo anterior en imagen)$/;"	c
 Mas informacion de los procesos a realizar	README.md	/^# Mas informacion de los procesos a realizar$/;"	c
@@ -76,65 +191,86 @@ WORD	inc/minishell.h	/^	WORD,$/;"	e	enum:e_type
 YELLOW	inc/minishell.h	/^# define YELLOW /;"	d
 all	Makefile	/^all: library $(NAME)$/;"	t
 all	inc/libft/Makefile	/^all : $(NAME)$/;"	t
-check_env	inc/minishell.h	/^	int				check_env;$/;"	m	struct:s_utils	typeref:typename:int
+args	src/parser/.vscode/launch.json	/^      "args": [],$/;"	a	object:configurations.0
+builtins	inc/minishell.h	/^	char			*builtins[8];$/;"	m	struct:s_utils	typeref:typename:char * [8]
+cStandard	.vscode/c_cpp_properties.json	/^      "cStandard": "${default}",$/;"	s	object:configurations.0
+cStandard	src/parser/.vscode/c_cpp_properties.json	/^      "cStandard": "${default}",$/;"	s	object:configurations.0
 clean	Makefile	/^clean:$/;"	t
 clean	inc/libft/Makefile	/^clean:$/;"	t
 cmd_array	inc/minishell.h	/^	char			**cmd_array;$/;"	m	struct:s_cmds	typeref:typename:char **
 command	.vscode/tasks.json	/^		"command": "make", $/;"	s	object:tasks.0
+compilerArgs	.vscode/c_cpp_properties.json	/^      "compilerArgs": [$/;"	a	object:configurations.0
+compilerArgs	src/parser/.vscode/c_cpp_properties.json	/^      "compilerArgs": [$/;"	a	object:configurations.0
+compilerPath	.vscode/c_cpp_properties.json	/^      "compilerPath": "C:\/MinGW\/bin\/gcc.exe",$/;"	s	object:configurations.0
+compilerPath	src/parser/.vscode/c_cpp_properties.json	/^      "compilerPath": "C:\/MinGW\/bin\/gcc.exe",$/;"	s	object:configurations.0
+configurations	.vscode/c_cpp_properties.json	/^  "configurations": [$/;"	a
 configurations	.vscode/launch.json	/^	"configurations": [$/;"	a
+configurations	src/parser/.vscode/c_cpp_properties.json	/^  "configurations": [$/;"	a
+configurations	src/parser/.vscode/launch.json	/^  "configurations": [$/;"	a
 count_digit	inc/libft/ft_itoa.c	/^static size_t	count_digit(int n)$/;"	f	typeref:typename:size_t	file:
 count_substrings	src/expanser/split_path.c	/^static int count_substrings(const char *str, char delimiter)$/;"	f	typeref:typename:int	file:
+cppStandard	.vscode/c_cpp_properties.json	/^      "cppStandard": "${default}",$/;"	s	object:configurations.0
+cppStandard	src/parser/.vscode/c_cpp_properties.json	/^      "cppStandard": "${default}",$/;"	s	object:configurations.0
 cwd	.vscode/launch.json	/^		"cwd": "${workspaceFolder}",  \/\/ Directorio de trabajo$/;"	s	object:configurations.0
+cwd	src/parser/.vscode/launch.json	/^      "cwd": "\/\/wsl.localhost\/Ubuntu\/home\/rbuitrag\/Cursus42\/Circle_3\/minishell\/src\/par/;"	s	object:configurations.0
+description	src/parser/.vscode/launch.json	/^          "description": "Enable pretty-printing for gdb",$/;"	s	object:configurations.0.setupCommands.0
 detail	.vscode/tasks.json	/^		"detail": "Tarea para compilar el proyecto minishell"$/;"	s	object:tasks.0
 e_type	inc/minishell.h	/^typedef enum e_type$/;"	g
 engineLogging	.vscode/launch.json	/^		  "engineLogging": true,$/;"	b	object:configurations.0.logging
 environ	inc/minishell.h	/^	t_env 			*environ;$/;"	m	struct:s_utils	typeref:typename:t_env *
-execute_commands	src/expanser/utils_expanser.c	/^void    execute_commands(t_cmds *cmd, char **env)$/;"	f	typeref:typename:void
+event	src/utils/signals.c	/^int	event(void)$/;"	f	typeref:typename:int
 exported	inc/minishell.h	/^	int				exported;$/;"	m	struct:s_env	typeref:typename:int
 externalConsole	.vscode/launch.json	/^		"externalConsole": false,$/;"	b	object:configurations.0
+externalConsole	src/parser/.vscode/launch.json	/^      "externalConsole": true,$/;"	b	object:configurations.0
 fclean	Makefile	/^fclean: clean$/;"	t
 fclean	inc/libft/Makefile	/^fclean: clean$/;"	t
 fd	inc/minishell.h	/^	int		fd;$/;"	m	struct:s_dir	typeref:typename:int
-fd_in	inc/minishell.h	/^	t_dir			*fd_in;$/;"	m	struct:s_cmds	typeref:typename:t_dir *
-fd_out	inc/minishell.h	/^	t_dir			*fd_out;$/;"	m	struct:s_cmds	typeref:typename:t_dir *
 filename	inc/minishell.h	/^	char	*filename;$/;"	m	struct:s_dir	typeref:typename:char *
-files.associations	.vscode/settings.json	/^	"files.associations": {$/;"	o
+files.associations	.vscode/settings.json	/^  "files.associations": {$/;"	o
+free_cmd_array	src/parser/parser.c	/^static void	*free_cmd_array(char **cmd_array)$/;"	f	typeref:typename:void *	file:
 ft_add_env_tolst	src/utils/init_env.c	/^void	ft_add_env_tolst(t_env **lst_env, t_env *new_node)$/;"	f	typeref:typename:void
-ft_addlast_node	src/lexer/lexer_utils.c	/^int	ft_addlast_node(t_tokens **lexer, t_tokens *current_node)$/;"	f	typeref:typename:int
+ft_addlast_node	src/lexer/lexer.c	/^int	ft_addlast_node(t_tokens **lexer, t_tokens *current_node)$/;"	f	typeref:typename:int
+ft_addlast_pnode	src/parser/parser_utils.c	/^void	ft_addlast_pnode(t_cmds **list, t_cmds *node)$/;"	f	typeref:typename:void
 ft_atoi	inc/libft/ft_atoi.c	/^int	ft_atoi(const char *str)$/;"	f	typeref:typename:int
 ft_bzero	inc/libft/ft_bzero.c	/^void	ft_bzero(void *s, size_t n)$/;"	f	typeref:typename:void
 ft_calloc	inc/libft/ft_calloc.c	/^void	*ft_calloc(size_t count, size_t size)$/;"	f	typeref:typename:void *
 ft_clear_lstenv	src/utils/init_env.c	/^int	ft_clear_lstenv(t_env *envs)$/;"	f	typeref:typename:int
 ft_count_words	inc/libft/ft_split.c	/^static int	ft_count_words(const char *s, char c)$/;"	f	typeref:typename:int	file:
 ft_cpy_strs	inc/libft/ft_split.c	/^static char	**ft_cpy_strs(char **strs, const char *s, char c)$/;"	f	typeref:typename:char **	file:
-ft_create_node	src/lexer/prompt.c	/^t_tokens	*ft_create_node(const char **input)$/;"	f	typeref:typename:t_tokens *
-ft_create_node_cmd	src/parser/parser.c	/^t_cmds *ft_create_node_cmd(t_tokens *lexer, int count, char *path)$/;"	f	typeref:typename:t_cmds *
+ft_create_node	src/lexer/lexer.c	/^t_tokens *ft_create_node(const char **input)$/;"	f	typeref:typename:t_tokens *
+ft_create_node_cmd	src/parser/parser.c	/^t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)$/;"	f	typeref:typename:t_cmds *
 ft_create_node_env	src/utils/init_env.c	/^t_env	*ft_create_node_env(char *envs)$/;"	f	typeref:typename:t_env *
-ft_determine_type	src/lexer/prompt.c	/^t_type	ft_determine_type(char *value)$/;"	f	typeref:typename:t_type
+ft_determine_type	src/lexer/init_lexer.c	/^t_type	ft_determine_type(char *value)$/;"	f	typeref:typename:t_type
 ft_dup_close	src/executor/ft_executor.c	/^void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)$/;"	f	typeref:typename:void
 ft_executor	src/executor/ft_executor.c	/^void	ft_executor(t_cmds *current, t_utils *utils, char **env)$/;"	f	typeref:typename:void
 ft_exit_error	src/lexer/lexer_utils.c	/^void	*ft_exit_error(char quote)$/;"	f	typeref:typename:void *
 ft_forking	src/executor/ft_executor.c	/^int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)$/;"	f	typeref:typename:int
-ft_free_array	src/expanser/utils_expanser.c	/^static void ft_free_array(char **array)$/;"	f	typeref:typename:void	file:
+ft_free_array	src/utils/free.c	/^void ft_free_array(char **array)$/;"	f	typeref:typename:void
+ft_free_cmd	src/utils/free.c	/^void	ft_free_cmd(t_cmds *cmd)$/;"	f	typeref:typename:void
+ft_free_env	src/utils/free.c	/^void ft_free_env(t_env *env)$/;"	f	typeref:typename:void
+ft_free_one_to_cmd	src/utils/free.c	/^void	*ft_free_one_to_cmd(t_cmds *cmd)$/;"	f	typeref:typename:void *
+ft_free_redir	src/utils/free.c	/^void	*ft_free_redir(t_dir *node)$/;"	f	typeref:typename:void *
 ft_free_tokens	src/lexer/lexer_utils.c	/^void	ft_free_tokens(t_tokens **head)$/;"	f	typeref:typename:void
+ft_free_utils	src/utils/free.c	/^void *ft_free_utils(t_utils *utils)$/;"	f	typeref:typename:void *
 ft_get_env_key	src/utils/env_export.c	/^char	*ft_get_env_key(char *str)$/;"	f	typeref:typename:char *
 ft_get_env_value	src/utils/env_export.c	/^char	*ft_get_env_value(char *key_value)$/;"	f	typeref:typename:char *
-ft_get_path	src/expanser/utils_expanser.c	/^char    *ft_get_path(char *path, char *cmd) \/\/ full_path, cmd->cmd_array[0]$/;"	f	typeref:typename:char *
+ft_get_path	src/expanser/utils_expanser.c	/^char    *ft_get_path(char *path, char *cmd)$/;"	f	typeref:typename:char *
 ft_get_paths_from_env	src/expanser/utils_expanser.c	/^char	*ft_get_paths_from_env(t_env *environ)$/;"	f	typeref:typename:char *
-ft_get_value	src/lexer/lexer_utils.c	/^char	*ft_get_value(const char **input)$/;"	f	typeref:typename:char *
-ft_get_word	src/lexer/lexer_utils.c	/^char	*ft_get_word(const char **input)$/;"	f	typeref:typename:char *
+ft_get_value	src/lexer/lexer_get_values.c	/^char	*ft_get_value(const char **input)$/;"	f	typeref:typename:char *
+ft_get_word	src/lexer/lexer_get_values.c	/^char	*ft_get_word(const char **input)$/;"	f	typeref:typename:char *
 ft_init_env	src/utils/init_env.c	/^t_env		*ft_init_env(char **envs)$/;"	f	typeref:typename:t_env *
+ft_init_node	src/lexer/init_lexer.c	/^t_tokens	*ft_init_node(void)$/;"	f	typeref:typename:t_tokens *
 ft_is_metacharacter	src/lexer/lexer_utils.c	/^int	ft_is_metacharacter(int c)$/;"	f	typeref:typename:int
 ft_isalnum	inc/libft/ft_isalnum.c	/^int	ft_isalnum(int c)$/;"	f	typeref:typename:int
 ft_isalpha	inc/libft/ft_isalpha.c	/^int	ft_isalpha(int c)$/;"	f	typeref:typename:int
 ft_isascii	inc/libft/ft_isascii.c	/^int	ft_isascii(int c)$/;"	f	typeref:typename:int
 ft_isdigit	inc/libft/ft_isdigit.c	/^int	ft_isdigit(int c)$/;"	f	typeref:typename:int
 ft_isprint	inc/libft/ft_isprint.c	/^int	ft_isprint(int c)$/;"	f	typeref:typename:int
-ft_isspace	src/lexer/prompt.c	/^int	ft_isspace(char c)$/;"	f	typeref:typename:int
+ft_isspace	src/lexer/init_lexer.c	/^int	ft_isspace(char c)$/;"	f	typeref:typename:int
 ft_itoa	inc/libft/ft_itoa.c	/^char	*ft_itoa(int n)$/;"	f	typeref:typename:char *
-ft_lexer_input	src/lexer/prompt.c	/^t_tokens	*ft_lexer_input(const char *input)$/;"	f	typeref:typename:t_tokens *
-ft_list_to_char	src/lexer/prompt.c	/^char **ft_list_to_char(t_env *env)$/;"	f	typeref:typename:char **
-ft_lstsize	src/lexer/prompt.c	/^static int ft_lstsize(t_env *env)$/;"	f	typeref:typename:int	file:
+ft_lexer_input	src/lexer/lexer.c	/^t_tokens	*ft_lexer_input(const char *input)$/;"	f	typeref:typename:t_tokens *
+ft_list_to_char	src/lexer/env_utils.c	/^char **ft_list_to_char(t_env *env)$/;"	f	typeref:typename:char **
+ft_lstsize	src/lexer/env_utils.c	/^static int	ft_lstsize(t_env *env)$/;"	f	typeref:typename:int	file:
 ft_malloc_strs	inc/libft/ft_split.c	/^static char	**ft_malloc_strs(char **strs, const char *s, char c)$/;"	f	typeref:typename:char **	file:
 ft_memchr	inc/libft/ft_memchr.c	/^void	*ft_memchr(const void *s, int c, int n)$/;"	f	typeref:typename:void *
 ft_memcmp	inc/libft/ft_memcmp.c	/^int	ft_memcmp(const void *s1, const void *s2, size_t n)$/;"	f	typeref:typename:int
@@ -149,8 +285,10 @@ ft_putchar_fd	inc/libft/ft_putchar_fd.c	/^void	ft_putchar_fd(char c, int fd)$/;"
 ft_putendl_fd	inc/libft/ft_putendl_fd.c	/^void	ft_putendl_fd(char *s, int fd)$/;"	f	typeref:typename:void
 ft_putnbr_fd	inc/libft/ft_putnbr_fd.c	/^void	ft_putnbr_fd(int n, int fd)$/;"	f	typeref:typename:void
 ft_putstr_fd	inc/libft/ft_putstr_fd.c	/^void	ft_putstr_fd(char *s, int fd)$/;"	f	typeref:typename:void
+ft_remove_quotes	src/lexer/lexer_utils.c	/^char	*ft_remove_quotes(const char *value)$/;"	f	typeref:typename:char *
 ft_reset_read_end	src/executor/ft_executor.c	/^void	ft_reset_read_end(t_cmds *current, int *prev_read, int *fd)$/;"	f	typeref:typename:void
 ft_search_c	inc/libft/ft_strtrim.c	/^static	int	ft_search_c(char c, const char *set)$/;"	f	typeref:typename:int	file:
+ft_skip_spaces_and_quotes	src/lexer/lexer_utils.c	/^void	ft_skip_spaces_and_quotes(char **input)$/;"	f	typeref:typename:void
 ft_split	inc/libft/ft_split.c	/^char	**ft_split(char const *s, char c)$/;"	f	typeref:typename:char **
 ft_split_path	src/expanser/split_path.c	/^char **ft_split_path(const char *path)$/;"	f	typeref:typename:char **
 ft_strchr	inc/libft/ft_strchr.c	/^char	*ft_strchr(const char *s, int c)$/;"	f	typeref:typename:char *
@@ -168,10 +306,18 @@ ft_strtrim	inc/libft/ft_strtrim.c	/^char	*ft_strtrim(const char *s1, const char 
 ft_substr	inc/libft/ft_substr.c	/^char	*ft_substr(const char *s, unsigned int start, size_t len)$/;"	f	typeref:typename:char *
 ft_tolower	inc/libft/ft_tolower.c	/^int	ft_tolower(int c)$/;"	f	typeref:typename:int
 ft_toupper	inc/libft/ft_toupper.c	/^int	ft_toupper(int c)$/;"	f	typeref:typename:int
+ft_validate_quotes	src/lexer/lexer_utils.c	/^static int	ft_validate_quotes(const char *value)$/;"	f	typeref:typename:int	file:
 full_path	inc/minishell.h	/^	char			*full_path;$/;"	m	struct:s_cmds	typeref:typename:char *
 get_env_value	src/expanser/utils_expanser.c	/^static char	*get_env_value(t_env *env, char *key)$/;"	f	typeref:typename:char *	file:
 group	.vscode/tasks.json	/^		"group": {$/;"	o	object:tasks.0
 heredoc	inc/minishell.h	/^	int		heredoc;$/;"	m	struct:s_dir	typeref:typename:int
+ignoreFailures	src/parser/.vscode/launch.json	/^          "ignoreFailures": true$/;"	b	object:configurations.0.setupCommands.0
+includePath	.vscode/c_cpp_properties.json	/^      "includePath": [$/;"	a	object:configurations.0
+includePath	src/parser/.vscode/c_cpp_properties.json	/^      "includePath": [$/;"	a	object:configurations.0
+init_signals	src/utils/signals.c	/^void	init_signals(void)$/;"	f	typeref:typename:void
+init_utils	src/utils/init_utils.c	/^void	init_utils(t_utils *utils, t_env *env)$/;"	f	typeref:typename:void
+intelliSenseMode	.vscode/c_cpp_properties.json	/^      "intelliSenseMode": "windows-gcc-x86",$/;"	s	object:configurations.0
+intelliSenseMode	src/parser/.vscode/c_cpp_properties.json	/^      "intelliSenseMode": "windows-gcc-x86",$/;"	s	object:configurations.0
 isDefault	.vscode/tasks.json	/^		  "isDefault": true$/;"	b	object:tasks.0.group
 key	inc/minishell.h	/^	char			*key;$/;"	m	struct:s_env	typeref:typename:char *
 kind	.vscode/tasks.json	/^		  "kind": "build",$/;"	s	object:tasks.0.group
@@ -180,35 +326,47 @@ library	Makefile	/^library:$/;"	t
 logging	.vscode/launch.json	/^		"logging": {$/;"	o	object:configurations.0
 main	src/main.c	/^int main(int ac, char **argv, char **env)$/;"	f	typeref:typename:int
 make_copy	inc/libft/ft_memmove.c	/^static void	*make_copy(unsigned char *dst, const unsigned char *src, size_t len)$/;"	f	typeref:typename:void *	file:
-makefile.configureOnOpen	.vscode/settings.json	/^	"makefile.configureOnOpen": false$/;"	b
+makefile.configureOnOpen	.vscode/settings.json	/^  "makefile.configureOnOpen": false,$/;"	b
 malloc_error	inc/libft/ft_substr.c	/^static char	*malloc_error(size_t len_malloc)$/;"	f	typeref:typename:char *	file:
 miDebuggerPath	.vscode/launch.json	/^		"miDebuggerPath": "\/usr\/bin\/gdb",  \/\/ Ruta del depurador (puede variar según el sistema)$/;"	s	object:configurations.0
-minishell.h	.vscode/settings.json	/^		"minishell.h": "c"$/;"	s	object:files.associations
+miDebuggerPath	src/parser/.vscode/launch.json	/^      "miDebuggerPath": "gdb",$/;"	s	object:configurations.0
+minishell.h	.vscode/settings.json	/^    "minishell.h": "c"$/;"	s	object:files.associations
+name	.vscode/c_cpp_properties.json	/^      "name": "windows-gcc-x86",$/;"	s	object:configurations.0
 name	.vscode/launch.json	/^		"name": "Debug Minishell",$/;"	s	object:configurations.0
+name	src/parser/.vscode/c_cpp_properties.json	/^      "name": "windows-gcc-x86",$/;"	s	object:configurations.0
+name	src/parser/.vscode/launch.json	/^      "name": "C\/C++ Runner: Debug Session",$/;"	s	object:configurations.0
 next	inc/minishell.h	/^	struct s_cmds 	*next;$/;"	m	struct:s_cmds	typeref:struct:s_cmds *
 next	inc/minishell.h	/^	struct s_env	*next;$/;"	m	struct:s_env	typeref:struct:s_env *
 next	inc/minishell.h	/^	struct s_tokens	*next;$/;"	m	struct:s_tokens	typeref:struct:s_tokens *
 next	inc/minishell.h	/^	struct s_utils	*next;$/;"	m	struct:s_utils	typeref:struct:s_utils *
 preLaunchTask	.vscode/launch.json	/^		"preLaunchTask": "compilar",  \/\/ Nombre de la tarea de compilación$/;"	s	object:configurations.0
 prev	inc/minishell.h	/^	struct s_cmds	*prev;$/;"	m	struct:s_cmds	typeref:struct:s_cmds *
+prev	inc/minishell.h	/^	struct s_env	*prev;$/;"	m	struct:s_env	typeref:struct:s_env *
 prev	inc/minishell.h	/^	struct s_tokens	*prev;$/;"	m	struct:s_tokens	typeref:struct:s_tokens *
 prev	inc/minishell.h	/^	struct s_utils	*prev;$/;"	m	struct:s_utils	typeref:struct:s_utils *
-print_find_cmd	src/parser/parser.c	/^void print_find_cmd(t_cmds	*find_cmd)$/;"	f	typeref:typename:void
 print_num	inc/libft/ft_putnbr_fd.c	/^static void	print_num(int n2, int fd2)$/;"	f	typeref:typename:void	file:
 problemMatcher	.vscode/tasks.json	/^		"problemMatcher": ["$gcc"],$/;"	a	object:tasks.0
 program	.vscode/launch.json	/^		"program": "${workspaceFolder}\/minishell",  \/\/ Ruta del ejecutable$/;"	s	object:configurations.0
-prompt_loop	src/lexer/prompt.c	/^void	prompt_loop(t_env *environ, char *path)$/;"	f	typeref:typename:void
+program	src/parser/.vscode/launch.json	/^      "program": "\/\/wsl.localhost\/Ubuntu\/home\/rbuitrag\/Cursus42\/Circle_3\/minishell\/src\//;"	s	object:configurations.0
+prompt_loop	src/lexer/prompt.c	/^void	prompt_loop(t_utils *utils, char *path)$/;"	f	typeref:typename:void
 re	Makefile	/^re: fclean all$/;"	t
 re	inc/libft/Makefile	/^re : fclean all$/;"	t
-read_input	src/lexer/prompt.c	/^char	*read_input(void)$/;"	f	typeref:typename:char *
+read_input	src/lexer/read_input.c	/^char	*read_input(void)$/;"	f	typeref:typename:char *
+redir_in	inc/minishell.h	/^	t_dir			*redir_in;$/;"	m	struct:s_cmds	typeref:typename:t_dir *
+redir_out	inc/minishell.h	/^	t_dir			*redir_out;$/;"	m	struct:s_cmds	typeref:typename:t_dir *
 request	.vscode/launch.json	/^		"request": "launch",$/;"	s	object:configurations.0
+request	src/parser/.vscode/launch.json	/^      "request": "launch",$/;"	s	object:configurations.0
 s_cmds	inc/minishell.h	/^typedef struct s_cmds$/;"	s
 s_dir	inc/minishell.h	/^typedef struct s_dir$/;"	s
 s_env	inc/minishell.h	/^typedef struct s_env$/;"	s
 s_tokens	inc/minishell.h	/^typedef struct s_tokens$/;"	s
 s_utils	inc/minishell.h	/^typedef struct s_utils$/;"	s
+setupCommands	src/parser/.vscode/launch.json	/^      "setupCommands": [$/;"	a	object:configurations.0
+sigint_handler	src/utils/signals.c	/^void	sigint_handler(int signal)$/;"	f	typeref:typename:void
+sigquit_handler	src/utils/signals.c	/^void	sigquit_handler(int signal)$/;"	f	typeref:typename:void
 stdin	inc/minishell.h	/^	int				stdin;$/;"	m	struct:s_utils	typeref:typename:int
 stdout	inc/minishell.h	/^	int				stdout;$/;"	m	struct:s_utils	typeref:typename:int
+stopAtEntry	src/parser/.vscode/launch.json	/^      "stopAtEntry": false,$/;"	b	object:configurations.0
 substring	src/expanser/split_path.c	/^static char *substring(const char *start, const char *end)$/;"	f	typeref:typename:char *	file:
 t_cmds	inc/minishell.h	/^} t_cmds;$/;"	t	typeref:struct:s_cmds
 t_dir	inc/minishell.h	/^}	t_dir;$/;"	t	typeref:struct:s_dir
@@ -217,11 +375,16 @@ t_tokens	inc/minishell.h	/^}	t_tokens;$/;"	t	typeref:struct:s_tokens
 t_type	inc/minishell.h	/^}	t_type;$/;"	t	typeref:enum:e_type
 t_utils	inc/minishell.h	/^}	t_utils;$/;"	t	typeref:struct:s_utils
 tasks	.vscode/tasks.json	/^	"tasks": [$/;"	a
+text	src/parser/.vscode/launch.json	/^          "text": "-enable-pretty-printing",$/;"	s	object:configurations.0.setupCommands.0
 token	inc/minishell.h	/^	t_type			token;$/;"	m	struct:s_tokens	typeref:typename:t_type
 trace	.vscode/launch.json	/^		  "trace": true$/;"	b	object:configurations.0.logging
 type	.vscode/launch.json	/^		"type": "cppdbg",$/;"	s	object:configurations.0
 type	.vscode/tasks.json	/^		"type": "shell",$/;"	s	object:tasks.0
+type	src/parser/.vscode/launch.json	/^      "type": "cppdbg",$/;"	s	object:configurations.0
 value	inc/minishell.h	/^	char			*value;$/;"	m	struct:s_env	typeref:typename:char *
 value	inc/minishell.h	/^	char			*value;$/;"	m	struct:s_tokens	typeref:typename:char *
+version	.vscode/c_cpp_properties.json	/^  "version": 4$/;"	n
 version	.vscode/launch.json	/^	"version": "0.2.0",$/;"	s
 version	.vscode/tasks.json	/^	"version": "2.0.0",$/;"	s
+version	src/parser/.vscode/c_cpp_properties.json	/^  "version": 4$/;"	n
+version	src/parser/.vscode/launch.json	/^  "version": "0.2.0",$/;"	s

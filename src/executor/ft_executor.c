@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yrodrigu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/27 10:23:33 by rbuitrag         ###   ########.fr       */
+/*   Created: 2025/01/29 12:42:17 by rbuitrag          #+#    #+#             */
+/*   Updated: 2025/01/29 13:19:15 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 
@@ -87,6 +88,9 @@ int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
 	{
 		ft_dup_close(cmd, prev_read, fd);
 		execve(cmd->full_path, cmd->cmd_array, env);
+		printf("Command '%s' not found\n", cmd->full_path);
+		//ft_free_cmd(cmd);
+		ft_free_array(env);
 		exit(1);
 	}
 	return (1);
