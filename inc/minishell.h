@@ -91,12 +91,12 @@ void    prompt_loop(t_utils *utils, char *path);
 
 /*          LEXER FUNCTIONS         */
 t_type		ft_determine_type(char *value);
-t_tokens	*ft_create_node(char **value);
-t_tokens	*ft_lexer_input(char *input);
+t_tokens	*ft_create_node(const char **value);
+t_tokens	*ft_lexer_input(const char *input);
 char		*read_input(void);
 int			ft_addlast_node(t_tokens **lexer, t_tokens *current_node);
-char		*ft_get_word(char **line);
-char		*ft_get_value(char **line);
+char		*ft_get_word(const char **line);
+char		*ft_get_value(const char **line);
 char		*read_input(void);
 t_tokens	*ft_init_node(void);
 

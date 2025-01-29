@@ -25,27 +25,30 @@ static int	ft_lstsize(t_env *env)
 	return (size);
 }
 
-char	**ft_list_to_char(t_env *env)
+char **ft_list_to_char(t_env *env)
 {
-	char	**char_env;
-	int		size;
-	char	*key_value;
+    char    **char_env;
+    int     size;
+    char    *key_value;
+	char	*temp;
 
-	size = ft_lstsize(env);
-	char_env = (char **)malloc(sizeof(char *) * (size + 1));
-	if (!char_env)
-		return (NULL);
-	for (int i = 0; env; i++, env = env->next)
-	{
-		key_value = ft_strjoin(env->key, "=");
-		char_env[i] = ft_strjoin(key_value, env->value);
-		free(key_value);
-		if (!char_env[i])
-		{
-			ft_free_array(char_env);
+    size = ft_lstsize(env);
+    char_env = (char **)malloc(sizeof(char *) * (size + 1));
+    if (!char_env)
+        return (NULL);
+    while (env)
+    {
+        temp = ft_strjoin(env->key, "=");
+       	if (!temp)
 			return (NULL);
-		}
-	}
-	char_env[size] = NULL;
-	return (char_env);
+		key_value = ft_strjoin(temp, env->value);
+		if (!key_value)
+			return (NULL);
+		free(temp);
+        *char_env = key_value;
+        char_env++;
+        env = env->next;
+    }
+	*char_env = NULL;
+    return (char_env - size);
 }

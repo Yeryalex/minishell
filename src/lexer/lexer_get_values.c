@@ -15,7 +15,7 @@
 /*
  * // Recoge el total de chars en word y controlo comillas sin cerrar
  */
-char	*ft_get_word(char **input)
+char	*ft_get_word(const char **input)
 {
 	int		i;
 	char	*value;
@@ -46,7 +46,7 @@ char	*ft_get_word(char **input)
 /*
 // recogemos el valor para el nodo WORD hasta los space
 */
-char	*ft_get_value(char **input)
+char	*ft_get_value(const char **input)
 {
 	char	*value;
 	int		i;

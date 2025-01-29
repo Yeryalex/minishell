@@ -68,6 +68,7 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
     }
 	node_cmd->cmd_array[i] = NULL;
     node_cmd->next = NULL;
+	node_cmd->prev = NULL;
 	if (!node_cmd)
 			return (ft_free_cmd(node_cmd), NULL);
 	return (node_cmd);
@@ -79,7 +80,8 @@ t_cmds *ft_parser(t_tokens *lexer, char *path)
  	t_cmds *new_cmd;
     t_tokens *head_parser; 
     t_tokens *parser;
-	int count_tokens;
+	char *cmd_path;
+	int count_tokens = 0;
 
     head_parser = lexer;
 	parser = lexer;
@@ -91,6 +93,7 @@ t_cmds *ft_parser(t_tokens *lexer, char *path)
     	perror("syntax error near unexpected token `|\'\n");
     	return (NULL);
 	}
+	cmd_path = path;
 	while (parser)
 	{
     	if (parser->token == WORD)
@@ -99,18 +102,10 @@ t_cmds *ft_parser(t_tokens *lexer, char *path)
     	{
         	if (count_tokens > 0)
         	{
-            	new_cmd = ft_create_node_cmd(head_parser, count_tokens, path);
+            	new_cmd = ft_create_node_cmd(head_parser, count_tokens, cmd_path);
             	if (!new_cmd)
-				{
-					ft_free_tokens(&head_parser);
-                    ft_free_cmd(all_cmds);
-                    return (NULL);
-				}
-
-					//return(ft_free_cmd(new_cmd), NULL);
-				//if (!new_cmd->cmd_array)
-				//	new_cmd->cmd_array = free_cmd_array(new_cmd->cmd_array);
-			//	free(new_cmd);
+					return(ft_free_cmd(new_cmd), NULL);
+				ft_addlast_pnode(&all_cmds, new_cmd);
         	}
 			else
         	{
@@ -124,33 +119,15 @@ t_cmds *ft_parser(t_tokens *lexer, char *path)
 	}
 	if (count_tokens > 0)
 	{
-    	new_cmd = ft_create_node_cmd(head_parser, count_tokens, path);
+    	new_cmd = ft_create_node_cmd(head_parser, count_tokens, cmd_path);
     	if (!new_cmd)
-		{
-			ft_free_tokens(&head_parser);
-			ft_free_cmd(all_cmds);
-			//ft_free_cmd(new_cmd);
-			return (NULL);
-		//	free(cmd_path);
-			//return (ft_free_cmd(new_cmd), NULL);
-		}
+			return (ft_free_cmd(new_cmd), NULL);
 		ft_addlast_pnode(&all_cmds, new_cmd);
     }
-//	else if (parser && parser->token == PIPE)
-//	{
-  //  	perror("syntax error near unexpected token `|\'\n");
-    //	return (NULL);
-//	}
-/*	if (!all_cmds)
+	else if (parser && parser->token == PIPE)
 	{
-		ft_free_tokens(&head_parser);
-		ft_free_cmd(new_cmd);
-		ft_free_cmd(all_cmds);
-		free(cmd_path);
-		return (NULL);
-	}*/
-	//ft_free_cmd(new_cmd) hace SEVFa;
-	//ft_free_tokens(&head_parser);
-	//ft_free_tokens(&parser);
+    	perror("syntax error near unexpected token `|\'\n");
+    	return (NULL);
+	}
 	return (all_cmds);
 }
