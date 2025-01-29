@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:44:57 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/29 12:54:55 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/29 13:48:27 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -111,13 +111,17 @@ t_env *ft_add_node_env(char **cmd_array, t_env *env)
 	{
 		node = (t_env *)malloc(sizeof(t_env));
 		node->next = NULL;
+		
+		key_value = ft_split(cmd_array[i], '=');
 		int	add_equals = ft_exist_char(cmd_array[i]);
+		
+		t_env *node_with_key = ft_find_key_env(env, key_value[0]);
 		if (add_equals)
 		{
 		
-			key_value = ft_split(cmd_array[i], '=');
-			t_env *temp = ft_find_key_env(env, key_value[0]);
-			if (!temp)
+		//	key_value = ft_split(cmd_array[i], '=');
+		//	t_env *temp = ft_find_key_env(env, key_value[0]);
+			if (!node_with_key)
 			{
 				node->key = key_value[0];
 				if (add_equals == 1)
@@ -132,19 +136,26 @@ t_env *ft_add_node_env(char **cmd_array, t_env *env)
 			}
 			else
 			{
-				if (temp->value)
-					free(temp->value);
+				if (node_with_key->value)
+					free(node_with_key->value);
 				if (key_value[1])
-					temp->value = ft_strdup(key_value[1]);
+					node_with_key->value = ft_strdup(key_value[1]);
 				else
 					key_value = NULL;
 				break ;
 			}
 		}
-		else
+		else if (!add_equals)
 		{
-			node->key = ft_strdup(cmd_array[i]);
-			node->value = NULL;
+			if (!node_with_key)
+			{
+				node_with_key->key = ft_strdup(cmd_array[i]);
+				node_with_key->value = NULL;
+			}
+			else
+			{
+				node_with_key->key = ft_strdup(cmd_array[i]);
+			}
 		}
         temp = env;
         while (temp->next)
