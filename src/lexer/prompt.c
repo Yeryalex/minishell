@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/25 10:45:03 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/29 11:16:41 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,9 @@ t_tokens	*ft_lexer_input(const char *input)
 	while(*input)
 	{
 		while (ft_isspace(*input))
-		{
 			input++;
-			continue ;
-		}
+		if (!*input)
+			break ;
 		node = ft_create_node(&input);
 		if (!node || (node && ft_addlast_node(&lexer, node)))
 		{
@@ -124,8 +123,6 @@ char **ft_list_to_char(t_env *env)
     char    **char_env;
     int     size;
     char    *key_value;
-	char	*dup_key;
-	char	*dup_value;
 	char	*temp;
 
     size = ft_lstsize(env);
@@ -134,19 +131,18 @@ char **ft_list_to_char(t_env *env)
         return (NULL);
     while (env)
     {
-		dup_key = ft_strdup(env->key);
-		dup_value = ft_strdup(env->value);
-        key_value = ft_strjoin(dup_key, "=");
-       	if (!key_value)
+        temp = ft_strjoin(env->key, "=");
+       	if (!temp)
 			return (NULL);
-		temp = ft_strjoin(key_value, dup_value);
-		free(key_value);
-		free(dup_key);
-		free(dup_value);
-        *char_env = temp;
+		key_value = ft_strjoin(temp, env->value);
+		if (!key_value)
+			return (NULL);
+		free(temp);
+        *char_env = key_value;
         char_env++;
         env = env->next;
     }
+	*char_env = NULL;
     return (char_env - size);
 }
 

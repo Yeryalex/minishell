@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/25 10:28:24 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/29 10:19:17 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
 	node_cmd->full_path = ft_get_path(path, node_cmd->cmd_array[0]);
 	node_cmd->cmd_array[count_tokens] = NULL;
     node_cmd->next = NULL;
-    return (node_cmd);
+    node_cmd->prev = NULL;
+	return (node_cmd);
 }
 
 t_cmds *ft_parser(t_tokens *lexer, char *path)
