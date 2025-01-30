@@ -12,59 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-
-/*
-char	*ft_get_path(char *path, char *cmd)
-{
-	char	**path_dir;
-	char	*path_to_exec;
-	char	*tmp;
-	int		i;
-
-	path_dir = ft_split(path, ':');
-	if (!path_dir)
-		return NULL;
-	i = 0;
-	while(path_dir[i])
-	{
-		path_to_exec = ft_strjoin(path_dir[i], "/");
-		if (!path_to_exec)
-			return (ft_free_array(path_dir), NULL);
-		tmp = ft_strjoin(path_to_exec, cmd);
-		if (!tmp)
-			return (ft_free_array(path_dir), free(path_to_exec), NULL);
-		free(path_to_exec);
-		path_to_exec = tmp;
-		if (access(path_to_exec, F_OK | X_OK) == 0)
-			break ;
-		free(path_to_exec);
-		i++;
-	}
-	return (ft_free_array(path_dir), path_to_exec);	
-}
-*/
-
-/*
-void print_struct(t_commands *lst)
-{
-	while (lst)
-	{
-		if (lst->prev)
-		{
-    		printf("Struct content->prev = %i\n", lst->prev->id);
-		}
-		else
-    		printf("first content->prev node is NULL\n");
-		printf("struct content %i\n", lst->id);
-		if (lst->next)
-		    printf("struct content->next = %i\n", lst->next->id);
-		else
-    		printf("last content->next node is NULL\n");
-		lst = lst->next;
-	}
-}
-*/
-
 void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
 {
 	if (cmd->prev)
@@ -87,11 +34,15 @@ int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
 	if (pid == 0)
 	{
 		ft_dup_close(cmd, prev_read, fd);
-		execve(cmd->full_path, cmd->cmd_array, env);
-		printf("Command '%s' not found\n", cmd->full_path);
-		//ft_free_cmd(cmd);
-		ft_free_array(env);
-		exit(1);
+		if (execve(cmd->full_path, cmd->cmd_array, env) == -1)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(cmd->cmd_array[0], 2);
+			ft_putstr_fd(": command not found\n", 2);
+			//ft_free_cmd(cmd); Genera doble free
+			ft_free_array(env);
+			exit(127);
+		}
 	}
 	return (1);
 }
@@ -149,7 +100,7 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
     {
     	if (current->next && pipe(fd) == -1)
 		{
-            perror("error in pipe\n");
+            perror("minishell: error in pipe\n");
 			return ;
         }
 		if (current->cmd_array && current->cmd_array[0])

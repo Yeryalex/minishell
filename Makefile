@@ -25,6 +25,7 @@ CFILES =	main.c \
 			lexer/init_lexer.c \
 			lexer/read_input.c \
 			lexer/lexer_get_values.c \
+			lexer/quotes.c \
 			parser/parser.c \
 			parser/parser_utils.c \
 			utils/init_env.c \

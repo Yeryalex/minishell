@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-/*static void	ft_cleanup_loop(t_tokens **commands, t_cmds *cmd, char *input)
+static void	ft_cleanup_loop(t_tokens **commands, t_cmds *cmd, char *input)
 {
 	if (commands)
 		ft_free_tokens(commands);
@@ -20,7 +20,7 @@
 		ft_free_cmd(cmd);
 	if (input)
 		free(input);
-}*/
+}
 
 void	prompt_loop(t_utils *utils, char *path)
 {
@@ -46,10 +46,14 @@ void	prompt_loop(t_utils *utils, char *path)
             continue;
         }
  	 	cmd = ft_parser(commands, path);
-		//ft_free_tokens(&commands);
-		//free(path);
-		ft_executor(cmd, utils, env);
-    }
-  	//ft_free_tokens(&commands);
-  	free(input);
+		if (!cmd)
+		{
+			ft_free_tokens(&commands);
+			free(input);
+			continue;
+		}
+			ft_executor(cmd, utils, env);
+	}
+	ft_cleanup_loop(&commands, cmd, input);
+	ft_free_array(env);
 }

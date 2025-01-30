@@ -35,10 +35,12 @@ char	*ft_get_word(const char **input)
 		++i;
 	}
 	if (quote != 0)
-		return (ft_exit_error(quote));
+	{	ft_putstr_fd("minishell: syntax error: unclosed quote\n", 2);
+		return(NULL);	
+	}
 	value = ft_substr(*input, 0, i);
 	if (!value)
-		return (free(value), NULL);
+		return (NULL);
 	*input = *input + i;
 	return (value);
 }
@@ -63,6 +65,6 @@ char	*ft_get_value(const char **input)
 	else
 		value = ft_get_word(input);
 	if (!value)
-		return(free(value), NULL);
+		return(NULL);
 	return (value);
 }

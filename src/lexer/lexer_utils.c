@@ -15,19 +15,23 @@
 /*
 // Función para liberar la memoria de los tokens
 */
-void	ft_free_tokens(t_tokens **head)
+void	ft_free_tokens(t_tokens **lexer)
 {
-	t_tokens	*temp;
+	t_tokens	*tmp;
 
-	while (*head)
+	//if (!lexer || !*lexer)
+		//return ;
+	//while ((*lexer)->prev)
+	//	*lexer = (*lexer)->prev;
+	while (*lexer)
 	{
-		temp = (*head)->next;
-		free((*head)->value);
-		free((void*)(*head)->token);
-		free(*head);
-		*head = temp;
+		tmp = (*lexer)->next;
+		free((*lexer)->value);
+		free((void*)(*lexer)->token);
+		free(*lexer);
+		*lexer = tmp;
 	}
-	*head = NULL;
+	*lexer = NULL;
 }
 
 int	ft_is_metacharacter(int c)
@@ -39,70 +43,15 @@ int	ft_is_metacharacter(int c)
 
 /*
 // vamos a controlar la salida si le faltan comillas,
-*/ 
+ 
 void	*ft_exit_error(char quote)
 {
 	ft_putstr_fd("minishell: Error! unclosed quote ", 2);
 	ft_putchar_fd(quote, 2);
 	ft_putchar_fd('\n', 2);
 	return (NULL);
-}
+}*/
 
-// Valida que las comillas sean pares y estén correctamente cerradas
-static int	ft_validate_quotes(const char *value)
-{
-	char	quote_type;
-	int		i;
-	int		opened;
-
-	i = 0;
-	opened = 0;
-	while (value[i])
-	{
-		if (value[i] == '\'' || value[i] == '"')
-		{
-			quote_type = value[i];
-			opened++;
-			i++;
-			while (value[i] && value[i] != quote_type)
-				i++;
-			if (value[i] == quote_type)
-				opened--;
-		}
-		if (value[i])
-			i++;
-	}
-	// Si no se cerraron correctamente las comillas
-	if (opened > 0)
-	{
-		printf("Unexpected close quote\n");
-		return (0);
-	}
-	return (1);
-}
-
-char	*ft_remove_quotes(const char *value)
-{
-	char	*trimmed;
-	char	*result;
-
-	if (!value)
-		return (NULL);
-
-	// Validar las comillas primero
-	if (!ft_validate_quotes(value))
-		return (NULL);
-
-	// Trim comillas simples y dobles
-	trimmed = ft_strtrim(value, "\'\"");
-	if (!trimmed)
-		return (NULL);
-
-	// Duplicar el valor sin las comillas
-	result = ft_strdup(trimmed);
-	free(trimmed);
-	return (result);
-}
 
 void	ft_skip_spaces_and_quotes(char **input)
 {

@@ -146,7 +146,7 @@ int		ft_isspace(char c);
 void	*ft_exit_error(char quote);
 int		ft_is_metacharacter(int c);
 void	ft_skip_spaces_and_quotes(char **input);
-char	*ft_remove_quotes(const char *value);
+char	*ft_remove_quotes(char *value);
 
 /* UTILS FUNCTIONS */
 
