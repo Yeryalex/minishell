@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 12:42:17 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/29 13:19:15 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/30 19:15:01 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
 		dup2(fd[1], STDOUT_FILENO);;
 		close(fd[1]);	
 	}
+	close(fd[0]); // Close read en el hijo
 }
 
 int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
@@ -85,7 +86,6 @@ void	ft_exec_builtin(t_commands *cmd, t_utils *utils, int fd)
 		ft_echo(cmd, fd);
 }
 */
-
 void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 {
 	int	fd[2];
@@ -105,7 +105,7 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
         }
 		if (current->cmd_array && current->cmd_array[0])
 		{
-		/*	if (ft_is_builtin(current, utils))
+			/*if (ft_is_builtin(current, utils))
 			{
 				printf("%s is builtin\n", current->cmd[0]);
 				ft_exec_builtin(current, utils, fd[1]);
@@ -122,7 +122,6 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
      {
          wait(NULL);
      }
-
 }
 
 

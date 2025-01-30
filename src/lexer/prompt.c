@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/28 14:37:41 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/30 17:57:04 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	prompt_loop(t_utils *utils, char *path)
  		input = read_input();
 		if (!input)
 		{
-			free(input);
-			break ;
+			//free(input);
+			break; ;
 		}
 		commands = ft_lexer_input(input);
 		if (!commands)

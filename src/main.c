@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/27 09:04:31 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/30 17:45:16 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int main(int ac, char **argv, char **env)
 	if (!utils)
 	{
 		perror("Error to asign memory for utils\n");
-		free(utils);
+		ft_free_utils(utils);
 		return (1);
 	}
 
