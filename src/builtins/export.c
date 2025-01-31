@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:44:57 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/30 13:21:02 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:19:59 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -101,112 +101,100 @@ t_env	*ft_find_key_env(t_env *env, char *key_value)
 
 int	ft_abletojoin(char *str)
 {
-	int i;
-
-	i = ft_strlen(str) - 1;
-	if (str[i] == '+' && str[i - 1] != '+')
-			return (1);
+	int plus;
+	int	i;
+	
+	i = 0;
+	plus = 0;
+	while (str[i])
+	{
+		if (str[i] == '+')
+			plus++;
+		i++;
+	}
+	if (plus == 1)
+		return (1);
+	else if (plus > 1)
+		return (2);
 	return (0);
 }
 
-t_env *ft_add_node_env(char **cmd_array, t_env *env)
+
+int	ft_key_end(char *str)
 {
 	int i;
-	t_env	*node;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return  (i);
+		i++;
+	}
+	return (0);
+}
+
+
+t_env	*ft_add_node_env(char **cmd_array, t_env *env)
+{
+	int i;
+	t_env	*new_node;
 	t_env	*temp;
-	char	**key_value;
-	int		concat_flag = 0;
-	
+	t_env	*node_already_exist;
+	int 	flag;
+
 	i = 1;
+	flag = 0;
 	while (cmd_array && cmd_array[i])
 	{
+		char *x_key;
+		char *x_value = NULL;
+		int end_key;
+		
 		while (cmd_array[i] && cmd_array[i][0] == '=')
 		{
-			printf("minishell: export: `%s': not a valid identifier\n", cmd_array[i]);
-			i++;
-		}
-
+    		printf("minishell: export: `%s': not a valid identifier\n", cmd_array[i]);
+    		i++;
+		}	
 		if (!cmd_array[i])
 			return (env);
-		node = (t_env *)malloc(sizeof(t_env));
-		node->next = NULL;
-		
-		key_value = ft_split(cmd_array[i], '=');
-		int	add_equals = ft_exist_char(cmd_array[i]);
-		
-		if (ft_abletojoin(key_value[0]))
+		end_key = ft_key_end(cmd_array[i]);
+		if (end_key)
 		{
-			char *plus_join;
-
-			plus_join = key_value[0];
-			key_value[0] = ft_strtrim(key_value[0], "+");
-			if (key_value[1])
-				concat_flag = 1;
-			free(plus_join);
+			x_key = ft_substr(cmd_array[i], 0 , end_key);
+			x_value = ft_substr(cmd_array[i], end_key + 1, ft_strlen(cmd_array[i]));
 		}
-		
-		t_env *node_with_key = ft_find_key_env(env, key_value[0]);
-		printf("%i\n", concat_flag);
-
-		char	*final_value;
-
-		if (key_value[1])
-			final_value = ft_strtrim(key_value[1], "\"\'");
-
-		if (node_with_key && concat_flag)
+		else
+			x_key = ft_strdup(cmd_array[i]);
+	
+		node_already_exist = ft_find_key_env(env, x_key);
+		if (node_already_exist)
 		{
-			char *value_join;
-			value_join = key_value[1];
-			
-			if (node_with_key->value)
-			{
-				key_value[1] = ft_strjoin(node_with_key->value, key_value[1]);
-				free(value_join);
-			}
-		/*	else
-			{
-				node_with_key->value = key_value[1];
-				free(value_join);
-			}*/
-		}
-		if (node_with_key)
-		{
-			if (add_equals)
-			{
-				if (node_with_key->value)
-     				free(node_with_key->value);
-			
- 			if (final_value)
-     			node_with_key->value = final_value;
- 			else
-     			node_with_key->value = NULL;
-			}
-			i++;
-			continue ;
-		}
-		if (add_equals)
-		{
-			node->key = key_value[0];
-			if (add_equals == 1)
-			{
-    			if (final_value)
-        			node->value = final_value;
-    			else
-        			node->value = NULL;
-			}
-			else 
-    			node->value = ft_strjoin(ft_add_equals(add_equals - 1), final_value);
+
+				if (node_already_exist->value == NULL)
+				{
+					free(node_already_exist->value);
+					node_already_exist->value = x_value;
+				}
+				else
+				{
+					if (x_value)
+						node_already_exist->value = x_value;
+				}	
 		}
 		else
 		{
-			
-			node->key = key_value[0];
-			node->value = final_value;
+			new_node = (t_env *)malloc(sizeof(t_env));
+			new_node->next = NULL;
+
+			new_node->key = x_key;
+			new_node->value = x_value;
+	
+			temp = env;
+			while (temp->next)
+				temp = temp->next;
+			temp->next = new_node;
 		}
-        temp = env;
-        while (temp->next)
-			temp = temp->next;
-		temp->next = node;
 		i++;
 	}
 	return (env);
