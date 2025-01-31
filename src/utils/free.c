@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:36:31 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/30 17:29:44 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:13:52 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void ft_free_utils(t_utils *utils)
     if (utils->environ)
         ft_free_env(utils->environ);
     free(utils);
-	//return (NULL);
+	utils = NULL;
 }
 
 void ft_free_array(char **array)
@@ -59,7 +59,7 @@ void ft_free_array(char **array)
         return;
     while (array[i])
     {
-        free(array[i]);
+		free(array[i]);
 		array[i] = NULL;	
         i++;
     }
@@ -69,9 +69,15 @@ void ft_free_array(char **array)
 void	ft_free_one_to_cmd(t_cmds *cmd)
 {
 	if (cmd->cmd_array)
+	{
 		ft_free_array(cmd->cmd_array);
+		cmd->cmd_array = NULL;
+	}
 	if (cmd->full_path)
+	{
 		free (cmd->full_path);
+		cmd->full_path = NULL;
+	}
 	if (cmd->redir_in)
 		ft_free_redir(cmd->redir_in);
 	if (cmd->redir_out)

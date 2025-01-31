@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/30 17:20:42 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/31 10:33:16 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <errno.h>
 # include "../inc/libft/libft.h"
 
 # define CYAN "\033[96m"
@@ -81,6 +82,7 @@ typedef struct s_utils
 	t_env 			*environ;
 	int				stdin;
 	int				stdout;
+	int				exit_status;
 	char			*builtins[8];
 	struct s_utils	*next;
 	struct s_utils	*prev;
@@ -93,11 +95,11 @@ void    prompt_loop(t_utils *utils, char *path);
 t_type		ft_determine_type(char *value);
 t_tokens	*ft_create_node(const char **value);
 t_tokens	*ft_lexer_input(const char *input);
-char		*read_input(void);
+char		*read_input(char **env);
 int			ft_addlast_node(t_tokens **lexer, t_tokens *current_node);
 char		*ft_get_word(const char **line);
 char		*ft_get_value(const char **line);
-char		*read_input(void);
+char		*read_input(char **env);
 t_tokens	*ft_init_node(void);
 
 
@@ -114,6 +116,7 @@ void    ft_addlast_pnode(t_cmds **list, t_cmds *node);
 /*          BUILTINS FUNCTIONS         */
 
 /*          SIGNAL FUNCTIONS         */
+void		ft_ctr_c(int sig);
 
 /*          ENV FUNCTIONS         */
 t_env		*ft_init_env(char **env);

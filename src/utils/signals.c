@@ -6,9 +6,28 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:46:08 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/27 16:51:11 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/31 10:34:28 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../inc/minishell.h" 
+
+void	ft_ctr_c(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_putstr_fd("\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		//rl_redisplay();
+		///exit(130);
+	}
+}
+/*
+		g_signal = 0;
+		utils->exit_status = 130;
+	}
+}
 
 void	sigquit_handler(int signal)
 {
@@ -50,4 +69,4 @@ void	init_signals(void)
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
 	rl_catch_signals = 1;
-}
+}*/

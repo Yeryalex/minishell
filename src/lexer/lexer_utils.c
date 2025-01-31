@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:59:53 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/28 14:49:12 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/31 12:28:22 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_free_tokens(t_tokens **lexer)
 	{
 		tmp = (*lexer)->next;
 		free((*lexer)->value);
-		free((void*)(*lexer)->token);
+		//free((void*)(*lexer)->token);
 		free(*lexer);
 		*lexer = tmp;
 	}

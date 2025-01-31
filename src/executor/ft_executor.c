@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 12:42:17 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/30 19:15:01 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/31 12:42:04 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(cmd->cmd_array[0], 2);
 			ft_putstr_fd(": command not found\n", 2);
-			//ft_free_cmd(cmd); Genera doble free
+			ft_free_cmd(cmd);
 			ft_free_array(env);
 			exit(127);
 		}

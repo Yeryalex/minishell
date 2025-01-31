@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/01/30 19:37:04 by rbuitrag         ###   ########.fr        #
+#    Updated: 2025/01/31 12:10:08 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 
 HEADER = inc/minishell.h 
 LIBFT = inc/libft/libft.a
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address -fsanitize=leak
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address -fsanitize=leak
 
 CFILES =	main.c \
 			lexer/prompt.c \
@@ -32,6 +32,7 @@ CFILES =	main.c \
 			utils/env_export.c \
 			utils/free.c \
 			utils/init_utils.c \
+			utils/signals.c \
 			expanser/expanser.c \
 			expanser/split_path.c \
 			expanser/utils_expanser.c \

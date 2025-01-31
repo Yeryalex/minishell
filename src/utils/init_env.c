@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:15:20 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/27 17:53:26 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:20:58 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,7 @@ t_env	*ft_create_node_env(char *envs)
 	
 	env_node = (t_env *)malloc(sizeof(t_env));
 	if (!env_node)
-	{
-		ft_clear_lstenv(env_node);
 		return (NULL);
-	}
 	env_node->key = ft_get_env_key(envs);
 	env_node->value = ft_get_env_value(envs);
 	if (!env_node->value)
