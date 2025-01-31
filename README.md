@@ -280,4 +280,4 @@ https://github.com/karisti/42_minishell?tab=readme-ov-file#resources
 Para probar con dos terminales y probar bash y tu propia minishell ya que clona el teclado: https://42born2code.slack.com/files/U06D4LACZHA/F07SUS94QMR/init_test.sh 
 
 # Uso de Valgrind en el programa (sube el archivo <readline.ignore> para probar los leaks sin los errores de readline 
- valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all  --trace-children=yes --suppressions=readline.ignore -q ./minishell
+ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all  --trace-children=yes --track-origins=yes --suppressions=readline.ignore -q ./minishell
