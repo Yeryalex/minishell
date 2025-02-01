@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:44:57 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/31 13:19:59 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/01 11:54:35 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -45,43 +45,6 @@ void	ft_sort_env(t_env *env)
 		}
 		env = env->next;
 	}
-}
-
-int	ft_exist_char(char *str)
-{
-	int i;
-	int char_num;
-	i = 0;
-	char_num = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			char_num++;
-		i++;
-	}
-	if (char_num == 1)
-		return (1);
-	else if (char_num > 1)
-		return (char_num);
-	return (0);
-}
-
-char	*ft_add_equals(int count)
-{
-	char *equals;
-	int i;
-
-	i = 0;
-	equals = (char *)malloc(sizeof(char) * count);
-	if (!equals)
-		return (NULL);
-	while (i < count)
-	{
-		equals[i] = '=';
-		i++;
-	}
-	equals[i] = '\0';
-	return (equals);
 }
 
 t_env	*ft_find_key_env(t_env *env, char *key_value)
@@ -134,11 +97,88 @@ int	ft_key_end(char *str)
 	return (0);
 }
 
+void	ft_check_identifier(char **cmd_array, int *i)
+{
+	while (cmd_array[*i] && cmd_array[*i][0] == '=')
+	{
+    	printf("minishell: export: `%s': not a valid identifier\n", cmd_array[*i]);
+    	(*i)++;
+	}   
+}
+
+void	ft_init_key_value(char **cmd_array, char **x_key, char **x_value, int *i, int *flag)
+{
+		int end_key;
+		char	*temp_x_value;
+
+        end_key = ft_key_end(cmd_array[*i]);
+        if (end_key)
+        {   
+            *x_key = ft_substr(cmd_array[*i], 0 , end_key);
+            *x_value = ft_substr(cmd_array[*i], end_key + 1, ft_strlen(cmd_array[*i]));
+        }
+        else
+            *x_key = ft_strdup(cmd_array[*i]);
+        if (ft_abletojoin(*x_key))
+        {   
+            char *temp_key = *x_key;
+            *x_key = ft_strtrim(*x_key, "+");
+            free(temp_key);
+            *flag = 1;
+        }
+      	temp_x_value = *x_value;
+     	*x_value = ft_strtrim(*x_value, "\"\'");
+     	free(temp_x_value);
+}
+
+t_env	*ft_create_new_node(char **x_key, char **x_value)
+{
+	t_env	*new_node;
+
+ 	new_node = (t_env *)malloc(sizeof(t_env));
+ 	new_node->next = NULL;
+
+	new_node->key = *x_key;
+ 	new_node->value = *x_value;
+	return (new_node);
+}
+
+void	ft_flag_case1(t_env *node_already_exist, char **x_value)
+{
+	if (node_already_exist->value)
+	{   
+    	char *temp_value;
+    	
+    	temp_value = node_already_exist->value;
+    	node_already_exist->value = ft_strjoin(temp_value, *x_value);
+    	free(temp_value);
+	}
+	else
+	{
+    	if (*x_value)
+        	node_already_exist->value = *x_value;
+	}
+}
+
+void	ft_flag_case2(t_env *node_already_exist, char **x_value)
+{
+         if (node_already_exist->value == NULL) 
+         {
+             free(node_already_exist->value);
+             node_already_exist->value = *x_value;
+         }
+         else
+         {
+             if (*x_value)
+                 node_already_exist->value = *x_value;
+         }
+}
+
 
 t_env	*ft_add_node_env(char **cmd_array, t_env *env)
 {
 	int i;
-	t_env	*new_node;
+	t_env	*new_node = NULL;
 	t_env	*temp;
 	t_env	*node_already_exist;
 	int 	flag;
@@ -147,49 +187,24 @@ t_env	*ft_add_node_env(char **cmd_array, t_env *env)
 	flag = 0;
 	while (cmd_array && cmd_array[i])
 	{
-		char *x_key;
+		char *x_key = NULL;
 		char *x_value = NULL;
-		int end_key;
 		
-		while (cmd_array[i] && cmd_array[i][0] == '=')
-		{
-    		printf("minishell: export: `%s': not a valid identifier\n", cmd_array[i]);
-    		i++;
-		}	
+		ft_check_identifier(cmd_array, &i);
 		if (!cmd_array[i])
 			return (env);
-		end_key = ft_key_end(cmd_array[i]);
-		if (end_key)
-		{
-			x_key = ft_substr(cmd_array[i], 0 , end_key);
-			x_value = ft_substr(cmd_array[i], end_key + 1, ft_strlen(cmd_array[i]));
-		}
-		else
-			x_key = ft_strdup(cmd_array[i]);
-	
+		ft_init_key_value(cmd_array, &x_key, &x_value, &i, &flag);
 		node_already_exist = ft_find_key_env(env, x_key);
 		if (node_already_exist)
 		{
-
-				if (node_already_exist->value == NULL)
-				{
-					free(node_already_exist->value);
-					node_already_exist->value = x_value;
-				}
-				else
-				{
-					if (x_value)
-						node_already_exist->value = x_value;
-				}	
+			if (flag == 1)
+				ft_flag_case1(node_already_exist, &x_value);
+			else
+				ft_flag_case2(node_already_exist, &x_value);
 		}
 		else
 		{
-			new_node = (t_env *)malloc(sizeof(t_env));
-			new_node->next = NULL;
-
-			new_node->key = x_key;
-			new_node->value = x_value;
-	
+			new_node = ft_create_new_node(&x_key, &x_value);
 			temp = env;
 			while (temp->next)
 				temp = temp->next;
