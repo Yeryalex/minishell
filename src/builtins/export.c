@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:44:57 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/01 11:54:35 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/01 12:24:48 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -131,16 +131,21 @@ void	ft_init_key_value(char **cmd_array, char **x_key, char **x_value, int *i, i
      	free(temp_x_value);
 }
 
-t_env	*ft_create_new_node(char **x_key, char **x_value)
+void	ft_create_new_node(char **x_key, char **x_value, t_env *env)
 {
 	t_env	*new_node;
+	t_env	*temp;
 
  	new_node = (t_env *)malloc(sizeof(t_env));
  	new_node->next = NULL;
 
 	new_node->key = *x_key;
  	new_node->value = *x_value;
-	return (new_node);
+
+	temp = env;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new_node;
 }
 
 void	ft_flag_case1(t_env *node_already_exist, char **x_value)
@@ -174,12 +179,23 @@ void	ft_flag_case2(t_env *node_already_exist, char **x_value)
          }
 }
 
+void	ft_check_nodes(t_env *node_already_exist,char **x_key,  char **x_value, t_env *env, int *flag)
+{
+        if (node_already_exist)
+        {
+            if (*flag == 1)
+                ft_flag_case1(node_already_exist, x_value);
+            else
+                ft_flag_case2(node_already_exist, x_value);
+        }
+        else
+            ft_create_new_node(x_key, x_value, env); 
+	
+}
 
 t_env	*ft_add_node_env(char **cmd_array, t_env *env)
 {
 	int i;
-	t_env	*new_node = NULL;
-	t_env	*temp;
 	t_env	*node_already_exist;
 	int 	flag;
 
@@ -195,21 +211,7 @@ t_env	*ft_add_node_env(char **cmd_array, t_env *env)
 			return (env);
 		ft_init_key_value(cmd_array, &x_key, &x_value, &i, &flag);
 		node_already_exist = ft_find_key_env(env, x_key);
-		if (node_already_exist)
-		{
-			if (flag == 1)
-				ft_flag_case1(node_already_exist, &x_value);
-			else
-				ft_flag_case2(node_already_exist, &x_value);
-		}
-		else
-		{
-			new_node = ft_create_new_node(&x_key, &x_value);
-			temp = env;
-			while (temp->next)
-				temp = temp->next;
-			temp->next = new_node;
-		}
+		ft_check_nodes(node_already_exist, &x_key, &x_value, env, &flag);
 		i++;
 	}
 	return (env);
