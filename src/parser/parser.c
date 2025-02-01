@@ -150,6 +150,26 @@ static void	*free_cmd_array(char **cmd_array)
 	return (NULL);
 }
 
+static int	ft_init_cmd_node(t_cmds *node, int num)
+{
+	if (num > 0)
+	{
+		node->cmd_array = (char **)malloc((num + 1) * sizeof(char *));
+		if (!node->cmd_array)
+			return (free(node->cmd_array), -1);
+		node->cmd_array[num] = NULL;
+	}
+	else
+		node->cmd_array = NULL;
+	//node->error_fd = 0;
+	node->full_path = NULL;
+	node->prev = NULL;
+	node->next = NULL;
+	node->redir_in = NULL;
+	node->redir_out = NULL;
+	return (0);
+}
+
 // Crea un nodo de comandos y maneja errores de memoria
 t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
 {
@@ -161,9 +181,14 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
 	node_cmd = (t_cmds *)malloc(sizeof(t_cmds));
 	if (!node_cmd)
 		return (NULL);
-	node_cmd->cmd_array = (char **)malloc((count_tokens + 1) * sizeof(char *));
+	if (ft_init_cmd_node(node_cmd, count_tokens) == -1)
+	{
+		free(node_cmd);
+		return (NULL);
+	}
+	/*node_cmd->cmd_array = (char **)malloc((count_tokens + 1) * sizeof(char *));
 	if (!node_cmd->cmd_array)
-		return (free(node_cmd), NULL);
+		return (free(node_cmd), NULL);*/
 	i = 0;
 	while (lexer && lexer->token != PIPE && i < count_tokens)
 	{
@@ -176,7 +201,8 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
 	node_cmd->cmd_array[i] = NULL;
 	node_cmd->full_path = ft_get_path(path, node_cmd->cmd_array[0]);
 	if (!node_cmd->full_path)
-		return (free_cmd_array(node_cmd->cmd_array), free(node_cmd), NULL);
+		//return (free_cmd_array(node_cmd->cmd_array), free(node_cmd), NULL);
+		return (NULL);
 	node_cmd->next = NULL;
 	node_cmd->prev = NULL;
 	return (node_cmd);

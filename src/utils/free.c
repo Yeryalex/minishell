@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-void	ft_free_redir(t_dir *node)
+void	*ft_free_redir(t_dir *node)
 {
 	if (node)
 	{
@@ -24,7 +24,7 @@ void	ft_free_redir(t_dir *node)
 		free (node);
 		node = NULL;
 	}
-	//return (NULL);
+	return (NULL);
 }
 
 void ft_free_env(t_env *env)
@@ -46,7 +46,9 @@ void ft_free_utils(t_utils *utils)
     if (!utils)
         return ;
     if (utils->environ)
-        ft_free_env(utils->environ);
+		ft_free_env(utils->environ);
+	//if (utils->builtins[])
+	//	ft_free_array(utils->builtins);
     free(utils);
 	utils = NULL;
 }
@@ -60,13 +62,12 @@ void ft_free_array(char **array)
     while (array[i])
     {
 		free(array[i]);
-		array[i] = NULL;	
-        i++;
+		i++;
     }
-    free(array);
+	free(array);
 }
 
-void	ft_free_one_to_cmd(t_cmds *cmd)
+void	*ft_free_one_to_cmd(t_cmds *cmd)
 {
 	if (cmd->cmd_array)
 	{
@@ -79,17 +80,25 @@ void	ft_free_one_to_cmd(t_cmds *cmd)
 		cmd->full_path = NULL;
 	}
 	if (cmd->redir_in)
+	{
 		ft_free_redir(cmd->redir_in);
+		cmd->redir_in = NULL;
+	}
 	if (cmd->redir_out)
+	{
 		ft_free_redir(cmd->redir_out);
+		cmd->redir_out = NULL;
+	}
 	free(cmd);
-	//return (NULL);
+	return (NULL);
 }
 
 void	ft_free_cmd(t_cmds *cmd)
 {
 	t_cmds	*tmp;
 
+	if (!cmd)
+		return;
 	while (cmd)
 	{
 		tmp = cmd->next;

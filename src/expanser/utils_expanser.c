@@ -33,7 +33,7 @@ char	*ft_get_paths_from_env(t_env *environ)
     return (path_env);
 }
 
-char    *ft_get_path(char *path, char *cmd)
+/*char    *ft_get_path(char *path, char *cmd)
 {
     char    **path_dir;
     char    *path_to_exec;
@@ -46,6 +46,7 @@ char    *ft_get_path(char *path, char *cmd)
     if (!path_dir)
         return (ft_free_array(path_dir), NULL);
     i = 0;
+    path_to_exec = NULL;
     while(path_dir[i])
     {
         path_to_exec = ft_strjoin(path_dir[i], "/");
@@ -53,9 +54,10 @@ char    *ft_get_path(char *path, char *cmd)
             return (ft_free_array(path_dir), NULL);
         tmp = ft_strjoin(path_to_exec, cmd);
         if (!tmp)
-            return (ft_free_array(path_dir), free(path_to_exec), NULL);
+            //return (ft_free_array(path_dir), free(path_to_exec), free(tmp), NULL);
+            return (NULL);
         free(path_to_exec);
-        path_to_exec = tmp;
+        path_to_exec = ft_strdup(tmp);
         if (access(path_to_exec, F_OK | X_OK) == 0)
             break ;
         free(path_to_exec);
@@ -65,4 +67,44 @@ char    *ft_get_path(char *path, char *cmd)
 	if (!path_to_exec)
 		path_to_exec  = ft_strdup(cmd);
     return (ft_free_array(path_dir), path_to_exec);
+}*/
+char    *ft_get_path(char *path, char *cmd)
+{
+    char    **path_dir;
+    char    *path_to_exec;
+    char    *tmp;
+    int     i;
+
+    if (!path || !cmd)
+        return (NULL);
+    path_dir = ft_split(path, ':');
+    if (!path_dir)
+        return (NULL);
+    i = 0;
+    path_to_exec = NULL;
+    while (path_dir[i])
+    {
+        tmp = ft_strjoin(path_dir[i], "/");
+        if (!tmp)
+        {
+            ft_free_array(path_dir);
+            return (NULL);
+        }
+        path_to_exec = ft_strjoin(tmp, cmd);
+        free(tmp);
+        if (!path_to_exec)
+        {
+            ft_free_array(path_dir);
+            return (NULL);
+        }
+        if (access(path_to_exec, F_OK | X_OK) == 0)
+            break ;
+        free(path_to_exec);
+        path_to_exec = NULL;
+        i++;
+    }
+    ft_free_array(path_dir);
+    if (!path_to_exec)
+        path_to_exec = ft_strdup(cmd);
+    return (path_to_exec);
 }

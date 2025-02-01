@@ -24,7 +24,8 @@ void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
 		dup2(fd[1], STDOUT_FILENO);;
 		close(fd[1]);	
 	}
-	close(fd[0]); // Close read en el hijo
+	if (fd[0])
+		close(fd[0]); // Close read en el hijo
 }
 
 int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
@@ -40,7 +41,7 @@ int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(cmd->cmd_array[0], 2);
 			ft_putstr_fd(": command not found\n", 2);
-			ft_free_cmd(cmd);
+			//ft_free_cmd(cmd);
 			ft_free_array(env);
 			exit(127);
 		}
@@ -115,9 +116,10 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
         	ft_reset_read_end(current, &prev_read, fd);
 		}
 		current = current->next;
+		
      }
- 
-	 printf("Number of process = %i\n", i);
+	ft_free_cmd(current);
+	printf("Number of process = %i\n", i);
      while (i-- > 0)
      {
          wait(NULL);

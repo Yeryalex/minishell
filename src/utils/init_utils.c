@@ -17,7 +17,9 @@ void	init_utils(t_utils *utils, t_env *env)
 	utils->environ = env;
 	utils->next = NULL;
 	utils->prev = NULL;
-
+	utils->stdin = 0;
+	utils->stdout =	0;
+	utils->exit_status = 0;
 	utils->builtins[0] = "echo";
 	utils->builtins[1] = "cd";
 	utils->builtins[2] = "pwd";

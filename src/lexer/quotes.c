@@ -60,15 +60,20 @@ static int	ft_is_enclosed_by_single_quotes(const char *value)
 	return (len > 1 && value[0] == '\'' && value[len - 1] == '\'');
 }
 
-static char	*ft_strip_outer_quotes(char *value)
+static char *ft_strip_outer_quotes(char *value)
 {
-	int		len;
-	char	*trimmed;
+    int len;
+    char *trimmed;
 
-	len = ft_strlen(value);
-	trimmed = ft_substr(value, 1, len - 2);
-	free(value);
-	return (trimmed);
+    len = ft_strlen(value);
+    trimmed = ft_substr(value, 1, len - 2);
+    if (!trimmed)
+    {
+        free(value);
+        return (NULL);
+    }
+    free(value);
+    return (trimmed);
 }
 
 static void	ft_process_quotes(char *value, char *result, int inside_double)
@@ -102,7 +107,7 @@ char	*ft_remove_quotes(char *value)
 	int		inside_double_quotes;
 
 	if (!value || !ft_validate_quotes(value))
-		return (NULL);
+		return (free(value), NULL);
 	if (ft_is_enclosed_by_single_quotes(value))
 		return (ft_strip_outer_quotes(value)); // Elimina comillas simples externas
 	len = ft_strlen(value);
@@ -110,7 +115,7 @@ char	*ft_remove_quotes(char *value)
 	inside_double_quotes = (double_quotes / 2) % 2;
 	result = (char *)malloc(len + 1);
 	if (!result)
-		return (NULL);
+		return (free(value), NULL);
 	ft_process_quotes(value, result, inside_double_quotes);
 	free(value);
 	return (result);

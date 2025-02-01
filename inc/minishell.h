@@ -158,8 +158,8 @@ void	init_utils(t_utils *utils, t_env *env);
 /*          FREE FUNCTIONS         */
 void	ft_free_tokens(t_tokens **lexer);
 void    ft_free_cmd(t_cmds *cmd);
-void    ft_free_one_to_cmd(t_cmds *cmd);
-void    ft_free_redir(t_dir *node);
+void    *ft_free_one_to_cmd(t_cmds *cmd);
+void    *ft_free_redir(t_dir *node);
 void	ft_free_array(char **array);
 void	ft_free_utils(t_utils *utils);
 void	ft_free_env(t_env *env);

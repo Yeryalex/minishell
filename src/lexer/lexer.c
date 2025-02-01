@@ -16,13 +16,12 @@ t_tokens *ft_create_node(const char **input)
 {
     t_tokens *new_node = (t_tokens *)malloc(sizeof(t_tokens));
     if (!new_node)
-        //return (ft_free_tokens(&new_node), NULL);
-		return (NULL);
+        return (NULL);
     new_node->prev = NULL;
 	new_node->next = NULL;
 	new_node->value = ft_remove_quotes(ft_get_value(input));
     if (!new_node->value)
-        return (NULL);
+        return (free(new_node),NULL);
     new_node->token = ft_determine_type(new_node->value);
 	return (new_node);
 }
@@ -62,7 +61,7 @@ t_tokens	*ft_lexer_input(const char *input)
 			break ;
 		node = ft_create_node(&input);
 		if (!node)
-			return (NULL);
+			return (ft_free_tokens(&lexer),NULL);
 		if (ft_addlast_node(&lexer, node))
 		{
 			ft_free_tokens(&lexer);
