@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:44:57 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/01 13:12:05 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/02 13:11:49 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -107,12 +107,24 @@ void	ft_check_identifier(char **cmd_array, int *i)
 	}
 }
 
-void	ft_init_key_value(char **cmd_array, char **x_key, char **x_value, int *i, int *flag)
+void	ft_trim_case(char **x_value)
+{
+	char	*temp_x_value;
+
+	temp_x_value = *x_value;
+	printf("trim case before %s\n", *x_value);
+	*x_value = ft_strtrim(*x_value, "\"\'");
+	printf("trim case after %s\n", *x_value);
+	free(temp_x_value);
+}
+
+int	ft_init_key_value(char **cmd_array, char **x_key, char **x_value, int *i)
 {
 	int		end_key;
-	char	*temp_x_value;
 	char	*temp_key;
+	int		flag;
 
+	flag = 0;
 	end_key = ft_key_end(cmd_array[*i]);
 	if (end_key)
 	{
@@ -127,11 +139,11 @@ void	ft_init_key_value(char **cmd_array, char **x_key, char **x_value, int *i, i
 		temp_key = *x_key;
 		*x_key = ft_strtrim(*x_key, "+");
 		free(temp_key);
-		*flag = 1;
+		flag = 1;
 	}
-	temp_x_value = *x_value;
-	*x_value = ft_strtrim(*x_value, "\"\'");
-	free(temp_x_value);
+	ft_trim_case(x_key);
+	ft_trim_case(x_value);
+	return (flag);
 }
 
 void	ft_create_new_node(char **x_key, char **x_value, t_env *env)
@@ -168,33 +180,38 @@ void	ft_flag_case1(t_env *node_already_exist, char **x_value)
 	else
 	{
 		if (*x_value)
-			node_already_exist->value = *x_value;
+			node_already_exist->value = ft_strdup(*x_value);
 	}
 }
 
 void	ft_flag_case2(t_env *node_already_exist, char **x_value)
 {
-	if (node_already_exist->value == NULL)
-		node_already_exist->value = *x_value;
+	char	*temp_value;
+
+	if (node_already_exist->value)
+	{
+		temp_value = node_already_exist->value;
+		if (*x_value)
+		{
+			node_already_exist->value = *x_value;
+			free(temp_value);
+		}
+	}
 	else
 	{
-		free(node_already_exist->value);
 		if (*x_value)
 			node_already_exist->value = *x_value;
+		else
+			node_already_exist->value = NULL;
 	}
 }
 
-void	ft_check_nodes(t_env *node_already_exist, char **x_key, char **x_value, t_env *env, int *flag)
+void	ft_check_nodes(t_env *node_already_exist, char **x_value, int *flag)
 {
-	if (node_already_exist)
-	{
-		if (*flag == 1)
-			ft_flag_case1(node_already_exist, x_value);
-		else
-			ft_flag_case2(node_already_exist, x_value);
-	}
+	if (*flag == 1)
+		ft_flag_case1(node_already_exist, x_value);
 	else
-		ft_create_new_node(x_key, x_value, env);
+		ft_flag_case2(node_already_exist, x_value);
 }
 
 t_env	*ft_add_node_env(char **cmd_array, t_env *env)
@@ -214,9 +231,12 @@ t_env	*ft_add_node_env(char **cmd_array, t_env *env)
 		ft_check_identifier(cmd_array, &i);
 		if (!cmd_array[i])
 			return (env);
-		ft_init_key_value(cmd_array, &x_key, &x_value, &i, &flag);
+		flag = ft_init_key_value(cmd_array, &x_key, &x_value, &i);
 		node_already_exist = ft_find_key_env(env, x_key);
-		ft_check_nodes(node_already_exist, &x_key, &x_value, env, &flag);
+		if (node_already_exist)
+			ft_check_nodes(node_already_exist, &x_value, &flag);
+		else
+			ft_create_new_node(&x_key, &x_value, env);
 		i++;
 	}
 	return (env);
@@ -238,6 +258,8 @@ t_env	*ft_copy_envlst(t_env *env)
 		new_node->key = ft_strdup(env->key);
 		if (env->value)
 			new_node->value = ft_strdup(env->value);
+		else
+			new_node->value = NULL;
 		new_node->next = NULL;
 		if (!new_env)
 			new_env = new_node;

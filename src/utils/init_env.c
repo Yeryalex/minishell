@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:15:20 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/01 12:37:56 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/02 13:00:11 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ int	ft_clear_lstenv(t_env *envs)
 		free (envs);
 		envs = tmp;
 	}
+	/*
+	t_env *temp;
+
+    while (env)
+    {
+        temp = env;
+        env = env->next;
+        free(temp->key); // Free the key
+        if (temp->value) // Free the value if it exists
+            free(temp->value);
+        free(temp); // Free the node
+    }*/
 	return (1);
 }
 
