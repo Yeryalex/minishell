@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/28 20:04:25 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/02 13:22:25 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,18 @@ char		*ft_get_paths_from_env(t_env *environ);
 
 
 /*          EXPORT FUNCTIONS         */
-void		*ft_print_stderr(char *str);
+void	*ft_print_stderr(char *str);
 //int			ft_print_env(t_env *env_list, int fd);
-void 		ft_print_env_list(t_env *env);
+void 	ft_print_env_list(t_env *env);
+void	ft_check_identifier(char **cmd_array, int *i);
+void	ft_trim_case(char **x_value);
+int		ft_init_key_value(char **cmd_array, char **x_key, char **x_value, int *i);
+void	ft_create_new_node(char **x_key, char **x_value, t_env *env);
+int		ft_strcmp(char *s1, char *s2);
+void	ft_sort_env(t_env *env);
+t_env	*ft_find_key_env(t_env *env, char *key_value);
+int		ft_abletojoin(char *str);
+int		ft_key_end(char *str);
 
 /*          EXPAND FUNCTIONS         */
 t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env);
