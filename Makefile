@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/02/02 13:23:09 by yrodrigu         ###   ########.fr        #
+#    Updated: 2025/02/02 14:17:57 by yrodrigu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ CFILES =	main.c \
 			builtins/export.c\
 			builtins/x_utils.c\
 			builtins/x_utils2.c\
+			builtins/unset.c\
 
 GREEN = "\033[92m"
 RESET = "\033[0m"

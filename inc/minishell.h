@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/02 13:22:25 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/02 15:02:41 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int		ft_echo(char **cmd, int fd);
 int		ft_env(t_utils *utils, int fd);
 int		ft_pwd(t_env *env);
 int		ft_export(t_cmds *cmd, t_env *env);
+int		ft_unset(char **cmd_array, t_env  *env);
 
 /*          SIGNAL FUNCTIONS         */
 
@@ -138,6 +139,7 @@ void	ft_sort_env(t_env *env);
 t_env	*ft_find_key_env(t_env *env, char *key_value);
 int		ft_abletojoin(char *str);
 int		ft_key_end(char *str);
+void    ft_flag_case1(t_env *node_already_exist, char **x_value);
 
 /*          EXPAND FUNCTIONS         */
 t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env);
