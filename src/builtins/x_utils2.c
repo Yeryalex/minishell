@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 13:17:47 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/02 13:47:40 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/02 13:54:49 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -83,4 +83,21 @@ void	ft_create_new_node(char **x_key, char **x_value, t_env *env)
 	while (temp->next)
 		temp = temp->next;
 	temp->next = new_node;
+}
+
+void	ft_flag_case1(t_env *node_already_exist, char **x_value)
+{
+	char	*temp_value;
+
+	if (node_already_exist->value)
+	{
+		temp_value = node_already_exist->value;
+		node_already_exist->value = ft_strjoin(temp_value, *x_value);
+		free(temp_value);
+	}
+	else
+	{
+		if (*x_value)
+			node_already_exist->value = ft_strdup(*x_value);
+	}
 }
