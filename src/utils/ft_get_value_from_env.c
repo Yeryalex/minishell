@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:23:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/03 11:07:08 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/03 18:38:34 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -24,5 +24,3 @@ char    *get_value_from_env(t_env *env, char *key)
 	}
 	return (NULL);                  
 }
-
-
