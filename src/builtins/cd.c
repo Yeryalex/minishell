@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:40:55 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/03 20:15:18 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/03 20:52:47 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -34,7 +34,7 @@ int	ft_cd_home(t_env *env)
 
 	home = get_value_from_env(env, "HOME");
 	if (!home)
-		perror("minishell : cd: HOME not set");
+		perror("minishell : cd: HOME not set\n");
 	if (!home)
 		return (1);
 	if (!getcwd(cwd, 1024))
@@ -47,6 +47,42 @@ int	ft_cd_home(t_env *env)
 	return (0);
 }
 
+int	ft_cd_minus(char **cmd_array, t_env *env)
+{
+	char	cwd[1024];
+	char	*OLDPWD;
+
+	if (cmd_array[1][1])
+	{
+		printf("minishell: cd: -%c: invalid option\n", cmd_array[1][1]);
+		printf("cd: usage: cd [-L|[-P [-e]] [-@]] [dir]\n");
+		return (1);
+	}
+	else
+	{
+		if (!getcwd(cwd, 1024))
+			return (1);
+		OLDPWD = get_value_from_env(env, "OLDPWD");
+/*		if (!OLDPWD)
+			perror("minishell : cd: OLDPWD not set\n");
+		if (!OLDPWD)
+			return (1);
+*/		ft_modify_especific_env(cwd, env, "OLDPWD=");
+		chdir(OLDPWD);
+		if (!getcwd(cwd, 1024))
+			return (1);
+		ft_modify_especific_env(cwd, env, "PWD=");
+	}
+	return (0);
+}
+
+int	ft_calling_cd(char **cmd_array, t_env *env)
+{
+	if (cmd_array[1][0] == '-')
+		ft_cd_minus(cmd_array, env);
+	return (0);
+}
+
 int	ft_cd(char **cmd_array, t_env *env)
 {
 	char	cwd[1024];
@@ -55,5 +91,7 @@ int	ft_cd(char **cmd_array, t_env *env)
 		return (1);
 	if (!cmd_array[1])
 		ft_cd_home(env);
+	else if (cmd_array[1])
+		ft_calling_cd(cmd_array, env);
 	return (0);
 }
