@@ -281,3 +281,6 @@ Para probar con dos terminales y probar bash y tu propia minishell ya que clona 
 
 # Uso de Valgrind en el programa (sube el archivo <readline.ignore> para probar los leaks sin los errores de readline 
  valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all  --trace-children=yes --track-origins=yes --suppressions=readline.ignore -q ./minishell
+
+ #Hoja de evaluación básica 
+ https://github.com/rizky/42-corrections/blob/master/minishell.pdf
