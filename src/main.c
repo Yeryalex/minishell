@@ -38,7 +38,7 @@ static t_utils	*ft_init_minishell(char **env, char **full_path)
 		ft_free_utils(utils);
 		exit(EXIT_FAILURE);
 	}
-	signal(SIGQUIT, SIG_IGN);
+	init_signals();
 	environ = ft_init_env(env);
 	if (!environ)
 		return(free(environ), NULL);

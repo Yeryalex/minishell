@@ -27,7 +27,7 @@ void	ft_ctr_c(int sig)
 		g_signal = 0;
 		utils->exit_status = 130;
 	}
-}
+}*/
 
 void	sigquit_handler(int signal)
 {
@@ -40,20 +40,24 @@ int	event(void)
 	return (EXIT_SUCCESS);
 }
 
-void	sigint_handler(int signal)
+void	sigint_handler(int sig)
 {
-	if (g_status == 0)
+	/*if (g_status == 0)
 	{
 		g_status = 2;
 		rl_done = 1;
 	}
 	else
+	{*/
+	if (sig == SIGINT)
 	{
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		//exit(130);
 	}
+	//}
 	(void)signal;
 }
 
@@ -69,4 +73,4 @@ void	init_signals(void)
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
 	rl_catch_signals = 1;
-}*/
+}

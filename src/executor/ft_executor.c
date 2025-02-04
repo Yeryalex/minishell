@@ -38,7 +38,6 @@ int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
 		ft_dup_close(cmd, prev_read, fd);
 		if (execve(cmd->full_path, cmd->cmd_array, env) == -1)
 		{
-			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(cmd->cmd_array[0], 2);
 			ft_putstr_fd(": command not found\n", 2);
 			//ft_free_cmd(cmd);
@@ -119,12 +118,37 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 		
      }
 	ft_free_cmd(current);
-	printf("Number of process = %i\n", i);
+	//printf("Number of process = %i\n", i);
      while (i-- > 0)
      {
          wait(NULL);
      }
+
 }
+/* el executor para que pueda validar los comandos en bash se priorizan los de la derecha primero
+void	ft_executor(t_cmds *cmd, t_utils *utils, char **env)
+{
+	t_cmds	*last;
+	int		status;
+	int		cmd_not_found = 0;
+
+	last = cmd;
+	while (last->next)
+		last = last->next; // 🔹 Encuentra el último comando en la tubería
+
+	while (last)
+	{
+		if (access(last->full_path, X_OK) != 0) // 🔹 Si no es ejecutable, marcar error
+			cmd_not_found = 1;
+		else
+			ft_execute_command(last, utils, env); // 🔹 Ejecuta si es válido
+		last = last->prev; // 🔹 Retrocede en la lista de comandos
+	}
+	if (cmd_not_found)
+		ft_putstr_fd("Command not found\n", 2); // 🔹 Imprime error después de ejecutar todo
+}
+*/
+
 
 
 /*

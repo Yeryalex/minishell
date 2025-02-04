@@ -119,6 +119,7 @@ void	*free_cmd_array(char **cmd_array);
 
 /*          SIGNAL FUNCTIONS         */
 void		ft_ctr_c(int sig);
+void		init_signals(void);
 
 /*          ENV FUNCTIONS         */
 t_env		*ft_init_env(char **env);
