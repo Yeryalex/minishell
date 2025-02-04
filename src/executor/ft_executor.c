@@ -6,7 +6,7 @@
 /*   By: yrodrigu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/03 17:52:02 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:16:27 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -77,7 +77,7 @@ void	ft_exec_builtin(t_cmds *cmd, t_utils *utils, int fd)
 	else if(!ft_strncmp(cmd->cmd_array[0], "env", 4))
 		ft_env(utils, fd);
 	else if(!ft_strncmp(cmd->cmd_array[0], "pwd", 4))
-		ft_pwd();
+		ft_pwd(utils->environ);
 	else if (!ft_strncmp(cmd->cmd_array[0], "export", 6))
 		ft_export(cmd, utils->environ);
 	else if (!ft_strncmp(cmd->cmd_array[0], "unset", 5))
