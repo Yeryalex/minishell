@@ -107,6 +107,8 @@ t_tokens	*ft_init_node(void);
 t_cmds	*ft_parser(t_tokens *lexer, char *path);
 t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count, char *cmd_path);
 void    ft_addlast_pnode(t_cmds **list, t_cmds *node);
+void	*free_cmd_array(char **cmd_array);
+
 
 
 /*          STRUCT FUNCTIONS         */
@@ -150,6 +152,9 @@ void	*ft_exit_error(char quote);
 int		ft_is_metacharacter(int c);
 void	ft_skip_spaces_and_quotes(char **input);
 char	*ft_remove_quotes(char *value);
+char 	*ft_strip_outer_quotes(char *value);
+int		ft_is_enclosed_by_single_quotes(const char *value);
+int		ft_count_double_quotes(const char *value);
 
 /* UTILS FUNCTIONS */
 

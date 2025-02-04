@@ -12,19 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-static int	ft_count_double_quotes(const char *value)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (value[i])
-		if (value[i++] == '"')
-			count++;
-	return (count);
-}
-
 static int	ft_validate_quotes(const char *value)
 {
 	char	quote_type;
@@ -52,29 +39,6 @@ static int	ft_validate_quotes(const char *value)
 	return (1);
 }
 
-static int	ft_is_enclosed_by_single_quotes(const char *value)
-{
-	int	len;
-
-	len = ft_strlen(value);
-	return (len > 1 && value[0] == '\'' && value[len - 1] == '\'');
-}
-
-static char *ft_strip_outer_quotes(char *value)
-{
-    int len;
-    char *trimmed;
-
-    len = ft_strlen(value);
-    trimmed = ft_substr(value, 1, len - 2);
-    if (!trimmed)
-    {
-        free(value);
-        return (NULL);
-    }
-    free(value);
-    return (trimmed);
-}
 
 static void	ft_process_quotes(char *value, char *result, int inside_double)
 {
@@ -109,7 +73,7 @@ char	*ft_remove_quotes(char *value)
 	if (!value || !ft_validate_quotes(value))
 		return (free(value), NULL);
 	if (ft_is_enclosed_by_single_quotes(value))
-		return (ft_strip_outer_quotes(value)); // Elimina comillas simples externas
+		return (ft_strip_outer_quotes(value));
 	len = ft_strlen(value);
 	double_quotes = ft_count_double_quotes(value);
 	inside_double_quotes = (double_quotes / 2) % 2;
