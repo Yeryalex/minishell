@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/05 13:02:04 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/05 13:13:27 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -123,7 +123,6 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 		{
 			if (ft_is_builtin(current, utils))
 			{
-			//	printf("%s %s\n", current->cmd_array[0], current->cmd_array[1]);
 				ft_call_builtin(current, utils, fd[1]);
 			}
 			else

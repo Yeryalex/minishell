@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/30 18:54:48 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/05 13:20:35 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
 	t_cmds	*node_cmd;
 
 	if (!lexer)
-		return (ft_free_tokens(&lexer), NULL);
-		//return (NULL);
+		return (NULL);
+		//return (ft_free_tokens(&lexer), NULL);
 	node_cmd = (t_cmds *)malloc(sizeof(t_cmds));
 	if (!node_cmd || ft_init_cmd_node(node_cmd, count_tokens) == -1)
 		return (ft_free_tokens(&lexer), NULL);
