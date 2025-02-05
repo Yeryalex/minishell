@@ -3,100 +3,112 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/25 10:28:24 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/01/30 18:54:48 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+static int	ft_init_cmd_node(t_cmds *node, int num)
+{
+	if (num > 0)
+	{
+		node->cmd_array = (char **)malloc((num + 1) * sizeof(char *));
+		if (!node->cmd_array)
+			return (free(node->cmd_array), -1);
+		node->cmd_array[num] = NULL;
+	}
+	else
+		node->cmd_array = NULL;
+	//node->error_fd = 0;
+	node->full_path = NULL;
+	node->prev = NULL;
+	node->next = NULL;
+	node->redir_in = NULL;
+	node->redir_out = NULL;
+	return (0);
+}
+
+static int	ft_fill_cmd_array(t_cmds *node, t_tokens *lexer, int count)
+{
+	int	i;
+
+	i = 0;
+	while (lexer && lexer->token != PIPE && i < count)
+	{
+		node->cmd_array[i] = ft_strdup(lexer->value);
+		if (!node->cmd_array[i])
+			return (free_cmd_array(node->cmd_array), free(node), -1);
+			//return (-1);
+		i++;
+		lexer = lexer->next;
+	}
+	node->cmd_array[i] = NULL;
+	return (0);
+}
+
 t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
 {
-	t_cmds *node_cmd;
-    int i;
+	t_cmds	*node_cmd;
 
-	if (!lexer || count_tokens <= 0)
-	{
-		ft_free_tokens(&lexer);
-        return (NULL);
-	}
-    node_cmd = (t_cmds *)malloc(sizeof(t_cmds));
-    if (!node_cmd)
-		ft_free_cmd(node_cmd);
-    node_cmd->cmd_array = (char **)malloc((count_tokens + 1) * sizeof(char *));
-    if (!node_cmd->cmd_array)
-        ft_free_cmd(node_cmd);
-    i = 0;
-    while (lexer && lexer->token != PIPE && i < count_tokens)
-    {
-        node_cmd->cmd_array[i] = ft_strdup(lexer->value);
-        if (!node_cmd->cmd_array[i])
-			ft_free_cmd(node_cmd);
-        i++;
-        lexer = lexer->next;
-    }
+	if (!lexer)
+		return (ft_free_tokens(&lexer), NULL);
+		//return (NULL);
+	node_cmd = (t_cmds *)malloc(sizeof(t_cmds));
+	if (!node_cmd || ft_init_cmd_node(node_cmd, count_tokens) == -1)
+		return (ft_free_tokens(&lexer), NULL);
+		//return (NULL);
+	if (ft_fill_cmd_array(node_cmd, lexer, count_tokens) == -1)
+		return (NULL);
 	node_cmd->full_path = ft_get_path(path, node_cmd->cmd_array[0]);
-	node_cmd->cmd_array[count_tokens] = NULL;
-    node_cmd->next = NULL;
-    return (node_cmd);
+	if (!node_cmd->full_path)
+		return (free_cmd_array(node_cmd->cmd_array), free(node_cmd), NULL);
+		//return (NULL);
+	return (node_cmd);
+}
+
+static int	ft_process_pipe(t_cmds **all_cmds, int count_tokens, t_tokens **head, char *path)
+{
+	t_cmds	*new_cmd;
+
+	if (count_tokens == 0)
+		return (perror("minishell: syntax error near unexpected token `|\'\n"), 0);
+	new_cmd = ft_create_node_cmd(*head, count_tokens, path);
+	if (!new_cmd)
+		return (ft_free_cmd(*all_cmds), 0);
+	ft_addlast_pnode(all_cmds, new_cmd);
+	return (1);
 }
 
 t_cmds *ft_parser(t_tokens *lexer, char *path)
 {
-    t_cmds *all_cmds;
- 	t_cmds *new_cmd;
-    t_tokens *head_parser; 
-    t_tokens *parser;
-	char *cmd_path;
-	int count_tokens = 0;
+	t_cmds		*all_cmds;
+	t_tokens	*head_parser;
+	int			count_tokens;
 
-    head_parser = lexer;
-	parser = lexer;
 	all_cmds = NULL;
-	new_cmd = NULL;
+	head_parser = lexer;
 	count_tokens = 0;
-	if (parser && parser->token == PIPE)
+	if (lexer && lexer->token == PIPE)
+		return (perror("minishell: syntax error near unexpected token `|\'\n"), NULL);
+	while (lexer)
 	{
-    	perror("syntax error near unexpected token `|\'\n");
-    	return (NULL);
+		if (lexer->token == WORD)
+			count_tokens++;
+		else if (lexer->token == PIPE)
+		{
+			if (ft_process_pipe(&all_cmds, count_tokens, &head_parser, path) == 0)
+				return(NULL);
+			head_parser = lexer->next;
+			count_tokens = 0;
+		}
+		lexer = lexer->next;
 	}
-	cmd_path = path;
-	while (parser)
-	{
-    	if (parser->token == WORD)
-    	   	count_tokens++;
-    	else if (parser->token == PIPE)
-    	{
-        	if (count_tokens > 0)
-        	{
-            	new_cmd = ft_create_node_cmd(head_parser, count_tokens, cmd_path);
-            	if (!new_cmd)
-					return(ft_free_cmd(new_cmd), NULL);
-				ft_addlast_pnode(&all_cmds, new_cmd);
-        	}
-			else
-        	{
-            	perror("syntax error near unexpected token `|\'\n");
-            	return (NULL);
-        	}
-			head_parser = parser->next;
-        	count_tokens = 0;
-    	}
-    	parser = parser->next;
-	}
-	if (count_tokens > 0)
-	{
-    	new_cmd = ft_create_node_cmd(head_parser, count_tokens, cmd_path);
-    	if (!new_cmd)
-			return (ft_free_cmd(new_cmd), NULL);
-		ft_addlast_pnode(&all_cmds, new_cmd);
-    }
-	else if (parser && parser->token == PIPE)
-	{
-    	perror("syntax error near unexpected token `|\'\n");
-    	return (NULL);
-	}
+	if (count_tokens >= 0)
+		if (ft_process_pipe(&all_cmds, count_tokens, &head_parser, path) == 0)
+			return(NULL);
 	return (all_cmds);
 }

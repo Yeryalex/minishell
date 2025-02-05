@@ -6,19 +6,14 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/27 12:22:08 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/31 08:50:23 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int main(int ac, char **argv, char **env)
+static void	ft_check_args(int ac)
 {
-	t_env	*environ;
-	t_utils	*utils;
-	(void)argv;
-	char *full_path;
-	
 	if (!isatty(STDIN_FILENO))
 	{
 		perror("./minishell");
@@ -26,21 +21,42 @@ int main(int ac, char **argv, char **env)
 	}
 	if (ac != 1)
 	{
-		perror("Error ./minishel without arguments");
-		return (EXIT_FAILURE);
+		perror("Error ./minishell without arguments");
+		exit(EXIT_FAILURE);
 	}
+}
+
+static t_utils	*ft_init_minishell(char **env, char **full_path)
+{
+	t_env	*environ;
+	t_utils	*utils;
+
 	utils = malloc(sizeof(t_utils));
 	if (!utils)
 	{
 		perror("Error to asign memory for utils\n");
-		free(utils);
-		return (1);
+		ft_free_utils(utils);
+		exit(EXIT_FAILURE);
 	}
-
+	init_signals();
 	environ = ft_init_env(env);
-	full_path = ft_get_paths_from_env(environ);
-	init_utils(utils, environ);		
+	if (!environ)
+		return(free(environ), NULL);
+	*full_path = ft_get_paths_from_env(environ);
+	init_utils(utils, environ);
+	return (utils);
+}
+
+int	main(int ac, char **argv, char **env)
+{
+	t_utils	*utils;
+	char	*full_path;
+
+	(void)argv;
+	ft_check_args(ac);
+	utils = ft_init_minishell(env, &full_path);
 	prompt_loop(utils, full_path);
-	free(utils);
- 	return (0);
+	free(full_path);
+	ft_free_utils(utils);
+	return (0);
 }

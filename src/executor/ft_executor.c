@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yrodrigu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
 /*   Updated: 2025/02/04 17:16:27 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
@@ -23,6 +24,8 @@ void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);	
 	}
+	if (fd[0])
+		close(fd[0]); // Close read en el hijo
 }
 
 int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
@@ -33,8 +36,14 @@ int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
 	if (pid == 0)
 	{
 		ft_dup_close(cmd, prev_read, fd);
-		execve(cmd->full_path, cmd->cmd_array, env);
-		exit(1);
+		if (execve(cmd->full_path, cmd->cmd_array, env) == -1)
+		{
+			ft_putstr_fd(cmd->cmd_array[0], 2);
+			ft_putstr_fd(": command not found\n", 2);
+			//ft_free_cmd(cmd);
+			ft_free_array(env);
+			exit(127);
+		}
 	}
 	return (1);
 }
@@ -109,7 +118,7 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
     {
     	if (current->next && pipe(fd) == -1)
 		{
-            perror("error in pipe\n");
+            perror("minishell: error in pipe\n");
 			return ;
         }
 		if (current->cmd_array && current->cmd_array[0])
@@ -123,6 +132,7 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
         	ft_reset_read_end(current, &prev_read, fd);
 		}
 		current = current->next;
+		
      }
 	ft_wait_for_children(i);
 }

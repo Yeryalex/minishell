@@ -21,6 +21,13 @@ CFLAGS = -Wall -Werror -Wextra
 CFILES =	main.c \
 			lexer/prompt.c \
 			lexer/lexer_utils.c \
+			lexer/lexer.c \
+			lexer/env_utils.c \
+			lexer/init_lexer.c \
+			lexer/read_input.c \
+			lexer/lexer_get_values.c \
+			lexer/quotes.c \
+			lexer/quotes_utils.c \
 			parser/parser.c \
 			parser/parser_utils.c \
 			utils/init_env.c \
@@ -28,6 +35,7 @@ CFILES =	main.c \
 			utils/free.c \
 			utils/init_utils.c \
 			utils/ft_get_value_from_env.c\
+			utils/signals.c \
 			expanser/expanser.c \
 			expanser/split_path.c \
 			expanser/utils_expanser.c \
@@ -55,7 +63,7 @@ $(NAME): $(OBJS)
 	@echo " "
 	@$(CC) $(CFLAGS) -g $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 
-%.o: %.c $(HEADER) Makefile
+%.o: %.c $(HEADER) Makefile $(LIBFT)
 	@$(CC) $(CFLAGS) -g -c $< -o $@
 
 library:

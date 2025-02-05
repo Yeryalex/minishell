@@ -46,7 +46,7 @@ t_env	*ft_create_node_env(char *envs)
 	
 	env_node = (t_env *)malloc(sizeof(t_env));
 	if (!env_node)
-		return (NULL);
+		return (free(env_node), NULL);
 	env_node->key = ft_get_env_key(envs);
 	env_node->value = ft_get_env_value(envs);
 	if (!env_node->value)
