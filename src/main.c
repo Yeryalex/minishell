@@ -54,6 +54,7 @@ int	main(int ac, char **argv, char **env)
 
 	(void)argv;
 	ft_check_args(ac);
+	
 	utils = ft_init_minishell(env, &full_path);
 	prompt_loop(utils, full_path);
 	free(full_path);

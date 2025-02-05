@@ -63,8 +63,7 @@ int	ft_is_builtin(t_cmds *cmd, t_utils *utils)
 	i = 0;
 	while (utils->builtins[i])
 	{
-		if (!ft_strncmp(cmd->cmd_array[0], utils->builtins[i], 
-					ft_strlen(utils->builtins[i] + 1)))
+		if (!ft_strncmp(cmd->cmd_array[0], utils->builtins[i], ft_strlen(utils->builtins[i]) + 1))
 			return (1);
 		i++;
 	}

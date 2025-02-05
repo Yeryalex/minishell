@@ -25,7 +25,7 @@ char	*read_input(char **env)
 
 	input = NULL;
 	input = clean_input(input);
-	signal(SIGINT, ft_ctr_c);
+	signal(SIGINT, sigint_handler);
 	input = readline(CYAN "minishell> " RESET);
 	if (input && *input)
 		add_history(input);

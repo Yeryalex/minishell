@@ -124,8 +124,11 @@ int		ft_unset(char **cmd_array, t_env  **env);
 int		ft_cd(char **cmd_array, t_env *env);
 
 /*          SIGNAL FUNCTIONS         */
-void		ft_ctr_c(int sig);
+//void		ft_ctr_c(int sig);
 void		init_signals(void);
+void		sigint_handler(int sig);
+void		sigquit_handler(int signal);
+int			event(void);
 
 /*          ENV FUNCTIONS         */
 t_env		*ft_init_env(char **env);

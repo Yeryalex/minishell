@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h" 
 
-void	ft_ctr_c(int sig)
+/*void	ft_ctr_c(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -23,7 +23,7 @@ void	ft_ctr_c(int sig)
 		//exit(130);
 	}
 }
-/*
+
 		g_signal = 0;
 		utils->exit_status = 130;
 	}
@@ -53,12 +53,12 @@ void	sigint_handler(int sig)
 	{
 		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		//rl_replace_line("", 0);
 		rl_redisplay();
 		//exit(130);
 	}
 	//}
-	(void)signal;
+	//(void)signal;
 }
 
 void	init_signals(void)
