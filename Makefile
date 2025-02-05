@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/01/29 11:20:14 by rbuitrag         ###   ########.fr        #
+#    Updated: 2025/02/04 08:24:34 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,20 @@ CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address -fsanitize=leak
 CFILES =	main.c \
 			lexer/prompt.c \
 			lexer/lexer_utils.c \
+			lexer/lexer.c \
+			lexer/env_utils.c \
+			lexer/init_lexer.c \
+			lexer/read_input.c \
+			lexer/lexer_get_values.c \
+			lexer/quotes.c \
+			lexer/quotes_utils.c \
 			parser/parser.c \
 			parser/parser_utils.c \
 			utils/init_env.c \
 			utils/env_export.c \
 			utils/free.c \
 			utils/init_utils.c \
+			utils/signals.c \
 			expanser/expanser.c \
 			expanser/split_path.c \
 			expanser/utils_expanser.c \
@@ -47,7 +55,7 @@ $(NAME): $(OBJS)
 	@echo " "
 	@$(CC) $(CFLAGS) -g $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 
-%.o: %.c $(HEADER) Makefile
+%.o: %.c $(HEADER) Makefile $(LIBFT)
 	@$(CC) $(CFLAGS) -g -c $< -o $@
 
 library:

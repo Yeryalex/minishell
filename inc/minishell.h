@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/24 11:06:36 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/01/31 10:33:16 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <errno.h>
 # include "../inc/libft/libft.h"
 
 # define CYAN "\033[96m"
@@ -73,6 +74,7 @@ typedef struct s_env
 	char			*key;
 	char			*value;
 	struct s_env	*next;
+	struct s_env	*prev;
 }	t_env;
 
 typedef struct s_utils
@@ -80,6 +82,7 @@ typedef struct s_utils
 	t_env 			*environ;
 	int				stdin;
 	int				stdout;
+	int				exit_status;
 	char			*builtins[8];
 	struct s_utils	*next;
 	struct s_utils	*prev;
@@ -92,15 +95,20 @@ void    prompt_loop(t_utils *utils, char *path);
 t_type		ft_determine_type(char *value);
 t_tokens	*ft_create_node(const char **value);
 t_tokens	*ft_lexer_input(const char *input);
-char		*read_input(void);
+char		*read_input(char **env);
 int			ft_addlast_node(t_tokens **lexer, t_tokens *current_node);
 char		*ft_get_word(const char **line);
 char		*ft_get_value(const char **line);
+char		*read_input(char **env);
+t_tokens	*ft_init_node(void);
+
 
 /*			PARSER FUNCTIONS		*/
 t_cmds	*ft_parser(t_tokens *lexer, char *path);
 t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count, char *cmd_path);
 void    ft_addlast_pnode(t_cmds **list, t_cmds *node);
+void	*free_cmd_array(char **cmd_array);
+
 
 
 /*          STRUCT FUNCTIONS         */
@@ -110,6 +118,8 @@ void    ft_addlast_pnode(t_cmds **list, t_cmds *node);
 /*          BUILTINS FUNCTIONS         */
 
 /*          SIGNAL FUNCTIONS         */
+void		ft_ctr_c(int sig);
+void		init_signals(void);
 
 /*          ENV FUNCTIONS         */
 t_env		*ft_init_env(char **env);
@@ -119,6 +129,7 @@ void    	ft_add_env_tolst(t_env **lst_env, t_env *new_node);
 char		*ft_get_env_value(char *key_value);
 char		*ft_get_env_key(char *str);
 char		*ft_get_paths_from_env(t_env *environ);
+char		**ft_list_to_char(t_env *env);
 
 
 /*          EXPORT FUNCTIONS         */
@@ -140,6 +151,11 @@ void	ft_executor(t_cmds *cmd, t_utils *utils, char **env);
 int		ft_isspace(char c);
 void	*ft_exit_error(char quote);
 int		ft_is_metacharacter(int c);
+void	ft_skip_spaces_and_quotes(char **input);
+char	*ft_remove_quotes(char *value);
+char 	*ft_strip_outer_quotes(char *value);
+int		ft_is_enclosed_by_single_quotes(const char *value);
+int		ft_count_double_quotes(const char *value);
 
 /* UTILS FUNCTIONS */
 
@@ -151,5 +167,8 @@ void    ft_free_cmd(t_cmds *cmd);
 void    *ft_free_one_to_cmd(t_cmds *cmd);
 void    *ft_free_redir(t_dir *node);
 void	ft_free_array(char **array);
+void	ft_free_utils(t_utils *utils);
+void	ft_free_env(t_env *env);
+
 
 #endif

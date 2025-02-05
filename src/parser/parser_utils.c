@@ -27,3 +27,21 @@ void	ft_addlast_pnode(t_cmds **list, t_cmds *node)
 	current_node->next = node;
 	node->prev = current_node;
 }
+
+/* Libera un array de cadenas y devuelve NULL */
+void	*free_cmd_array(char **cmd_array)
+{
+	int	i;
+
+	if (!cmd_array)
+		return (NULL);
+	i = 0;
+	while (cmd_array[i])
+	{
+		free(cmd_array[i]);
+		cmd_array[i] = NULL;
+		i++;
+	}
+	free(cmd_array);
+	return (NULL);
+}

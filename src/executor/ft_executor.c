@@ -3,66 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yrodrigu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/29 11:24:28 by rbuitrag         ###   ########.fr       */
+/*   Created: 2025/01/29 12:42:17 by rbuitrag          #+#    #+#             */
+/*   Updated: 2025/01/31 12:42:04 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../inc/minishell.h"
-
-
-/*
-char	*ft_get_path(char *path, char *cmd)
-{
-	char	**path_dir;
-	char	*path_to_exec;
-	char	*tmp;
-	int		i;
-
-	path_dir = ft_split(path, ':');
-	if (!path_dir)
-		return NULL;
-	i = 0;
-	while(path_dir[i])
-	{
-		path_to_exec = ft_strjoin(path_dir[i], "/");
-		if (!path_to_exec)
-			return (ft_free_array(path_dir), NULL);
-		tmp = ft_strjoin(path_to_exec, cmd);
-		if (!tmp)
-			return (ft_free_array(path_dir), free(path_to_exec), NULL);
-		free(path_to_exec);
-		path_to_exec = tmp;
-		if (access(path_to_exec, F_OK | X_OK) == 0)
-			break ;
-		free(path_to_exec);
-		i++;
-	}
-	return (ft_free_array(path_dir), path_to_exec);	
-}
-*/
-
-/*
-void print_struct(t_commands *lst)
-{
-	while (lst)
-	{
-		if (lst->prev)
-		{
-    		printf("Struct content->prev = %i\n", lst->prev->id);
-		}
-		else
-    		printf("first content->prev node is NULL\n");
-		printf("struct content %i\n", lst->id);
-		if (lst->next)
-		    printf("struct content->next = %i\n", lst->next->id);
-		else
-    		printf("last content->next node is NULL\n");
-		lst = lst->next;
-	}
-}
-*/
 
 void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
 {
@@ -76,6 +24,8 @@ void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
 		dup2(fd[1], STDOUT_FILENO);;
 		close(fd[1]);	
 	}
+	if (fd[0])
+		close(fd[0]); // Close read en el hijo
 }
 
 int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
@@ -86,8 +36,14 @@ int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
 	if (pid == 0)
 	{
 		ft_dup_close(cmd, prev_read, fd);
-		execve(cmd->full_path, cmd->cmd_array, env);
-		exit(1);
+		if (execve(cmd->full_path, cmd->cmd_array, env) == -1)
+		{
+			ft_putstr_fd(cmd->cmd_array[0], 2);
+			ft_putstr_fd(": command not found\n", 2);
+			//ft_free_cmd(cmd);
+			ft_free_array(env);
+			exit(127);
+		}
 	}
 	return (1);
 }
@@ -130,7 +86,6 @@ void	ft_exec_builtin(t_commands *cmd, t_utils *utils, int fd)
 		ft_echo(cmd, fd);
 }
 */
-
 void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 {
 	int	fd[2];
@@ -145,12 +100,12 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
     {
     	if (current->next && pipe(fd) == -1)
 		{
-            perror("error in pipe\n");
+            perror("minishell: error in pipe\n");
 			return ;
         }
 		if (current->cmd_array && current->cmd_array[0])
 		{
-		/*	if (ft_is_builtin(current, utils))
+			/*if (ft_is_builtin(current, utils))
 			{
 				printf("%s is builtin\n", current->cmd[0]);
 				ft_exec_builtin(current, utils, fd[1]);
@@ -160,14 +115,40 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
         	ft_reset_read_end(current, &prev_read, fd);
 		}
 		current = current->next;
+		
      }
- 
-     printf("Number of process = %i\n", i);
+	ft_free_cmd(current);
+	//printf("Number of process = %i\n", i);
      while (i-- > 0)
      {
          wait(NULL);
      }
+
 }
+/* el executor para que pueda validar los comandos en bash se priorizan los de la derecha primero
+void	ft_executor(t_cmds *cmd, t_utils *utils, char **env)
+{
+	t_cmds	*last;
+	int		status;
+	int		cmd_not_found = 0;
+
+	last = cmd;
+	while (last->next)
+		last = last->next; // 🔹 Encuentra el último comando en la tubería
+
+	while (last)
+	{
+		if (access(last->full_path, X_OK) != 0) // 🔹 Si no es ejecutable, marcar error
+			cmd_not_found = 1;
+		else
+			ft_execute_command(last, utils, env); // 🔹 Ejecuta si es válido
+		last = last->prev; // 🔹 Retrocede en la lista de comandos
+	}
+	if (cmd_not_found)
+		ft_putstr_fd("Command not found\n", 2); // 🔹 Imprime error después de ejecutar todo
+}
+*/
+
 
 
 /*
