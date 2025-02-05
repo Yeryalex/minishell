@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:40:55 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/04 19:20:00 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/05 10:13:27 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -45,8 +45,8 @@ int	ft_cd_home(t_env *env)
 		ft_modify_especific_env(path, env, "OLDPWD=");
 	}
 	else
-		ft_modify_especific_env(cwd, env, "OLDPWD=")
-			chdir(home);
+		ft_modify_especific_env(cwd, env, "OLDPWD=");
+	chdir(home);
 	if (!getcwd(cwd, 1024))
 		perror("hola\n");
 	ft_modify_especific_env(cwd, env, "PWD=");
@@ -59,30 +59,22 @@ int	ft_cd_minus(char **cmd_array, t_env *env)
 	char	*oldpwd;
 	char	*pwd;
 
-	if (cmd_array[1][1])
-	{
-		printf("minishell: cd: -%c: invalid option\n", cmd_array[1][1]);
-		printf("cd: usage: cd [-L|[-P [-e]] [-@]] [dir]\n");
+	(void)cmd_array;
+	if (!getcwd(cwd, 1024))
 		return (1);
-	}
+	oldpwd = get_value_from_env(env, "OLDPWD");
+	if (!oldpwd)
+		perror("minishell : cd: OLDPWD not set\n");
+	if (!oldpwd)
+		return (1);
+	if (chdir(oldpwd))
+		printf("minishell: cd: %s: No such file or directory\n", oldpwd);
 	else
 	{
-		if (!getcwd(cwd, 1024))
-			return (1);
-		oldpwd = get_value_from_env(env, "OLDPWD");
-		if (!oldpwd)
-			perror("minishell : cd: OLDPWD not set\n");
-		if (!oldpwd)
-			return (1);
-		if(chdir(oldpwd))
-			printf("minishell: cd: %s: No such file or directory\n", oldpwd);
-		else
-		{
-			ft_modify_especific_env(oldpwd, env, "PWD=");
-			ft_modify_especific_env(cwd, env, "OLDPWD=");
-			PWD = get_value_from_env(env, "PWD");
-			printf("%s\n", pwd);
-		}
+		ft_modify_especific_env(oldpwd, env, "PWD=");
+		ft_modify_especific_env(cwd, env, "OLDPWD=");
+		pwd = get_value_from_env(env, "PWD");
+		printf("%s\n", pwd);
 	}
 	return (0);
 }
@@ -123,7 +115,15 @@ int	ft_cd(char **cmd_array, t_env *env)
 	else if (cmd_array[2])
 		perror("minishell: cd: too many arguments\n");
 	else if (cmd_array[1][0] == '-')
+	{
+		if (cmd_array[1][1])
+		{
+			printf("minishell: cd: -%c: invalid option\n", cmd_array[1][1]);
+			printf("cd: usage: cd [-L|[-P [-e]] [-@]] [dir]\n");
+			return (1);
+		}
 		ft_cd_minus(cmd_array, env);
+	}
 	else if (cmd_array[1])
 		ft_change_dir(cmd_array[1], env);
 	return (0);
