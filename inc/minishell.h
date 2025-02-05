@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/31 10:33:16 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:17:04 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,13 @@ void	*free_cmd_array(char **cmd_array);
 
 /*          REDIR FUNCTIONS         */
 
-/*          BUILTINS FUNCTIONS         */
+/*          BUILTINS FUNCTION:S         */
+int		ft_echo(char **cmd, int fd);
+int		ft_env(t_utils *utils, int fd);
+int		ft_pwd(t_env *env);
+int		ft_export(t_cmds *cmd, t_env *env);
+int		ft_unset(char **cmd_array, t_env  **env);
+int		ft_cd(char **cmd_array, t_env *env);
 
 /*          SIGNAL FUNCTIONS         */
 void		ft_ctr_c(int sig);
@@ -133,9 +139,20 @@ char		**ft_list_to_char(t_env *env);
 
 
 /*          EXPORT FUNCTIONS         */
-void		*ft_print_stderr(char *str);
+void	*ft_print_stderr(char *str);
 //int			ft_print_env(t_env *env_list, int fd);
-void 		ft_print_env_list(t_env *env);
+void 	ft_print_env_list(t_env *env);
+void	ft_check_identifier(char **cmd_array, int *i);
+void	ft_trim_case(char **x_value);
+int		ft_init_key_value(char **cmd_array, char **x_key, char **x_value, int *i);
+void	ft_create_new_node(char **x_key, char **x_value, t_env *env);
+t_env   *ft_add_node_env(char **cmd_array, t_env *env);
+int		ft_strcmp(char *s1, char *s2);
+void	ft_sort_env(t_env *env);
+t_env	*ft_find_key_env(t_env *env, char *key_value);
+int		ft_abletojoin(char *str);
+int		ft_key_end(char *str);
+void    ft_flag_case1(t_env *node_already_exist, char **x_value);
 
 /*          EXPAND FUNCTIONS         */
 t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env);
@@ -160,7 +177,7 @@ int		ft_count_double_quotes(const char *value);
 /* UTILS FUNCTIONS */
 
 void	init_utils(t_utils *utils, t_env *env);
-
+char	*get_value_from_env(t_env *env, char *key);
 /*          FREE FUNCTIONS         */
 void	ft_free_tokens(t_tokens **lexer);
 void    ft_free_cmd(t_cmds *cmd);
