@@ -6,10 +6,9 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/04 17:16:27 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/05 13:02:04 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../inc/minishell.h"
 
 void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
@@ -25,7 +24,7 @@ void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
 		close(fd[1]);	
 	}
 	if (fd[0])
-		close(fd[0]); // Close read en el hijo
+		close(fd[0]);
 }
 
 int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
@@ -40,7 +39,6 @@ int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
 		{
 			ft_putstr_fd(cmd->cmd_array[0], 2);
 			ft_putstr_fd(": command not found\n", 2);
-			//ft_free_cmd(cmd);
 			ft_free_array(env);
 			exit(127);
 		}
@@ -58,7 +56,6 @@ void	ft_reset_read_end(t_cmds *current, int *prev_read, int *fd)
 		*prev_read = fd[0];
 }
 
-
 int	ft_is_builtin(t_cmds *cmd, t_utils *utils)
 {
 	int i;
@@ -73,15 +70,10 @@ int	ft_is_builtin(t_cmds *cmd, t_utils *utils)
 	}
 	return (0);
 }
-/*
-void	ft_call_builtin()
-{
 
-}
-*/
 void	ft_exec_builtin(t_cmds *cmd, t_utils *utils, int fd)
 {
-	if (!ft_strncmp(cmd->cmd_array[0], "echo", 5))
+	if (!ft_strncmp(cmd->cmd_array[0], "echo", 4))
 		ft_echo(cmd->cmd_array, fd);
 	else if(!ft_strncmp(cmd->cmd_array[0], "env", 4))
 		ft_env(utils, fd);
@@ -95,13 +87,19 @@ void	ft_exec_builtin(t_cmds *cmd, t_utils *utils, int fd)
 		ft_cd(cmd->cmd_array, utils->environ);
 }
 
+void	ft_call_builtin(t_cmds *cmd, t_utils *utils, int pipe)
+{
+	if (cmd->next)
+		ft_exec_builtin(cmd, utils, pipe);
+	else
+		ft_exec_builtin(cmd, utils, 1);
+}
+
 void	ft_wait_for_children(int i)
 {
-
-//     printf("Number of process = %i\n", i);
-     while (i-- > 0)
-     {
-         wait(NULL);
+	while (i-- > 0)
+	{
+		wait(NULL);
      }
 }
 
@@ -125,7 +123,8 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 		{
 			if (ft_is_builtin(current, utils))
 			{
-				ft_exec_builtin(current, utils, fd[1]);
+			//	printf("%s %s\n", current->cmd_array[0], current->cmd_array[1]);
+				ft_call_builtin(current, utils, fd[1]);
 			}
 			else
         	i += ft_forking(current, prev_read, fd, env);
