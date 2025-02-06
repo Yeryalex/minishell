@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 13:17:47 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/02 13:54:49 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/06 18:05:52 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -47,11 +47,13 @@ int	ft_init_key_value(char **cmd_array, char **x_key, char **x_value, int *i)
 	if (end_key)
 	{
 		*x_key = ft_substr(cmd_array[*i], 0, end_key);
-		*x_value = ft_substr(cmd_array[*i], end_key + 1,
-				ft_strlen(cmd_array[*i]));
+		*x_value = ft_substr(cmd_array[*i], end_key + 1, ft_strlen(cmd_array[*i]));
 	}
 	else
+	{
 		*x_key = ft_strdup(cmd_array[*i]);
+		*x_value = NULL;
+	}
 	if (ft_abletojoin(*x_key) == 1)
 	{
 		temp_key = *x_key;
@@ -59,8 +61,10 @@ int	ft_init_key_value(char **cmd_array, char **x_key, char **x_value, int *i)
 		free(temp_key);
 		flag = 1;
 	}
-	ft_trim_case(x_key);
-	ft_trim_case(x_value);
+	if (*x_key)
+		ft_trim_case(x_key);
+	if (*x_value)
+		ft_trim_case(x_value);
 	return (flag);
 }
 
