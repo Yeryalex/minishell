@@ -104,11 +104,11 @@ t_tokens	*ft_init_node(void);
 
 
 /*			PARSER FUNCTIONS		*/
-t_cmds	*ft_parser(t_tokens *lexer, char *path);
-t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count, char *cmd_path);
+t_cmds	*ft_parser(t_tokens *lexer, char *path, t_utils *utils);
+t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count, char *cmd_path, t_utils *utils);
 void    ft_addlast_pnode(t_cmds **list, t_cmds *node);
 void	*free_cmd_array(char **cmd_array);
-
+int	    ft_process_pipe(t_cmds **all_cmds, int count_tokens, t_tokens **head, char *path, t_utils *utils);
 
 
 /*          STRUCT FUNCTIONS         */

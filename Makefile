@@ -29,6 +29,8 @@ CFILES =	main.c \
 			lexer/quotes_utils.c \
 			parser/parser.c \
 			parser/parser_utils.c \
+			parser/redir.c \
+			parser/redir_utils.c \
 			utils/init_env.c \
 			utils/env_export.c \
 			utils/free.c \

@@ -18,15 +18,15 @@ static void	ft_handle_exit(t_utils *utils, char *input, char **env)
 	ft_free_array(env);
 	ft_free_utils(utils);
 	ft_putstr_fd("exit\n", 1);
-	exit(EXIT_SUCCESS);
+	//exit(EXIT_SUCCESS);
 }
 
-static int	ft_process_input(char *input, t_tokens **commands, t_cmds **cmd, char *path)
+static int	ft_process_input(char *input, t_tokens **commands, t_cmds **cmd, char *path, t_utils *utils)
 {
 	*commands = ft_lexer_input(input);
 	if (!*commands)
 		return (ft_free_tokens(commands), free(input), 0);
-	*cmd = ft_parser(*commands, path);
+	*cmd = ft_parser(*commands, path, utils);
 	if (!cmd)
 		return (ft_free_tokens(commands), free(input), 0);
 	return (1);
