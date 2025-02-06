@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/05 13:13:27 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/06 19:49:08 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -84,6 +84,8 @@ void	ft_exec_builtin(t_cmds *cmd, t_utils *utils, int fd)
 		ft_unset(cmd->cmd_array, &utils->environ);
 	else if (!ft_strncmp(cmd->cmd_array[0], "cd", 2))
 		ft_cd(cmd->cmd_array, utils->environ);
+	else if (!ft_strncmp(cmd->cmd_array[0], "exit", 4))
+		ft_exit(cmd->cmd_array, utils->environ);
 }
 
 void	ft_call_builtin(t_cmds *cmd, t_utils *utils, int pipe)
