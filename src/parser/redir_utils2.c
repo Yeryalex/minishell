@@ -14,9 +14,9 @@
 
 void	ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils)
 {
-	ft_free_tokens(&lexer);
+	ft_free_tokens(lexer);
 	ft_free_cmd(cmds);
-	if(ft_clear_lstenv(utils->envs) == 0)
+	if(ft_clear_lstenv(utils->environ) == 0)
 	    return;
 	free (utils);
 }

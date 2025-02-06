@@ -66,7 +66,7 @@ t_dir	*ft_append_gthan_redir(char *file_name, int token, t_utils *utils, t_cmds 
 	redir_node = (t_dir *)malloc(sizeof(t_dir));
 	if (!redir_node)
 		return (NULL);
-	redir_node->here_doc = 0;
+	redir_node->heredoc = 0;
 	redir_node->filename = ft_strdup(file_name);
 	if (!redir_node->filename)
 		return (ft_exit_redir(3, redir_node, NULL));
@@ -89,7 +89,7 @@ t_dir	*ft_sthan_redir(char *file_name, t_utils *utils, t_cmds *parser_nodes)
 	redir_node = (t_dir *)malloc(sizeof(t_dir));
 	if (!redir_node)
 		return (NULL);
-	redir_node->here_doc = 0;
+	redir_node->heredoc = 0;
 	redir_node->filename = ft_strdup(file_name);
 	redir_node->fd = -1;
 	if (!redir_node->filename)

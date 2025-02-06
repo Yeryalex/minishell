@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include <fcntl.h>
 # include "../inc/libft/libft.h"
 
 # define CYAN "\033[96m"
