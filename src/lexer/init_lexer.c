@@ -42,6 +42,5 @@ t_tokens	*ft_init_node(void)
 	node->prev = NULL;
 	node->next = NULL;
 	node->value = NULL;
-	node->token = NONE;
 	return (node);
 }

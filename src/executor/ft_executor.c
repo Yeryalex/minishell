@@ -102,7 +102,7 @@ void	ft_wait_for_children(int i)
      }
 }
 
-void	ft_executor(t_cmds *current, t_utils *utils, char **env)
+/*void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 {
 	int	fd[2];
 	int	prev_read;
@@ -131,5 +131,70 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 		current = current->next;
 		
      }
+	ft_wait_for_children(i);
+}
+*/
+
+void	ft_executor(t_cmds *current, t_utils *utils, char **env)
+{
+	int	fd[2];
+	int	prev_read;
+	int	i;
+	int	stdin_backup;
+	int	stdout_backup;
+	int	fd_in;
+	int	fd_out;
+
+	i = 0;
+	prev_read = -1;
+
+	while (current)
+	{
+		stdin_backup = dup(STDIN_FILENO);
+		stdout_backup = dup(STDOUT_FILENO);
+
+		// 🔹 Manejar redirección de entrada (`<`)
+		if (current->redir_in)
+		{
+			fd_in = open(current->redir_in->filename, O_RDONLY);
+			if (fd_in == -1)
+				return (perror("minishell: error opening input file"));
+			dup2(fd_in, STDIN_FILENO);
+			close(fd_in);
+		}
+
+		// 🔹 Manejar redirección de salida (`>` o `>>`)
+		if (current->redir_out)
+		{
+			fd_out = open(current->redir_out->filename, O_CREAT | O_WRONLY |
+				(current->redir_out->heredoc ? O_APPEND : O_TRUNC), 0644);
+			if (fd_out == -1)
+				return (perror("minishell: error opening output file"));
+			dup2(fd_out, STDOUT_FILENO);
+			close(fd_out);
+		}
+
+		// 🔹 Crear pipe si es necesario
+		if (current->next && pipe(fd) == -1)
+			return (perror("minishell: error in pipe\n"));
+
+		// 🔹 Ejecutar comando
+		if (current->cmd_array && current->cmd_array[0])
+		{
+			if (ft_is_builtin(current, utils))
+				ft_call_builtin(current, utils, fd[1]);
+			else
+				i += ft_forking(current, prev_read, fd, env);
+		}
+
+		// 🔹 Restaurar STDIN y STDOUT
+		dup2(stdin_backup, STDIN_FILENO);
+		dup2(stdout_backup, STDOUT_FILENO);
+		close(stdin_backup);
+		close(stdout_backup);
+
+		ft_reset_read_end(current, &prev_read, fd);
+		current = current->next;
+	}
 	ft_wait_for_children(i);
 }

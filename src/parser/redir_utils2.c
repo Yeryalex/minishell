@@ -37,14 +37,14 @@ void	*ft_exit_redir(int error, t_dir *redir_node, t_utils *utils)
 	return (NULL);
 }
 
-int	ft_open_fd(char *file_name, int mode)
+int	ft_open_fd(char *filename, int mode)
 {
 	int	fd;
 
 	if (mode & O_CREAT)
-		fd = open(file_name, mode, 0664);
+		fd = open(filename, mode, 0664);
 	else
-		fd = open(file_name, mode);
+		fd = open(filename, mode);
 	if (fd < 0)
 		return (-1);
 	return (fd);

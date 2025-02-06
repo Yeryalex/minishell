@@ -34,7 +34,6 @@
 
 typedef enum e_type
 {
-	NONE,
 	PIPE,  // |
 	GTHAN, // >
 	STHAN, // <

@@ -54,7 +54,7 @@ static int	ft_fill_cmd(t_cmds *node, t_tokens *lexer, int count, t_utils *utils)
 		if (lexer->token == GTHAN || lexer->token == APPEND)
 			ft_gthan_append_cmds(&lexer, node, utils);
 		/*else if (lexer->token == STHAN || lexer->token == H_DOC)
-			sthan_hdoc_cmds(&lexer, node, utils);*/
+			ft_sthan_hdoc_cmds(&lexer, node, utils);*/
 		lexer = lexer->next;
 	}
 	node->cmd_array[i] = NULL;
