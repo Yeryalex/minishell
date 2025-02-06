@@ -23,7 +23,7 @@ static int	ft_init_cmd_node(t_cmds *node, int num)
 	}
 	else
 		node->cmd_array = NULL;
-	//node->error_fd = 0;
+	node->error_fd = 0;
 	node->full_path = NULL;
 	node->prev = NULL;
 	node->next = NULL;
@@ -32,36 +32,30 @@ static int	ft_init_cmd_node(t_cmds *node, int num)
 	return (0);
 }
 
-static int	ft_fill_cmd(t_cmds *node, t_tokens *lexer, int count, t_utils *utils);
+static int	ft_fill_cmd(t_cmds *node, t_tokens *lexer, int count, t_utils *utils)
 {
 	int	i;
 
 	i = 0;
 	while (lexer && lexer->token != PIPE && i < count)
 	{
-		if ((*lex_nodes)->token == WORD)
+		if (lexer->token == WORD)
 		{
 			node->cmd_array[i] = ft_strdup(lexer->value);
 			if (!node->cmd_array[i])
 			{
 				ft_free_cmd(node);
-				return ;
+				return (1);
 			}
 			i++;
 			lexer = lexer->next;
 			continue ;
 		}
 		if (lexer->token == GTHAN || lexer->token == APPEND)
-			gthan_append_cmds(lexer, node);
-		else if (lexer->token == STHAN || lexer->token == H_DOC)
-			sthan_hdoc_cmds(lexer, node, utils);
-		*lex_nodes = (*lex_nodes)->next->next;
-		
-		/*node->cmd_array[i] = ft_strdup(lexer->value);
-		if (!node->cmd_array[i])
-			return (free_cmd_array(node->cmd_array), free(node), -1);
-		i++;
-		lexer = lexer->next;*/
+			ft_gthan_append_cmds(&lexer, node, utils);
+		/*else if (lexer->token == STHAN || lexer->token == H_DOC)
+			sthan_hdoc_cmds(&lexer, node, utils);*/
+		lexer = lexer->next;
 	}
 	node->cmd_array[i] = NULL;
 	return (0);

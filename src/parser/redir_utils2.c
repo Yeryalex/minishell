@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir_utils2.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/06 11:04:58 by rbuitrag          #+#    #+#             */
+/*   Updated: 2025/02/06 11:05:01 by rbuitrag         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
-void	free_child_hdoc(t_tokens **lexer, t_cmd *cmds, t_utils *utils)
+void	ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils)
 {
 	ft_free_tokens(&lexer);
 	ft_free_cmd(cmds);
@@ -9,7 +21,7 @@ void	free_child_hdoc(t_tokens **lexer, t_cmd *cmds, t_utils *utils)
 	free (utils);
 }
 
-void	*exit_redir(int error, t_redir *redir_node, t_utils *utils)
+void	*ft_exit_redir(int error, t_dir *redir_node, t_utils *utils)
 {
 	if (!redir_node)
 		return (NULL);
@@ -25,7 +37,7 @@ void	*exit_redir(int error, t_redir *redir_node, t_utils *utils)
 	return (NULL);
 }
 
-int	open_fd(char *file_name, int mode)
+int	ft_open_fd(char *file_name, int mode)
 {
 	int	fd;
 

@@ -62,6 +62,7 @@ typedef struct s_cmds
 {
 	char			**cmd_array;
 	char			*full_path;
+	int   error_fd;
 	t_dir			*redir_in;
 	t_dir			*redir_out;
 	struct s_cmds 	*next;
@@ -114,6 +115,14 @@ int	    ft_process_pipe(t_cmds **all_cmds, int count_tokens, t_tokens **head, ch
 /*          STRUCT FUNCTIONS         */
 
 /*          REDIR FUNCTIONS         */
+t_dir	*ft_sthan_redir(char *file_name, t_utils *utils, t_cmds *parser_nodes);
+t_dir	*ft_append_gthan_redir(char *file_name, int token, t_utils *utils, t_cmds *parser_nodes);
+void	ft_gthan_append_cmds(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
+void	ft_sthan_hdoc_cmds(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
+int	ft_check_file(t_dir *node);
+int	ft_open_fd(char *file_name, int mode);
+void	*ft_exit_redir(int error, t_dir *redir_node, t_utils *utils);
+void	ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
 
 /*          BUILTINS FUNCTION:S         */
 int		ft_echo(char **cmd, int fd);

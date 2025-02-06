@@ -48,7 +48,7 @@ void	prompt_loop(t_utils *utils, char *path)
 		input = read_input(env);
 		if (!input)
 			ft_handle_exit(utils, input, env);
-		if (!ft_process_input(input, &commands, &cmd, path))
+		if (!ft_process_input(input, &commands, &cmd, path, utils))
 			continue;
 		ft_free_tokens(&commands);
 		ft_executor(cmd, utils, env);
