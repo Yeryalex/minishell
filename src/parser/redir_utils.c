@@ -73,7 +73,7 @@ t_dir	*ft_append_gthan_redir(char *file_name, int token, t_utils *utils, t_cmds 
 	mode = (O_WRONLY | O_CREAT);
 	if (token == APPEND)
 		redir_node->fd = ft_open_fd(redir_node->filename, mode | O_APPEND);
-	else
+	else if (token == GTHAN)
 		redir_node->fd = ft_open_fd(redir_node->filename, mode | O_TRUNC);
 	if (redir_node->fd < 0)
 		return (ft_exit_redir(1, redir_node, utils));
