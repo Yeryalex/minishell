@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/04 17:17:04 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/05 19:56:41 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <errno.h>
 # include "../inc/libft/libft.h"
 
+# define DEFAULT_ENV "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 # define CYAN "\033[96m"
 # define GREEN "\033[92m"
 # define YELLOW "\033[93m"
@@ -181,6 +182,7 @@ int		ft_count_double_quotes(const char *value);
 
 void	init_utils(t_utils *utils, t_env *env);
 char	*get_value_from_env(t_env *env, char *key);
+void	ft_modify_especific_env(char *cwd, t_env *env, char *key_value);
 /*          FREE FUNCTIONS         */
 void	ft_free_tokens(t_tokens **lexer);
 void    ft_free_cmd(t_cmds *cmd);

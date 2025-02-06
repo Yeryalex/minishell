@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:16:01 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/31 13:09:34 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/05 20:05:00 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_get_paths_from_env(t_env *environ)
 	path_env = get_env_value(environ, "PATH");
     if (!path_env)
 		return (free(path_env), NULL);
-    return (path_env);
+	return (path_env);
 }
 
 /*char    *ft_get_path(char *path, char *cmd)

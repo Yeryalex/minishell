@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/31 08:50:23 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/05 20:13:58 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,46 @@ static t_utils	*ft_init_minishell(char **env, char **full_path)
 	return (utils);
 }
 
+char	**ft_fill_env()
+{
+	char	cwd[1024];
+	char	**env;
+	char	*pwd;
+
+	env = (char **)malloc(sizeof(char *) * 5);
+	if (!env)
+		return (NULL);
+	if (!getcwd(cwd, 1024))
+	{
+		free(env);
+		return (NULL);
+	}
+	pwd = ft_strjoin("PWD=", cwd);
+	if (!pwd)
+	{
+		free(env);
+		return (NULL);
+	}
+	env[0] = pwd;
+	env[1] = ft_strdup("SHLVL=1");
+	env[2] = ft_strdup("_=/usr/bin/env");
+	env[3] = ft_strdup("PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
+	env[4] = NULL;
+	return (env);
+}
 int	main(int ac, char **argv, char **env)
 {
 	t_utils	*utils;
 	char	*full_path;
+	char	**empty_env = NULL;
 
 	(void)argv;
 	ft_check_args(ac);
-	
+	if (!env ||!env[0])		
+	{
+		empty_env = ft_fill_env();
+		env = empty_env;
+	}
 	utils = ft_init_minishell(env, &full_path);
 	prompt_loop(utils, full_path);
 	free(full_path);
