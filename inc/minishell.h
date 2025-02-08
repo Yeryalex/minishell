@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/05 19:56:41 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/07 14:20:46 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_utils
 	t_env 			*environ;
 	int				stdin;
 	int				stdout;
+	int				status;
 	int				exit_status;
 	char			*builtins[8];
 	struct s_utils	*next;
@@ -123,6 +124,7 @@ int		ft_pwd(t_env *env);
 int		ft_export(t_cmds *cmd, t_env *env);
 int		ft_unset(char **cmd_array, t_env  **env);
 int		ft_cd(char **cmd_array, t_env *env);
+int		ft_exit(char **cmd_array, t_utils *utils);
 
 /*          SIGNAL FUNCTIONS         */
 //void		ft_ctr_c(int sig);

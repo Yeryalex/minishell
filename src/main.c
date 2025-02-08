@@ -6,10 +6,9 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/05 20:13:58 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:09:26 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../inc/minishell.h"
 
 static void	ft_check_args(int ac)
@@ -34,9 +33,10 @@ static t_utils	*ft_init_minishell(char **env, char **full_path)
 	utils = malloc(sizeof(t_utils));
 	if (!utils)
 	{
-		perror("Error to asign memory for utils\n");
-		ft_free_utils(utils);
-		exit(EXIT_FAILURE);
+		//perror("Error to asign memory for utils\n");
+		//ft_free_utils(utils);
+		//exit(EXIT_FAILURE);
+		return (NULL);
 	}
 	init_signals();
 	environ = ft_init_env(env);
@@ -74,6 +74,7 @@ char	**ft_fill_env()
 	env[4] = NULL;
 	return (env);
 }
+
 int	main(int ac, char **argv, char **env)
 {
 	t_utils	*utils;
@@ -89,7 +90,8 @@ int	main(int ac, char **argv, char **env)
 	}
 	utils = ft_init_minishell(env, &full_path);
 	prompt_loop(utils, full_path);
-	free(full_path);
+//	free(full_path);
 	ft_free_utils(utils);
+//	This function is being apply for the second time
 	return (0);
 }

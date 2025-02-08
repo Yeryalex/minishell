@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_utils.c                                       :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/24 10:52:14 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/07 14:18:08 by yrodrigu         ###   ########.fr       */
+/*   Created: 2025/02/06 19:46:23 by yrodrigu          #+#    #+#             */
+/*   Updated: 2025/02/07 14:21:59 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../inc/minishell.h"
 
-void	init_utils(t_utils *utils, t_env *env)
+int	ft_exit(char **cmd_array, t_utils *utils)
 {
-	utils->environ = env;
-	utils->status = -1;
-	utils->next = NULL;
-	utils->prev = NULL;
-	utils->stdin = 0;
-	utils->stdout =	0;
-	utils->exit_status = 0;
-	utils->builtins[0] = "echo";
-	utils->builtins[1] = "cd";
-	utils->builtins[2] = "pwd";
-	utils->builtins[3] = "export";
-	utils->builtins[4] = "unset";
-	utils->builtins[5] = "env";
-	utils->builtins[6] = "exit";
-	utils->builtins[7] = NULL;
+	(void)cmd_array;
+	(void)utils;
+	ft_putstr_fd("exit\n", 2);
+	utils->status = 0;
+	return (0);
 }

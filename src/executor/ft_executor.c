@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/05 13:13:27 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/08 13:35:48 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -23,8 +23,8 @@ void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);	
 	}
-	if (fd[0])
-		close(fd[0]);
+//	if (fd[0])
+//		close(fd[0]);
 }
 
 int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
@@ -35,12 +35,16 @@ int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
 	if (pid == 0)
 	{
 		ft_dup_close(cmd, prev_read, fd);
+
+	//	pid = 3;
+	//	while (pid < 100)
+	//		close(pid++);
 		if (execve(cmd->full_path, cmd->cmd_array, env) == -1)
 		{
 			ft_putstr_fd(cmd->cmd_array[0], 2);
 			ft_putstr_fd(": command not found\n", 2);
-			ft_free_array(env);
-			exit(127);
+			//ft_free_array(env);
+			//exit(127);
 		}
 	}
 	return (1);
@@ -84,6 +88,8 @@ void	ft_exec_builtin(t_cmds *cmd, t_utils *utils, int fd)
 		ft_unset(cmd->cmd_array, &utils->environ);
 	else if (!ft_strncmp(cmd->cmd_array[0], "cd", 2))
 		ft_cd(cmd->cmd_array, utils->environ);
+	else if (!ft_strncmp(cmd->cmd_array[0], "exit", 4))
+		ft_exit(cmd->cmd_array, utils);
 }
 
 void	ft_call_builtin(t_cmds *cmd, t_utils *utils, int pipe)
