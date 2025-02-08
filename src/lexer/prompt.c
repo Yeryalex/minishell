@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/08 14:36:01 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:51:01 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static int	ft_process_input(char *input, t_tokens **commands, t_cmds **cmd, char
 		utils->exit_status = 0;
 		return (ft_free_tokens(commands), free(input), 0);
 	}
-	//ft_free_tokens(commands);
-	//free(input); 
+	ft_free_tokens(commands);
+	free(input); 
 	return (1);
 }
 
@@ -75,17 +75,14 @@ void	prompt_loop(t_utils *utils, char *path)
 		{
 			
 			ft_free_tokens(&commands);
-			//ft_free_utils(utils);
-			//free(input);
 			continue;;
 		}
 		if (cmd && env)
 			ft_executor(cmd, utils, env);
-		//ft_free_cmd(cmd);
+		ft_free_cmd(cmd);
 		ft_free_tokens(&commands);
-		free(input);
 	}
-	//ft_free_utils(utils);
+	ft_free_utils(utils);
 	ft_free_array(env);
 	rl_clear_history();
 }
