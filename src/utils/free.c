@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:36:31 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/08 11:22:21 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:35:19 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ void ft_free_env(t_env *env)
 
     while (env)
     {
-        tmp = env;
+		tmp = env;
         env = env->next;
         free(tmp->key);
         free(tmp->value);
         free(tmp);
     }
+	free(env);
 }
 
 void ft_free_utils(t_utils *utils)

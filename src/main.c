@@ -6,11 +6,10 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/08 14:17:24 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:34:54 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
 
 int		 g_exit_code;
 
@@ -36,10 +35,11 @@ static void	ft_check_args(int ac)
 	utils = (t_utils *)malloc(sizeof(t_utils));
 	if (!utils)
 	{
-		perror("Error to asign memory for utils\n");
-		ft_free_utils(utils);
+		//perror("Error to asign memory for utils\n");
+		//ft_free_utils(utils);
 		utils = NULL;
-		exit(EXIT_FAILURE);
+		//exit(EXIT_FAILURE);
+		return (NULL);
 	}
 	environ = ft_init_env(env);
 	if (!environ)
@@ -94,6 +94,34 @@ char	**ft_fill_env()
 	return (env);
 }
 
+char	**ft_fill_env()
+{
+	char	cwd[1024];
+	char	**env;
+	char	*pwd;
+
+	env = (char **)malloc(sizeof(char *) * 5);
+	if (!env)
+		return (NULL);
+	if (!getcwd(cwd, 1024))
+	{
+		free(env);
+		return (NULL);
+	}
+	pwd = ft_strjoin("PWD=", cwd);
+	if (!pwd)
+	{
+		free(env);
+		return (NULL);
+	}
+	env[0] = pwd;
+	env[1] = ft_strdup("SHLVL=1");
+	env[2] = ft_strdup("_=/usr/bin/env");
+	env[3] = ft_strdup("PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
+	env[4] = NULL;
+	return (env);
+}
+
 int	main(int ac, char **argv, char **env)
 {
 	t_utils	*utils;
@@ -103,7 +131,7 @@ int	main(int ac, char **argv, char **env)
 
 	(void)argv;
 	ft_check_args(ac);
-	if (!env || (!env[0]))
+	if (!env ||!env[0])		
 	{
 		empty_env = ft_fill_env();
 		env = empty_env;
@@ -120,9 +148,8 @@ int	main(int ac, char **argv, char **env)
 	utils->exit_status = -1;
 	prompt_loop(utils, full_path);
 	exit_code = utils->exit_status;
-	free(full_path);
+//	free(full_path);
 	ft_free_utils(utils);
-	ft_free_array(empty_env);
-	ft_free_array(env);
-	return (exit_code);
+//	This function is being apply for the second time
+	return (0);
 }

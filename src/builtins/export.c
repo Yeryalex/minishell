@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:44:57 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/03 20:12:33 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/06 18:05:05 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -61,7 +61,10 @@ t_env	*ft_add_node_env(char **cmd_array, t_env *env)
 		flag = ft_init_key_value(cmd_array, &x_key, &x_value, &i);
 		node_already_exist = ft_find_key_env(env, x_key);
 		if (node_already_exist)
+		{
 			ft_check_nodes(node_already_exist, &x_value, &flag);
+			free(x_key);
+		}
 		else
 			ft_create_new_node(&x_key, &x_value, env);
 		i++;

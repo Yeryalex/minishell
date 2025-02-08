@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:15:20 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/07 11:36:48 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:35:53 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,6 @@ int	ft_clear_lstenv(t_env *envs)
 		free (envs);
 		envs = tmp;
 	}
-	/*
-	t_env *temp;
-
-    while (env)
-    {
-        temp = env;
-        env = env->next;
-        free(temp->key); // Free the key
-        if (temp->value) // Free the value if it exists
-            free(temp->value);
-        free(temp); // Free the node
-    }*/
 	return (1);
 }
 
@@ -64,7 +52,10 @@ t_env	*ft_create_node_env(char *envs)
 		else
 			env_node->value = ft_strdup(env_node->value + 1);
 	}
+	if (!env_node->value)
+		return (free(env_node->key), free(env_node), NULL);
 	env_node->next = NULL;
+	//printf("%s, %p\n", env_node->key, env_node);
 	return (env_node);
 }
 

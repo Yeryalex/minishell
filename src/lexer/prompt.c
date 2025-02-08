@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/08 14:18:11 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:36:01 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ void	prompt_loop(t_utils *utils, char *path)
 	env = ft_list_to_char(utils->environ);
 	while (utils->exit_status == -1)
 	{
+		if (utils->status == 0)
+		{
+			ft_free_array(env);
+			break;
+		}
 		input = read_input(env);
 		if (!input)
 		{

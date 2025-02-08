@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/08 13:39:31 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:36:59 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/stat.h>
 # include "../inc/libft/libft.h"
 
+# define DEFAULT_ENV "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 # define CYAN "\033[96m"
 # define GREEN "\033[92m"
 # define YELLOW "\033[93m"
@@ -87,6 +88,7 @@ typedef struct s_utils
 	t_env			*environ;
 	int				stdin;
 	int				stdout;
+	int				status;
 	int				exit_status;
 	char			*builtins[8];
 	struct s_utils	*next;
@@ -129,12 +131,13 @@ void		*ft_exit_redir(int error, t_dir *redir_node, t_utils *utils);
 void		ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
 
 /*          BUILTINS FUNCTION:S         */
-int			ft_echo(char **cmd, int fd);
-int			ft_env(t_utils *utils, int fd);
-int			ft_pwd(t_env *env);
-int			ft_export(t_cmds *cmd, t_env *env);
-int			ft_unset(char **cmd_array, t_env  **env);
-int			ft_cd(char **cmd_array, t_env *env);
+int		ft_echo(char **cmd, int fd);
+int		ft_env(t_utils *utils, int fd);
+int		ft_pwd(t_env *env);
+int		ft_export(t_cmds *cmd, t_env *env);
+int		ft_unset(char **cmd_array, t_env  **env);
+int		ft_cd(char **cmd_array, t_env *env);
+int		ft_exit(char **cmd_array, t_utils *utils);
 
 /*          SIGNAL FUNCTIONS         */
 //void		ft_ctr_c(int sig);
@@ -192,9 +195,9 @@ int			ft_count_double_quotes(const char *value);
 
 /* UTILS FUNCTIONS */
 
-void		init_utils(t_utils *utils, t_env *env);
-char		*get_value_from_env(t_env *env, char *key);
-
+void	init_utils(t_utils *utils, t_env *env);
+char	*get_value_from_env(t_env *env, char *key);
+void	ft_modify_especific_env(char *cwd, t_env *env, char *key_value);
 /*          FREE FUNCTIONS         */
 void		ft_free_tokens(t_tokens **lexer);
 void		ft_free_cmd(t_cmds *cmd);
