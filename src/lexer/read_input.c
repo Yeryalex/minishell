@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-static void    *clean_input(char *input)
+static void    *ft_clean_input(char *input)
 {
     if (input)
         free(input);
@@ -24,16 +24,17 @@ char	*read_input(char **env)
 	char	*input;
 
 	input = NULL;
-	input = clean_input(input);
-	signal(SIGINT, sigint_handler);
+	input = ft_clean_input(input);
+	//signal(SIGINT, sigint_handler);
 	input = readline(CYAN "minishell> " RESET);
 	if (input && *input)
 		add_history(input);
 	else if (!input)
-		{
+	{
         ft_putstr_fd("exit\n", STDOUT_FILENO);
-        ft_free_array(env);
-        exit(EXIT_SUCCESS);
+        //ft_free_array(env);
+        //exit(EXIT_SUCCESS);
     }
+	(void)env;
 	return (input);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <rbuitrag@student.42barcelona.co  +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 19:20:57 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/30 19:21:00 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/08 12:04:18 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,5 @@ char	*ft_remove_quotes(char *value)
 	if (!result)
 		return (free(value), NULL);
 	ft_process_quotes(value, result, inside_double_quotes);
-	free(value);
 	return (result);
 }

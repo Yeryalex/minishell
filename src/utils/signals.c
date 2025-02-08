@@ -3,35 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <rbuitrag@student.42barcelona.co  +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:46:08 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/05 13:19:03 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/08 13:39:08 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h" 
 
-/*void	ft_ctr_c(int sig)
-{
-	if (sig == SIGINT)
-	{
-		ft_putstr_fd("\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		//exit(130);
-	}
-}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   a_signal.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: apaterno <apaterno@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/04 16:27:07 by apaterno          #+#    #+#             */
+/*   Updated: 2024/11/12 18:40:09 by apaterno         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-		g_signal = 0;
-		utils->exit_status = 130;
-	}
-}*/
+#include "../../inc/minishell.h"
 
 void	sigquit_handler(int signal)
 {
 	(void)signal;
+	g_exit_code = 131;
 	ft_putendl_fd("Quit (core dumped)", STDERR_FILENO);
 }
 
@@ -42,26 +40,19 @@ int	event(void)
 
 void	sigint_handler(int sig)
 {
-	/*if (g_status == 0)
-	{
-		g_status = 2;
-		rl_done = 1;
-	}
-	else
-	{*/
 	if (sig == SIGINT)
 	{
 		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		//exit(130);
+		g_exit_code = 130;
 	}
 	//}
 	//(void)signal;
 }
 
-void	init_signals(void)
+void	ft_init_signals(void)
 {
 	struct sigaction	sa;
 

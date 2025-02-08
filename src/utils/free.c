@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:36:31 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/31 13:13:52 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/08 11:22:21 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,15 @@ void ft_free_env(t_env *env)
 
 void ft_free_utils(t_utils *utils)
 {
-    if (!utils)
-        return ;
-    if (utils->environ)
-		ft_free_env(utils->environ);
-	//if (utils->builtins[])
-	//	ft_free_array(utils->builtins);
-    free(utils);
-	utils = NULL;
+    if (utils)
+    {
+        if (utils->environ)
+        	ft_clear_lstenv(utils->environ);
+    	if (*utils->builtins)
+			ft_free_array(utils->builtins);
+    	free(utils);
+		utils = NULL;
+	}
 }
 
 void ft_free_array(char **array)
@@ -90,7 +91,7 @@ void	*ft_free_one_to_cmd(t_cmds *cmd)
 		cmd->redir_out = NULL;
 	}
 	free(cmd);
-	return (NULL);
+	return (0);
 }
 
 void	ft_free_cmd(t_cmds *cmd)
@@ -101,8 +102,8 @@ void	ft_free_cmd(t_cmds *cmd)
 		return;
 	while (cmd)
 	{
-		tmp = cmd->next;
-		ft_free_one_to_cmd(cmd);
-		cmd = tmp;
+		tmp = cmd;
+		cmd = cmd->next;
+		ft_free_one_to_cmd(tmp);
 	}
 }

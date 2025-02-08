@@ -76,6 +76,7 @@ char	*ft_get_env_key(char *str)
 {
 	char	*separator;
 	int		i;
+	char	*new_key;
 
 	if (!str)
 		return (NULL);
@@ -97,8 +98,16 @@ char	*ft_get_env_key(char *str)
 	if (separator == str)
 		return (ft_print_stderr(str));
 	if (!separator)
-		return (ft_strdup(str));
-	return (ft_substr(str, 0, separator - str));
+	{
+		new_key = ft_strdup(str);
+		if (!new_key)
+			return (NULL);
+		return (new_key);
+	}
+	new_key = ft_substr(str, 0, separator - str);
+	if (!new_key)
+		return (NULL);
+	return (new_key);
 }
 
 char	*ft_get_env_value(char *key_value)

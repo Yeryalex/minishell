@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:15:20 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/02 13:00:11 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:36:48 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,16 @@ t_env	*ft_create_node_env(char *envs)
 	
 	env_node = (t_env *)malloc(sizeof(t_env));
 	if (!env_node)
-		return (free(env_node), NULL);
+		return (NULL);
 	env_node->key = ft_get_env_key(envs);
+	if (!env_node->key)
+		return (free(env_node), NULL);
 	env_node->value = ft_get_env_value(envs);
-	if (!env_node->value)
+	if (!env_node->value || !env_node->key)
+	{
 		env_node->exported = 0;
+		return(free(env_node->key), free(env_node), NULL);
+	}
 	else
 	{
 		env_node->exported = 1;
@@ -94,6 +99,7 @@ t_env		*ft_init_env(char **envs)
 		if (!new_node)
 		{
 			ft_clear_lstenv(lst_env);
+			ft_clear_lstenv(new_node);
 			return (NULL);
 		}
 		ft_add_env_tolst(&lst_env, new_node);

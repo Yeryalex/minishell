@@ -40,7 +40,7 @@ char	*ft_get_word(const char **input)
 	}
 	value = ft_substr(*input, 0, i);
 	if (!value)
-		return (NULL);
+		return (free(value), NULL);
 	*input = *input + i;
 	return (value);
 }
@@ -65,6 +65,6 @@ char	*ft_get_value(const char **input)
 	else
 		value = ft_get_word(input);
 	if (!value)
-		return(NULL);
+		return(free(value), NULL);
 	return (value);
 }

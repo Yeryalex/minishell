@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 10:50:55 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/05 13:11:49 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/07 10:25:22 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 int	ft_is_option(char *str)
@@ -48,6 +49,7 @@ int	ft_echo(char **cmd, int fd)
 	int i;
 
 	i = 1;
+	flag = 0;
 	ft_handle_flag(cmd, &i, &flag);
 	while (cmd[i])
 	{

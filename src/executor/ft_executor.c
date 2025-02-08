@@ -6,9 +6,10 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/05 13:13:27 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/08 13:40:17 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
@@ -23,8 +24,6 @@ void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);	
 	}
-	if (fd[0])
-		close(fd[0]);
 }
 
 int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
@@ -39,8 +38,8 @@ int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
 		{
 			ft_putstr_fd(cmd->cmd_array[0], 2);
 			ft_putstr_fd(": command not found\n", 2);
-			ft_free_array(env);
-			exit(127);
+			//ft_free_array(env);
+			//exit(127);
 		}
 	}
 	return (1);
@@ -102,7 +101,7 @@ void	ft_wait_for_children(int i)
      }
 }
 
-/*void	ft_executor(t_cmds *current, t_utils *utils, char **env)
+void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 {
 	int	fd[2];
 	int	prev_read;
@@ -110,7 +109,7 @@ void	ft_wait_for_children(int i)
 	
 	i = 0;
 	prev_read = -1;
-
+	ft_init_signals();
 	while (current)
     {
     	if (current->next && pipe(fd) == -1)
@@ -133,7 +132,7 @@ void	ft_wait_for_children(int i)
      }
 	ft_wait_for_children(i);
 }
-*/
+/*
 
 void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 {
@@ -198,3 +197,4 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 	}
 	ft_wait_for_children(i);
 }
+*/

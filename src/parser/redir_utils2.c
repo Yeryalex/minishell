@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 11:04:58 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/06 11:05:01 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/07 09:25:39 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*ft_exit_redir(int error, t_dir *redir_node, t_utils *utils)
 		return (NULL);
 	if (redir_node->filename)
 		free (redir_node->filename);
-	if (redir_node->fd >= 0 && redir_node->fd <= 100)
+	if (redir_node->fd >= 0 && redir_node->fd <= 42)
 		close (redir_node->fd);
 	free (redir_node);
 	if (error == 1)
@@ -44,7 +44,7 @@ int	ft_open_fd(char *filename, int mode)
 	if (mode & O_CREAT)
 		fd = open(filename, mode, 0664);
 	else
-		fd = open(filename, mode);
+		fd = open(filename, mode, 0664);
 	if (fd < 0)
 		return (-1);
 	return (fd);

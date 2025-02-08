@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:16:01 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/31 13:09:34 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/08 11:45:16 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char    *ft_get_path(char *path, char *cmd)
         return (NULL);
     path_dir = ft_split(path, ':');
     if (!path_dir)
-        return (NULL);
+        return (ft_free_array(path_dir), NULL);
     i = 0;
     path_to_exec = NULL;
     while (path_dir[i])

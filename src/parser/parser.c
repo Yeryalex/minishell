@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/05 13:20:35 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/08 12:58:06 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path, t_util
 		return (NULL);
 	node_cmd = (t_cmds *)malloc(sizeof(t_cmds));
 	if (!node_cmd || ft_init_cmd_node(node_cmd, count_tokens) == -1)
-		return (ft_free_tokens(&lexer), NULL);
+		return (ft_free_tokens(&lexer), ft_free_cmd(node_cmd), NULL);
 	if (ft_fill_cmd(node_cmd, lexer, count_tokens, utils) == -1)
-		return (NULL);
+		return (ft_free_cmd(node_cmd), NULL);
 	node_cmd->full_path = ft_get_path(path, node_cmd->cmd_array[0]);
 	if (!node_cmd->full_path)
-		return (free_cmd_array(node_cmd->cmd_array), free(node_cmd), NULL);
+		return (free_cmd_array(node_cmd->cmd_array), ft_free_cmd(node_cmd), NULL);
 	return (node_cmd);
 }
 
@@ -109,7 +109,7 @@ t_cmds *ft_parser(t_tokens *lexer, char *path, t_utils *utils)
 		else if (lexer->token == PIPE)
 		{
 			if (ft_process_pipe(&all_cmds, count_tokens, &head_parser, path, utils) == 0)
-				return(NULL);
+				return(ft_free_cmd(all_cmds), ft_free_tokens(&head_parser), NULL);
 			head_parser = lexer->next;
 			count_tokens = 0;
 		}
@@ -117,6 +117,6 @@ t_cmds *ft_parser(t_tokens *lexer, char *path, t_utils *utils)
 	}
 	if (count_tokens >= 0)
 		if (ft_process_pipe(&all_cmds, count_tokens, &head_parser, path, utils) == 0)
-			return(NULL);
+			return(ft_free_tokens(&head_parser), NULL);
 	return (all_cmds);
 }
