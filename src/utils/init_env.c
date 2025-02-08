@@ -34,8 +34,10 @@ t_env	*ft_create_node_env(char *envs)
 	
 	env_node = (t_env *)malloc(sizeof(t_env));
 	if (!env_node)
-		return (free(env_node), NULL);
+		return (NULL);
 	env_node->key = ft_get_env_key(envs);
+	if (!env_node->key)
+		return (free(env_node), NULL);
 	env_node->value = ft_get_env_value(envs);
 	if (!env_node->value)
 		env_node->exported = 0;
@@ -47,7 +49,10 @@ t_env	*ft_create_node_env(char *envs)
 		else
 			env_node->value = ft_strdup(env_node->value + 1);
 	}
+	if (!env_node->value)
+		return (free(env_node->key), free(env_node), NULL);
 	env_node->next = NULL;
+	//printf("%s, %p\n", env_node->key, env_node);
 	return (env_node);
 }
 

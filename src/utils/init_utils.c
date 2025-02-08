@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 10:52:14 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/01/24 10:54:45 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/07 14:18:08 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	init_utils(t_utils *utils, t_env *env)
 {
 	utils->environ = env;
+	utils->status = -1;
 	utils->next = NULL;
 	utils->prev = NULL;
 	utils->stdin = 0;
