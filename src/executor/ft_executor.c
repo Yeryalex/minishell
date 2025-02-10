@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/08 14:36:28 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/10 09:43:45 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,21 @@ void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
 		dup2(prev_read, STDIN_FILENO);
 		close(prev_read);
 	}
+	if (cmd->redir_in)
+	{
+		dup2(cmd->redir_in->fd, STDIN_FILENO);
+		close(cmd->redir_in->fd);
+	}
 	if (cmd->next)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);	
 	}
-//	if (fd[0])
-//		close(fd[0]);
+	if (cmd->redir_out)
+	{
+		dup2(cmd->redir_out->fd, STDOUT_FILENO);
+		close(cmd->redir_out->fd);
+	}
 }
 
 int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
@@ -53,6 +61,10 @@ int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
 
 void	ft_reset_read_end(t_cmds *current, int *prev_read, int *fd)
 {
+	if (current->redir_in && current->redir_in->fd > 0)
+		close(current->redir_in->fd);
+	if (current->redir_out && current->redir_out->fd > 0)
+		close(current->redir_out->fd);
 	if (current->next)
 		close(fd[1]);
 	if (current->prev)
@@ -117,7 +129,7 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 	
 	i = 0;
 	prev_read = -1;
-	ft_init_signals();
+	
 	while (current)
     {
     	if (current->next && pipe(fd) == -1)
