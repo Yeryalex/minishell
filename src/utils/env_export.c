@@ -101,7 +101,7 @@ char	*ft_get_env_key(char *str)
 	{
 		new_key = ft_strdup(str);
 		if (!new_key)
-			return (NULL);
+			return (free(new_key), NULL);
 		return (new_key);
 	}
 	new_key = ft_substr(str, 0, separator - str);

@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:36:31 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/08 14:35:19 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:24:30 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	*ft_free_redir(t_dir *node)
 	{
 		if (node->fd >= 0)
 			close (node->fd);
-		//if (node->here_doc && !access(node->filename, F_OK))
-		//	unlink(node->filename);
+		if (node->heredoc && !access(node->filename, F_OK))
+			unlink(node->filename);
 		free (node->filename);
 		free (node);
 		node = NULL;
@@ -39,19 +39,30 @@ void ft_free_env(t_env *env)
         free(tmp->value);
         free(tmp);
     }
-	free(env);
+	//free(env);
 }
 
 void ft_free_utils(t_utils *utils)
 {
+    int i = 0;
+
     if (utils)
     {
         if (utils->environ)
-        	ft_clear_lstenv(utils->environ);
-    	if (*utils->builtins)
-			ft_free_array(utils->builtins);
-    	free(utils);
-		utils = NULL;
+		{
+            ft_clear_lstenv(utils->environ);
+			utils->environ = NULL;
+		}
+		while (i < 8)
+        {
+            if (utils->builtins[i])
+            {
+                free(utils->builtins[i]);
+                utils->builtins[i] = NULL;
+            }
+            i++;
+        }
+        free(utils);
 	}
 }
 

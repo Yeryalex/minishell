@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:46:08 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/10 09:37:01 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:14:05 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,28 @@ void	sigquit_handler(int signal)
 
 int	event(void)
 {
+	// printf("Estoy de salida\n");
 	return (EXIT_SUCCESS);
 }
+
+/*static void ft_sig_d(int sig)
+{
+	if (sig == SIGQUIT)
+		{
+			printf("Estoy de salida\n");
+			}
+}*/
 
 void	ft_init_signals(void)
 {
 	struct sigaction	sa;
 	
-	rl_event_hook = event;
+	//rl_event_hook = event;
 	sa.sa_flags = 0;
 	sa.sa_handler = ft_sig_c;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
-	rl_catch_signals = 1;
+	// rl_catch_signals = 1;
 }

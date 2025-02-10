@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:15:20 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/08 14:35:53 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:54:55 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ int	ft_clear_lstenv(t_env *envs)
 	{
 		tmp = envs->next;
 		free (envs->key);
-		if (envs->value)
-			free (envs->value);
+		free (envs->value);
 		free (envs);
 		envs = tmp;
 	}
-	return (1);
+	return (0);
 }
 
 t_env	*ft_create_node_env(char *envs)
@@ -84,6 +83,7 @@ t_env		*ft_init_env(char **envs)
 	t_env	*lst_env;
 
 	lst_env = NULL;
+	new_node = NULL;
 	while (*envs)
 	{
 		new_node = ft_create_node_env(*envs);
