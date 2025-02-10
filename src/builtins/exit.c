@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:46:23 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/10 16:43:30 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:11:33 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -19,69 +19,52 @@ void	ft_error_exit(char	*str, t_utils *utils)
 	printf("numeric argument required\n");
 	utils->status = 0;
 }
-/*
-void	ft_init_long(char **str)
+
+char	*ft_init_long(long *sign, char *str)
 {
-    result = 0;
-    sign = 1;
-    digit_count = 0;
-    if (*str == '-' )
-    {
-        sign = -1;
-        str++;
-    }
-    else if (*str == '+')
-        str++;
+	if (*str == '-' )
+	{
+		*sign = -1;
+		str++;
+	}
+	else if (*str == '+')
+		str++;
+	return (str);
 }
-*/
-long    ft_atoi_long(const char *str, int *error)
+
+long	ft_atoi_long(char *str, int *error)
 {
-    long    result;
-    long    sign;
-    int     digit_count;
+	long	result;
+	long	sign;
 
 	result = 0;
-    sign = 1;
-    digit_count = 0;
-	if (*str == '-' )
-    {
-        sign = -1;
-        str++;
-    }
-    else if (*str == '+')
-		str++;
+	sign = 1;
+	str = ft_init_long(&sign, str);
 	while (*str >= '0' && *str <= '9')
-    {
-        digit_count++;
-        if ((result > (LONG_MAX / 10)) ||
-            (result == (LONG_MAX / 10) && (*str - '0') > (LONG_MAX % 10)))
+	{
+		if ((result > (LONG_MAX / 10)) || (result == (LONG_MAX / 10)
+				&& (*str - '0') > (LONG_MAX % 10)))
 		{
 			if (sign == -1 && *str == '8' && !*(str + 1))
 				return (LONG_MIN);
-			else if ((sign == -1 && (*str - '0') > 8 ) || *(str + 1))
-			{
-				*error = 1;
-				return (LONG_MIN);
-			}
+			else if ((sign == -1 && (*str - '0') > 8) || *(str + 1))
+				return (*error = 1, LONG_MIN);
 			if (sign == 1)
-			{
-				*error = 1;
-				return (LONG_MAX);
-			}
+				return (*error = 1, LONG_MAX);
 		}
-        result = result * 10 + (*str - '0');
-        str++;
-    }
+		result = result * 10 + (*str - '0');
+		str++;
+	}
 	return (result * sign);
 }
 
 int	ft_contains_alpha(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str[i] == '-' || str[i] == '+')
-	i++;
+		i++;
 	while (str[i])
 	{
 		if (ft_isalpha(str[i]) || !ft_isdigit(str[i]))
@@ -93,9 +76,9 @@ int	ft_contains_alpha(char *str)
 
 void	ft_save_status_value(char *value, t_utils *utils)
 {
-	long	exit_value;
-	unsigned char exit_status;
-	int	error;
+	long			exit_value;
+	unsigned char	exit_status;
+	int				error;
 
 	error = 0;
 	exit_value = ft_atoi_long(value, &error);
@@ -103,7 +86,7 @@ void	ft_save_status_value(char *value, t_utils *utils)
 	{
 		ft_error_exit(value, utils);
 		return ;
-	} 
+	}
 	exit_status = (unsigned char)(exit_value % 256);
 	utils->exit_status = exit_status;
 	ft_putstr_fd("exit\n", 2);
