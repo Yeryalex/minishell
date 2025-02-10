@@ -36,19 +36,22 @@ char **ft_list_to_char(t_env *env)
     char_env = (char **)malloc(sizeof(char *) * (size + 1));
     if (!char_env)
         return (NULL);
-    while (env)
-    {
-        temp = ft_strjoin(env->key, "=");
-       	if (!temp)
-			return (NULL);
-		key_value = ft_strjoin(temp, env->value);
-		if (!key_value)
-			return (NULL);
-		free(temp);
-        *char_env = key_value;
-        char_env++;
-        env = env->next;
-    }
+    if (char_env)
+	{
+		while (env)
+    	{
+        	temp = ft_strjoin(env->key, "=");
+       		if (!temp)
+				return (ft_free_array(char_env), NULL);
+			key_value = ft_strjoin(temp, env->value);
+			if (!key_value)
+				return (ft_free_array(char_env), NULL);
+			free(temp);
+        	*char_env = key_value;
+        	char_env++;
+        	env = env->next;
+    	}
+	}
 	*char_env = NULL;
 	return (char_env - size);
 }

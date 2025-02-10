@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/10 14:29:30 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:31:02 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,4 @@ void	prompt_loop(t_utils *utils, char *path)
 	}
 	ft_clear_lstenv(utils->environ);
 	rl_clear_history();
-	exit(g_exit_code);
 }

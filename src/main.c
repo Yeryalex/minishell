@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/10 13:55:43 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:34:09 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ int	main(int ac, char **argv, char **env)
 		if (!empty_env)
         {
             fprintf(stderr, "minishell: Error: no se pudo inicializar el env\n");
-            exit(EXIT_FAILURE);
+			ft_free_array(empty_env);
+			exit(EXIT_FAILURE);
         }
 		env = empty_env;
 	}
@@ -101,9 +102,9 @@ int	main(int ac, char **argv, char **env)
 	}
 	ft_init_signals();
 	prompt_loop(utils, full_path);
-	free(full_path);
+	//free(full_path);
 	if (empty_env)
 		ft_free_array(empty_env);
-	ft_free_utils(utils);
+	//ft_free_utils(utils);
 	return (g_exit_code);
 }
