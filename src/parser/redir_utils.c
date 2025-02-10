@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 11:04:40 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/07 09:34:12 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/10 09:06:05 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_check_file(t_dir *node)
 	return (0);
 }
 
-/*void	*hdoc_error_handler(t_redir *redir_node, t_cmd *parser_nodes)
+/*void	*ft_hdoc_error_handler(t_dir *redir_node, t_cmds *parser_nodes)
 {
 	unlink(redir_node->filename);
 	free(redir_node->filename);
@@ -35,7 +35,7 @@ int	ft_check_file(t_dir *node)
 	return (NULL);
 }
 
-t_dir	*hdoc_redir(t_tokens **lexer_nodes, t_cmd *parser_nodes, t_utils *utils)
+t_dir	*ft_hdoc_redir(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_utils *utils)
 {
 	t_dir	*redir_node;
 
@@ -46,7 +46,7 @@ t_dir	*hdoc_redir(t_tokens **lexer_nodes, t_cmd *parser_nodes, t_utils *utils)
 	redir_node = (t_redir *)malloc(sizeof(t_redir));
 	if (!redir_node)
 		return (NULL);
-	redir_node->here_doc = 1;
+	redir_node->heredoc = 1;
 	redir_node->filename = ft_random_filename();
 	if (ft_fork_hdoc(lexer_nodes, parser_nodes, redir_node, utils) || g_signal)
 		return (hdoc_error_handler(redir_node, parser_nodes));

@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/08 14:51:41 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/10 09:33:32 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ static t_utils	*ft_init_minishell(char **env, char **full_path)
 		return (NULL);
 		//exit(EXIT_FAILURE);
 	}
-
+	ft_init_signals();
 	environ = ft_init_env(env);
 	if (!environ)
 		return(ft_free_utils(utils), NULL);
 	*full_path = ft_get_paths_from_env(environ);
 	if (!*full_path)
-		return(ft_clear_lstenv(environ), ft_free_utils(utils), NULL);
+		return(ft_clear_lstenv(environ), ft_free_array(full_path), NULL);
 	init_utils(utils, environ);
 	return (utils);
 }
@@ -85,8 +85,7 @@ int	main(int ac, char **argv, char **env)
 	t_utils	*utils;
 	char	*full_path;
 	char	**empty_env = NULL;
-	int 	exit_code;
-
+	
 	(void)argv;
 	ft_check_args(ac);
 	if (!env ||!env[0])		
@@ -98,18 +97,18 @@ int	main(int ac, char **argv, char **env)
 	if (!utils)
 	{
 		perror("Error to asign memory for utils\n");
-		//ft_free_utils(utils);
-		//ft_free_array(env);
+		ft_free_utils(utils);
+		ft_free_array(env);
 		ft_free_array(empty_env);
 		exit(EXIT_FAILURE);
 	}
-	utils->exit_status = -1;
-	prompt_loop(utils, full_path);
-	exit_code = utils->exit_status;
-//	free(full_path);
-	ft_free_utils(utils);
+	//utils->status = 1;
+	if (utils && full_path)
+		prompt_loop(utils, full_path);
+	//	free(full_path);
+	//ft_free_utils(utils);
 //	This function is being apply for the second time
-	ft_free_array(env);
+	//ft_free_array(env);
 	ft_free_array(empty_env);
-	return (0);
+	return (g_exit_code);
 }

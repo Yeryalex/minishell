@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/08 14:36:59 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/10 09:00:03 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ int			ft_check_file(t_dir *node);
 int			ft_open_fd(char *file_name, int mode);
 void		*ft_exit_redir(int error, t_dir *redir_node, t_utils *utils);
 void		ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
+void		*ft_hdoc_error_handler(t_dir *redir_node, t_cmds *parser_nodes);
+t_dir		*ft_hdoc_redir(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_utils *utils);
 
 /*          BUILTINS FUNCTION:S         */
 int		ft_echo(char **cmd, int fd);
@@ -140,9 +142,8 @@ int		ft_cd(char **cmd_array, t_env *env);
 int		ft_exit(char **cmd_array, t_utils *utils);
 
 /*          SIGNAL FUNCTIONS         */
-//void		ft_ctr_c(int sig);
+void		ft_sig_c(int sig);
 void		ft_init_signals(void);
-void		sigint_handler(int sig);
 void		sigquit_handler(int signal);
 int			event(void);
 
