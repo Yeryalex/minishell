@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/08 13:35:48 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/10 09:05:54 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -18,13 +18,21 @@ void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
 		dup2(prev_read, STDIN_FILENO);
 		close(prev_read);
 	}
+	if (cmd->redir_in)
+	{
+		dup2(cmd->redir_in->fd, STDIN_FILENO);
+		close(cmd->redir_in->fd);
+	}
 	if (cmd->next)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);	
 	}
-//	if (fd[0])
-//		close(fd[0]);
+	if (cmd->redir_out)
+	{
+		dup2(cmd->redir_out->fd, STDOUT_FILENO);
+		close(cmd->redir_out->fd);
+	}
 }
 
 int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
@@ -52,6 +60,10 @@ int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
 
 void	ft_reset_read_end(t_cmds *current, int *prev_read, int *fd)
 {
+	if (current->redir_in && current->redir_in->fd > 0)
+		close(current->redir_in->fd);
+	if (current->redir_out && current->redir_out->fd > 0)
+		close(current->redir_out->fd);
 	if (current->next)
 		close(fd[1]);
 	if (current->prev)
