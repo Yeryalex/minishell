@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/11 08:47:48 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:30:06 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,14 +188,16 @@ char		*ft_get_path(char *path, char *cmd);
 /*          EXECUTOR FUNCTIONS         */
 void		ft_executor(t_cmds *cmd, t_utils *utils, char **env);
 /*          AUXILIARS FUNCTIONS         */
-int			ft_isspace(char c);
-void		*ft_exit_error(char quote);
-int			ft_is_metacharacter(int c);
-void		ft_skip_spaces_and_quotes(char **input);
-char		*ft_remove_quotes(char *value);
-char		*ft_strip_outer_quotes(char *value);
-int			ft_is_enclosed_by_single_quotes(const char *value);
-int			ft_count_double_quotes(const char *value);
+int		ft_isspace(char c);
+void	*ft_exit_error(char quote);
+int		ft_is_metacharacter(int c);
+void	ft_skip_spaces_and_quotes(char **input);
+char	*ft_remove_quotes(char *value);
+char 	*ft_strip_outer_quotes(char *value);
+int		ft_is_enclosed_by_single_quotes(const char *value);
+int		ft_count_double_quotes(const char *value);
+long	ft_atoi_long(char *str, int *error);
+char	*ft_init_long(long *sign, char *str);
 
 /* UTILS FUNCTIONS */
 
