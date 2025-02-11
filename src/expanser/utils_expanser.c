@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:16:01 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/11 13:40:41 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 19:56:49 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_get_paths_from_env(t_env *environ)
 
 	path_env = get_env_value(environ, "PATH");
     if (!path_env)
-		return (free(path_env), NULL);
+		return (NULL);
 	return (path_env);
 }
 
@@ -45,7 +45,7 @@ char    *ft_get_path(char *path, char *cmd)
         return (NULL);
     path_dir = ft_split(path, ':');
     if (!path_dir)
-        return (ft_free_array(path_dir), NULL);
+        return (NULL);
     i = 0;
     path_to_exec = NULL;
     while (path_dir[i])
@@ -57,7 +57,6 @@ char    *ft_get_path(char *path, char *cmd)
             return (NULL);
         }
         path_to_exec = ft_strjoin(tmp, cmd);
-        tmp = NULL;
         free(tmp);
         if (!path_to_exec)
         {
@@ -70,10 +69,7 @@ char    *ft_get_path(char *path, char *cmd)
         path_to_exec = NULL;
         i++;
     }
-    if (tmp)
-        free(tmp);
-    if (path_dir)
-        free(path_dir);
+    ft_free_array(path_dir);
     if (!path_to_exec)
         path_to_exec = ft_strdup(cmd);
     return (path_to_exec);

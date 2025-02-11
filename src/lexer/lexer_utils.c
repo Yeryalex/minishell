@@ -6,29 +6,25 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:59:53 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/11 13:49:00 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 19:31:23 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-
-void	ft_free_tokens(t_tokens **lexer)
+void	ft_free_tokens(t_tokens **tokens)
 {
-	t_tokens	*tmp;
-
-	if (!lexer || !*lexer)
-		return;
-	while ((*lexer)->prev)
-		*lexer = (*lexer)->prev;
-	while (*lexer)
+	t_tokens	*temp;
+		
+	if (!tokens || !*tokens)
+		return ;
+	while (*tokens)
 	{
-		tmp = (*lexer)->next;
-		//free((*lexer)->value);
-		free(*lexer);
-		*lexer = tmp;
+		temp = (*tokens)->next;
+		free((*tokens)->value);
+		free(*tokens);
+		*tokens = temp;
 	}
-	*lexer = NULL;
 }
 
 int	ft_is_metacharacter(int c)

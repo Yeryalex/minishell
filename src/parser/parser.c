@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/11 12:32:24 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:10:45 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ static int	ft_fill_cmd(t_cmds *node, t_tokens *lexer, int count, t_utils *utils)
 			node->cmd_array[i] = ft_strdup(lexer->value);
 			if (!node->cmd_array[i])
 			{
-				ft_free_cmd(node);
+				while (i > 0)
+					free(node->cmd_array[--i]);
+				free(node->cmd_array);
 				return (1);
 			}
 			i++;

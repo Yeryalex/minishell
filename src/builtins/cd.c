@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:40:55 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/06 17:13:43 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/11 19:00:29 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	ft_modify_especific_env(char *cwd, t_env *env, char *key_value)
@@ -103,11 +104,9 @@ int	ft_change_dir(char *path, t_env *env)
 {
 	char	cwd[1024];
 	char	*pwd;
-	char	*oldpwd;
 
 	if (!getcwd(cwd, 1024))
 	{
-		oldpwd = get_value_from_env(env, "OLDPWD");
 		pwd = get_value_from_env(env, "PWD");
 		ft_modify_especific_env(pwd, env, "OLDPWD=");
 	}

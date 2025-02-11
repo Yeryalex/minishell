@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/11 12:20:58 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:25:19 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,20 @@ static t_utils	*ft_init_minishell(char **env, char **full_path)
 
 	utils = malloc(sizeof(t_utils));
 	if (!utils)
-		return (ft_free_utils(utils), NULL);
+		return (NULL);
 	environ = ft_init_env(env);
 	if (!environ)
-		return(ft_clear_lstenv(environ), NULL);
+	{
+		free(utils);
+		return (NULL);
+	}
 	*full_path = ft_get_paths_from_env(environ);
 	if (!*full_path)
-		return(ft_clear_lstenv(environ), ft_free_array(full_path), NULL);
+	{
+		ft_clear_lstenv(environ);
+		free(utils);
+		return (NULL);
+	}
 	init_utils(utils, environ);
 	return (utils);
 }
@@ -54,7 +61,7 @@ char	**ft_fill_env()
 
 	env = (char **)malloc(sizeof(char *) * 5);
 	if (!env)
-		return (free(env), NULL);
+		return (NULL);
 	if (!getcwd(cwd, 1024))
 	{
 		free(env);
@@ -83,13 +90,12 @@ int	main(int ac, char **argv, char **env)
 	(void)argv;
 	g_exit = 1;
 	ft_check_args(ac);
-	if (!env ||!env[0])		
+	if (!env || !env[0])		
 	{
 		empty_env = ft_fill_env();
 		if (!empty_env)
         {
             fprintf(stderr, "minishell: Error: no se pudo inicializar el env\n");
-			ft_free_array(empty_env);
 			exit(EXIT_FAILURE);
         }
 		env = empty_env;
@@ -105,5 +111,6 @@ int	main(int ac, char **argv, char **env)
 	if (empty_env)
 		ft_free_array(empty_env);
 	free(full_path);
+	ft_free_utils(utils);
 	exit(g_exit);
 }

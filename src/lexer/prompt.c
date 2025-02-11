@@ -6,30 +6,30 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/11 13:55:32 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:22:25 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-
-static void ft_cleanup(char *input, t_tokens *commands, t_cmds *cmd)
+static void ft_cleanup(char **input, t_tokens **commands, t_cmds **cmd)
 {
-	if (input)
+	if (*input)
 	{
-		input = NULL;
-		free(input);
+		free(*input);
+		*input = NULL;
 	}
-	if (cmd)
+	if (*cmd)
 	{
-		cmd = NULL;
-		ft_free_cmd(cmd);
+		ft_free_cmd(*cmd);
+		*cmd = NULL;
 	}
-	if (commands)
+	(void)commands;
+	/*if (*commands)
 	{
-		commands = NULL;
-		ft_free_tokens(&commands);
-	}
+		ft_free_tokens(commands);
+		*commands = NULL;
+	}*/
 }
 
 static int	ft_process_input(char *input, t_tokens **commands, t_cmds **cmd, char *path, t_utils *utils)
@@ -42,7 +42,6 @@ static int	ft_process_input(char *input, t_tokens **commands, t_cmds **cmd, char
 		return (ft_free_tokens(commands), free(path), 0);
 	return (1);
 }
-
 
 void	prompt_loop(t_utils *utils, char *path)
 {
@@ -59,11 +58,12 @@ void	prompt_loop(t_utils *utils, char *path)
     {
         fprintf(stderr, "minishell: error: No tables in env array\n");
 		ft_free_array(env);
+		env = NULL;
         return;
     }
 	while (g_exit)
 	{
-		ft_cleanup(input, commands, cmd);
+		ft_cleanup(&input, &commands, &cmd);
 		if (utils->status == 0)
 		{
 			if (env)
@@ -85,17 +85,15 @@ void	prompt_loop(t_utils *utils, char *path)
 		}
 		if (!ft_process_input(input, &commands, &cmd, path, utils))
 		{
-			ft_cleanup(input, commands, cmd);
-			ft_free_utils(utils);
+			ft_cleanup(&input, &commands, &cmd);
 			g_exit = 0;
 			continue;
 		}
 		else
-		//if (cmd && env)
 			ft_executor(cmd, utils, env);
-		ft_cleanup(input, commands, cmd);
+		ft_cleanup(&input, &commands, &cmd);
 	}
-	//g_exit = utils->exit_status;
-	//ft_clear_lstenv(utils->environ);
 	rl_clear_history();
+	if (env)
+		ft_free_array(env);
 }

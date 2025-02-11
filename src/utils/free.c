@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:36:31 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/11 13:36:32 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 19:38:23 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,33 +39,17 @@ void ft_free_env(t_env *env)
         free(tmp->value);
         free(tmp);
     }
-	//free(env);
+	free(env);
 }
 
-void ft_free_utils(t_utils *utils)
+void	ft_free_utils(t_utils *utils)
 {
-    int i = 0;
-
-    if (utils)
-    {
-        if (utils->environ)
-		{
-            ft_clear_lstenv(utils->environ);
-			utils->environ = NULL;
-		}
-		while (i < 8)
-        {
-            if (utils->builtins[i])
-            {
-                free(utils->builtins[i]);
-                utils->builtins[i] = NULL;
-            }
-            i++;
-        }
-        free(utils);
-	}
+	if (!utils)
+		return;
+	if (utils->environ)
+		ft_clear_lstenv(utils->environ);
+	free(utils);
 }
-
 void ft_free_array(char **array)
 {
     int i = 0;
@@ -74,50 +58,35 @@ void ft_free_array(char **array)
         return;
     while (array[i])
     {
-		array[i] = NULL;
 		free(array[i]);
+		array[i] = NULL;
 		i++;
     }
 	free(array);
 }
 
-void	*ft_free_one_to_cmd(t_cmds *cmd)
-{
-	if (cmd->cmd_array)
-	{
-		ft_free_array(cmd->cmd_array);
-		cmd->cmd_array = NULL;
-	}
-	if (cmd->full_path)
-	{
-		free (cmd->full_path);
-		cmd->full_path = NULL;
-	}
-	if (cmd->redir_in)
-	{
-		ft_free_redir(cmd->redir_in);
-		cmd->redir_in = NULL;
-	}
-	if (cmd->redir_out)
-	{
-		ft_free_redir(cmd->redir_out);
-		cmd->redir_out = NULL;
-	}
-	free(cmd);
-	return (0);
-}
-
 void	ft_free_cmd(t_cmds *cmd)
 {
-	t_cmds	*tmp;
-
+	int	i;
+	
 	if (!cmd)
 		return;
-	tmp = NULL;
-	while (cmd)
+	if (cmd->cmd_array)
 	{
-		tmp = cmd;
-		cmd = cmd->next;
-		ft_free_one_to_cmd(tmp);		
+		i = 0;
+		while (cmd->cmd_array[i])
+		{
+			free(cmd->cmd_array[i]);
+			i++;
+		}
+		free(cmd->cmd_array);
 	}
+	if (cmd->full_path)
+		free(cmd->full_path);
+	if (cmd->redir_in)
+		ft_free_redir(cmd->redir_in);
+	if (cmd->redir_out)
+		ft_free_redir(cmd->redir_out);
+	free(cmd);
 }
+

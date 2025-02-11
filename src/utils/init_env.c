@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:15:20 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/10 12:54:55 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:24:49 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ t_env	*ft_create_node_env(char *envs)
 	if (!env_node->value)
 		return (free(env_node->key), free(env_node), NULL);
 	env_node->next = NULL;
-	//printf("%s, %p\n", env_node->key, env_node);
 	return (env_node);
 }
 
@@ -73,7 +72,6 @@ void	ft_add_env_tolst(t_env **lst_env, t_env *new_node)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new_node;
-		//new_node->prev = tmp;
 	}
 }
 
@@ -90,7 +88,6 @@ t_env		*ft_init_env(char **envs)
 		if (!new_node)
 		{
 			ft_clear_lstenv(lst_env);
-			ft_clear_lstenv(new_node);
 			return (NULL);
 		}
 		ft_add_env_tolst(&lst_env, new_node);
