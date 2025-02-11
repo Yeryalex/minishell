@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/10 13:55:26 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 08:47:48 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <sys/stat.h>
+# include <termios.h>
 # include "../inc/libft/libft.h"
 
 # define DEFAULT_ENV "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
@@ -35,7 +36,7 @@
 # define GRAY "\033[90m"
 # define RESET "\033[0m"
 
-extern int	g_exit_code;
+
 
 typedef enum e_type
 {
@@ -91,6 +92,7 @@ typedef struct s_utils
 	int				status;
 	int				exit_status;
 	char			*builtins[8];
+	struct termios	mirror_termios;
 	struct s_utils	*next;
 	struct s_utils	*prev;
 }	t_utils;
@@ -142,10 +144,11 @@ int		ft_cd(char **cmd_array, t_env *env);
 int		ft_exit(char **cmd_array, t_utils *utils);
 
 /*          SIGNAL FUNCTIONS         */
-void		ft_sig_c(int sig);
-void		ft_init_signals(void);
-void		sigquit_handler(int signal);
-int			event(void);
+void		signal_ctrl_c(void);
+void		ft_init_signals(struct termios *mirror_termios);
+void		save_settings_and_remove_c(struct termios *mirror_termios);
+void		handle_sigint(int sig_num);
+void		signal_ctrl_backslash(void);
 
 /*          ENV FUNCTIONS         */
 t_env		*ft_init_env(char **env);
@@ -208,5 +211,5 @@ void		ft_free_array(char **array);
 void		ft_free_utils(t_utils *utils);
 void		ft_free_env(t_env *env);
 
-
+extern int	g_exit;
 #endif

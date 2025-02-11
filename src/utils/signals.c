@@ -6,69 +6,61 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:46:08 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/10 14:14:05 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:19:22 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h" 
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   a_signal.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: apaterno <apaterno@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/04 16:27:07 by apaterno          #+#    #+#             */
-/*   Updated: 2024/11/12 18:40:09 by apaterno         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/* esta es un desarrollo mas seguro de la memoria*/
 
-#include "../../inc/minishell.h"
-
-void	ft_sig_c(int sig)
+void	save_settings_and_remove_c(struct termios *mirror_termios)
 {
-	if (sig == SIGINT)
+	struct termios		termios_settings;
+
+	tcgetattr(1, mirror_termios);
+	tcgetattr(1, &termios_settings);
+	termios_settings.c_lflag &= ~ECHOCTL; //Quita que se vea en pantalla el ^C 
+	tcsetattr(1, TCSAFLUSH, &termios_settings);
+}
+
+void	signal_ctrl_c(void)
+{
+	struct sigaction	ctrl_c;
+
+	ctrl_c.sa_handler = handle_sigint;
+	ctrl_c.sa_flags = SA_RESTART;
+	sigemptyset(&ctrl_c.sa_mask);
+	sigaction(SIGINT, &ctrl_c, NULL);
+}
+
+void	signal_ctrl_backslash(void)
+{
+	struct sigaction	ctrl_back_slash;
+
+	ctrl_back_slash.sa_handler = SIG_IGN;
+	ctrl_back_slash.sa_flags = SA_RESTART;
+	sigemptyset(&ctrl_back_slash.sa_mask);
+	sigaction(SIGQUIT, &ctrl_back_slash, NULL);
+}
+
+void	handle_sigint(int sig_num)
+{
+	if (sig_num == SIGINT)
 	{
-		ft_putstr_fd("\n", 1);
+		g_exit = 0;
+		write(1, "\n", 2);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		g_exit_code = 130;
-		//exit(130);
 	}
 }
 
-void	sigquit_handler(int signal)
+void	ft_init_signals(struct termios *mirror_termios)
 {
-	(void)signal;
-	ft_putendl_fd("Quit (core dumped)", STDERR_FILENO);
+	g_exit = 1;
+	save_settings_and_remove_c(mirror_termios);
+	signal_ctrl_backslash();
+	signal_ctrl_c();
 }
 
-int	event(void)
-{
-	// printf("Estoy de salida\n");
-	return (EXIT_SUCCESS);
-}
-
-/*static void ft_sig_d(int sig)
-{
-	if (sig == SIGQUIT)
-		{
-			printf("Estoy de salida\n");
-			}
-}*/
-
-void	ft_init_signals(void)
-{
-	struct sigaction	sa;
-	
-	//rl_event_hook = event;
-	sa.sa_flags = 0;
-	sa.sa_handler = ft_sig_c;
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGINT, &sa, NULL);
-	sa.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa, NULL);
-	// rl_catch_signals = 1;
-}

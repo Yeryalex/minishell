@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:36:31 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/10 12:24:30 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 09:26:57 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,11 @@ void	ft_free_cmd(t_cmds *cmd)
 
 	if (!cmd)
 		return;
+	tmp = NULL;
 	while (cmd)
 	{
 		tmp = cmd;
 		cmd = cmd->next;
-		ft_free_one_to_cmd(tmp);
+		ft_free_one_to_cmd(tmp);		
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/10 14:34:09 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 08:53:04 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int		 g_exit_code;
+int		 g_exit;
 
 static void	ft_check_args(int ac)
 {
@@ -81,6 +81,7 @@ int	main(int ac, char **argv, char **env)
 	char	**empty_env = NULL;
 	
 	(void)argv;
+	g_exit = 1;
 	ft_check_args(ac);
 	if (!env ||!env[0])		
 	{
@@ -100,11 +101,9 @@ int	main(int ac, char **argv, char **env)
 		ft_free_array(empty_env);
 		exit(EXIT_FAILURE);
 	}
-	ft_init_signals();
 	prompt_loop(utils, full_path);
-	//free(full_path);
 	if (empty_env)
 		ft_free_array(empty_env);
 	//ft_free_utils(utils);
-	return (g_exit_code);
+	exit (utils->exit_status);
 }

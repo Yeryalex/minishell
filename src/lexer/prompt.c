@@ -6,21 +6,12 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/10 14:31:02 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:09:52 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*static void	ft_handle_exit(t_utils *utils, char *input, char **env)
-{
-	ft_putstr_fd("exit\n", 1);
-	free(input);
-	ft_free_array(env);
-	ft_free_utils(utils);
-	rl_clear_history();
-	//exit(EXIT_SUCCESS);
-}*/
 
 static void ft_cleanup(char *input, t_tokens *commands, t_cmds *cmd)
 {
@@ -64,19 +55,21 @@ void	prompt_loop(t_utils *utils, char *path)
 		ft_free_array(env);
         return;
     }
-	while (1)
+	while (g_exit)
 	{
 		if (utils->status == 0)
 		{
-			ft_free_array(env);
+			if (env)
+			{
+				ft_free_array(env);
+				env = NULL;
+			}
 			break;
 		}
+		ft_init_signals(&utils->mirror_termios);
 		input = read_input(env);
 		if (input == NULL)
-		{
-			//ft_putstr_fd("exit\n", STDOUT_FILENO);
-			break;
-		}
+				break;
 		if (input[0] == '\0')
 		{
 			free(input);
@@ -86,10 +79,10 @@ void	prompt_loop(t_utils *utils, char *path)
 		{
 			free(input);
             ft_free_tokens(&commands);
-            //utils->status = 0;
-			continue;
+            continue;
 		}
-		if (cmd && env)
+		else
+		//if (cmd && env)
 			ft_executor(cmd, utils, env);
 		ft_cleanup(input, commands, cmd);
 	}
