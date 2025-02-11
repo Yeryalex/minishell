@@ -6,81 +6,39 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:15:39 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/17 11:32:00 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:23:01 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*
 #include "../../inc/minishell.h"
 
-static char	*get_env_value(t_env *envs, char *key_value)
+void	ft_start_expansion(char	**cmd, t_env *env)
 {
-	while (envs)
-    {
-        if (strcmp(envs->key, key_value) == 0)
-            return envs->value;
-        envs = envs->next;
-    }
-    return NULL;
+	char	*new_var;
+	t_env	*find_cmd;
+	char	*temp;
+
+	find_cmd = ft_find_key_env(env, *cmd + 1);
+	if (find_cmd)
+		new_var = find_cmd->value;
+	else
+		new_var = "";
+
+	temp = *cmd;
+	*cmd = ft_strdup(new_var);
+	free(temp);
 }
 
-t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env)
+void	ft_expanser(t_cmds **cmd, t_utils *utils)
 {
-    t_cmds *head = NULL;
-    t_cmds *current = NULL;
-    t_cmds *new_cmd = NULL;
-    char *path_value;
-    char **paths;
-    char *command_path;
-	int	i;
+	int i;
 
-    path_value = get_env_value(env, "PATH");
-    if (!path_value)
-        return (NULL);
-
-    paths = ft_split_path(path_value);
-    if (!paths)
-        return (NULL);
-    printf("Llega expanser 1\n");
-    while (tokens)
-    {
-        new_cmd = (t_cmds *)malloc(sizeof(t_cmds));
-        if (!new_cmd)
-        {
-            free (new_cmd);
-            return (NULL);
-        }
-        command_path = ft_validate_command(paths, tokens->value);
-        printf(RED "Valor de comand path expanser %s\n", command_path);
-        if (command_path)
-        {
-            new_cmd->cmd_array = (char **)malloc(2 * sizeof(char *));
-            new_cmd->cmd_array[0] = ft_strdup(command_path);
-            new_cmd->cmd_array[1] = NULL;
-            new_cmd->next = NULL;
-
-            if (!head)
-                head = new_cmd;
-            else
-                current->next = new_cmd;
-
-            current = new_cmd;
-            free(command_path);
-        }
-        tokens = tokens->next;
-    }
-   i = 0;
-   while (paths[i])
-    {
-		free(paths[i]);
+	i = 0;
+	while ((*cmd)->cmd_array[i])
+	{
+		if ((*cmd)->cmd_array[i][0] == '$')
+		{
+			ft_start_expansion(&(*cmd)->cmd_array[i], utils->environ);
+		}
 		i++;
 	}
-    free(paths);
-    t_cmds *print = head;
-    while (print)
-        {
-            printf(RED "Value: %s, Full Path: %s\n", print->cmd_array[0], print->full_path);
-            print = print->next;
-        }
-    return (head);
 }
-*/

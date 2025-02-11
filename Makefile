@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/02/11 09:40:00 by yrodrigu         ###   ########.fr        #
+#    Updated: 2025/02/11 13:18:22 by yrodrigu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,6 @@ CFILES =	main.c \
 			utils/ft_get_value_from_env.c\
 			utils/signals.c \
 			expanser/expanser.c \
-			expanser/split_path.c \
 			expanser/utils_expanser.c \
 			executor/ft_executor.c\
 			builtins/echo.c\

@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/11 09:44:42 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:08:09 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,10 +159,11 @@ int		ft_key_end(char *str);
 void    ft_flag_case1(t_env *node_already_exist, char **x_value);
 
 /*          EXPAND FUNCTIONS         */
-t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env);
-char **ft_split_path(const char *path);
-char *ft_validate_command(char **paths, const char *command);
-void execute_commands(t_cmds *cmd, char **env);
+void	ft_expanser(t_cmds **cmd, t_utils *utils);
+//t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env);
+//char **ft_split_path(const char *path);
+//char *ft_validate_command(char **paths, const char *command);
+//void execute_commands(t_cmds *cmd, char **env);
 char    *ft_get_path(char *path, char *cmd);
 
 
