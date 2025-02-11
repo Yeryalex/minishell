@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/07 14:20:46 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/11 09:44:42 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count, char *cmd_path);
 void    ft_addlast_pnode(t_cmds **list, t_cmds *node);
 void	*free_cmd_array(char **cmd_array);
 
-
-
 /*          STRUCT FUNCTIONS         */
 
 /*          REDIR FUNCTIONS         */
@@ -179,6 +177,8 @@ char	*ft_remove_quotes(char *value);
 char 	*ft_strip_outer_quotes(char *value);
 int		ft_is_enclosed_by_single_quotes(const char *value);
 int		ft_count_double_quotes(const char *value);
+long	ft_atoi_long(char *str, int *error);
+char	*ft_init_long(long *sign, char *str);
 
 /* UTILS FUNCTIONS */
 
