@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   split_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:15:50 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/17 11:15:53 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:30:56 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int count_substrings(const char *str, char delimiter)
+/*static int count_substrings(const char *str, char delimiter)
 {
     int count = 0;
     int in_substring = 0;
@@ -42,8 +42,8 @@ static char *substring(const char *start, const char *end)
     substr[end - start] = '\0';
     return substr;
 }
-
-char **ft_split_path(const char *path)
+*/
+/*char **ft_split_path(const char *path)
 {
     char **result;
     const char *start;
@@ -78,4 +78,4 @@ char **ft_split_path(const char *path)
     }
     result[i] = NULL;
     return result;
-}
+}*/

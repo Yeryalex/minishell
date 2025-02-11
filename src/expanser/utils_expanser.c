@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:16:01 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/10 12:22:07 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:40:41 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char    *ft_get_path(char *path, char *cmd)
             return (NULL);
         }
         path_to_exec = ft_strjoin(tmp, cmd);
+        tmp = NULL;
         free(tmp);
         if (!path_to_exec)
         {
@@ -69,7 +70,10 @@ char    *ft_get_path(char *path, char *cmd)
         path_to_exec = NULL;
         i++;
     }
-    ft_free_array(path_dir);
+    if (tmp)
+        free(tmp);
+    if (path_dir)
+        free(path_dir);
     if (!path_to_exec)
         path_to_exec = ft_strdup(cmd);
     return (path_to_exec);

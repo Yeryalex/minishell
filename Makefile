@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/02/11 10:27:29 by rbuitrag         ###   ########.fr        #
+#    Updated: 2025/02/11 11:18:20 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,6 +84,9 @@ fclean: clean
 re: fclean all
 
 va: all
-	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --track-origins=yes --suppressions=readline.ignore -q ./minishell	
+	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --track-origins=yes --suppressions=readline.ignore -q ./minishell
+
+vf: all
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-limit=no --tool=memcheck --suppressions=readline.ignore -q ./minishell
 
 .PHONY: all clean fclean re library

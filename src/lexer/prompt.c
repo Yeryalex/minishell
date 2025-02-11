@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/11 10:09:52 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:55:32 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,20 @@
 static void ft_cleanup(char *input, t_tokens *commands, t_cmds *cmd)
 {
 	if (input)
+	{
+		input = NULL;
 		free(input);
+	}
 	if (cmd)
+	{
+		cmd = NULL;
 		ft_free_cmd(cmd);
+	}
 	if (commands)
+	{
+		commands = NULL;
 		ft_free_tokens(&commands);
-	input = NULL;
-    cmd = NULL;
-    commands = NULL;
+	}
 }
 
 static int	ft_process_input(char *input, t_tokens **commands, t_cmds **cmd, char *path, t_utils *utils)
@@ -33,7 +39,7 @@ static int	ft_process_input(char *input, t_tokens **commands, t_cmds **cmd, char
 		return (0);
 	*cmd = ft_parser(*commands, path, utils);
 	if (!*cmd)
-		return (ft_free_tokens(commands), 0);
+		return (ft_free_tokens(commands), free(path), 0);
 	return (1);
 }
 
@@ -57,6 +63,7 @@ void	prompt_loop(t_utils *utils, char *path)
     }
 	while (g_exit)
 	{
+		ft_cleanup(input, commands, cmd);
 		if (utils->status == 0)
 		{
 			if (env)
@@ -73,19 +80,22 @@ void	prompt_loop(t_utils *utils, char *path)
 		if (input[0] == '\0')
 		{
 			free(input);
+			g_exit = 0;
 			continue;
 		}
 		if (!ft_process_input(input, &commands, &cmd, path, utils))
 		{
-			free(input);
-            ft_free_tokens(&commands);
-            continue;
+			ft_cleanup(input, commands, cmd);
+			ft_free_utils(utils);
+			g_exit = 0;
+			continue;
 		}
 		else
 		//if (cmd && env)
 			ft_executor(cmd, utils, env);
 		ft_cleanup(input, commands, cmd);
 	}
-	ft_clear_lstenv(utils->environ);
+	//g_exit = utils->exit_status;
+	//ft_clear_lstenv(utils->environ);
 	rl_clear_history();
 }

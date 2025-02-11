@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:36:31 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/11 09:26:57 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:36:32 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void ft_free_array(char **array)
         return;
     while (array[i])
     {
+		array[i] = NULL;
 		free(array[i]);
 		i++;
     }

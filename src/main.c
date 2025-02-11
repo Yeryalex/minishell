@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/11 08:53:04 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/11 12:20:58 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,6 @@ int	main(int ac, char **argv, char **env)
 	prompt_loop(utils, full_path);
 	if (empty_env)
 		ft_free_array(empty_env);
-	//ft_free_utils(utils);
-	exit (utils->exit_status);
+	free(full_path);
+	exit(g_exit);
 }
