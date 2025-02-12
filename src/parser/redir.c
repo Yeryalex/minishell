@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 11:04:24 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/12 10:36:35 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:06:17 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static t_dir	*ft_fill_redirections(t_tokens **lexer, t_cmds *cmds, t_utils *util
 		new_node = ft_sthan_redir((*lexer)->next->value, utils, cmds);
 	else if ((*lexer)->token == APPEND || (*lexer)->token == GTHAN)
 		new_node = ft_append_gthan_redir((*lexer)->next->value, (*lexer)->token, utils, cmds);
-	else if ((*lexer)->token == H_DOC)
-		new_node = ft_hdoc_redir(lexer, cmds, utils);
+	//else if ((*lexer)->token == H_DOC)
+		//new_node = ft_hdoc_redir(lexer, cmds, utils);
 	return (new_node);
 }
 

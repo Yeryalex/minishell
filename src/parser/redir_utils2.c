@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 11:04:58 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/12 10:46:09 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:09:28 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	ft_fork_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node
 	if (pid == 0)
 		ft_child_hdoc(lexer_nodes, parser_nodes, redir_node, utils);
 	ft_wait_for_childs(1, &utils->exit_status);
-	if (expand)
-		ft_exp_hd(redir_node, utils);
+	//if (expand)
+	//	ft_exp_hd(redir_node, utils);
 	return (0);
 }

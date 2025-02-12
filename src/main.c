@@ -6,13 +6,13 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/12 08:50:07 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:04:32 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int		 g_exit;
+int g_signal;
 
 static void	ft_check_args(int ac)
 {
@@ -58,7 +58,8 @@ char	**ft_fill_env()
 	char	cwd[1024];
 	char	**env;
 	char	*pwd;
-
+	
+	
 	env = (char **)malloc(sizeof(char *) * 5);
 	if (!env)
 		return (NULL);
@@ -84,35 +85,19 @@ char	**ft_fill_env()
 int	main(int ac, char **argv, char **env)
 {
 	t_utils	*utils;
-	char	*full_path = NULL;
+	char	*full_path;
 	char	**empty_env = NULL;
-	
+
 	(void)argv;
-	g_exit = 1;
+	g_signal = 1;
 	ft_check_args(ac);
-	if (!env || !env[0])		
+	if (!env ||!env[0])		
 	{
 		empty_env = ft_fill_env();
-		if (!empty_env)
-        {
-            fprintf(stderr, "minishell: Error: no se pudo inicializar el env\n");
-			exit(EXIT_FAILURE);
-        }
 		env = empty_env;
 	}
 	utils = ft_init_minishell(env, &full_path);
-	if (!utils)
-	{
-		perror("Error to asign memory for utils\n");
-		ft_free_array(empty_env);
-		ft_free_array(env);
-		free(full_path);
-		exit(EXIT_FAILURE);
-	}
 	prompt_loop(utils, full_path);
-	if (empty_env)
-		ft_free_array(empty_env);
-	free(full_path);
-	//ft_free_utils(utils);
-	exit(g_exit);
+	ft_free_utils(utils);
+	return (0);
 }

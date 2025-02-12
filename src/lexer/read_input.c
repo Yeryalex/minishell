@@ -19,21 +19,25 @@ static void    *ft_clean_input(char *input)
     return (NULL);
 }
 
-char	*read_input(char **env)
+char	*read_input(char **env, t_utils *utils)
 {
 	char	*input;
 
 	input = NULL;
 	input = ft_clean_input(input);
-	//signal(SIGINT, sigint_handler);
 	input = readline(CYAN "minishell> " RESET);
+	if (g_signal == 1)
+	{
+		utils->status = 0;
+		return (input);
+	}
 	if (input && *input)
 		add_history(input);
 	else if (!input)
 	{
         ft_putstr_fd("exit\n", STDOUT_FILENO);
-        //ft_free_array(env);
-        //exit(EXIT_SUCCESS);
+        ft_free_array(env);
+        exit(EXIT_SUCCESS);
     }
 	(void)env;
 	return (input);

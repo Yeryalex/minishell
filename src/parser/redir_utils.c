@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 11:04:40 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/12 10:39:30 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:09:02 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*ft_hdoc_error_handler(t_dir *redir_node, t_cmds *parser_nodes)
 	unlink(redir_node->filename);
 	free(redir_node->filename);
 	free(redir_node);
-	if (g_exit == 1)
+	if (g_signal == 1)
 		parser_nodes->error_fd = 1;
 	return (NULL);
 }
@@ -48,7 +48,7 @@ t_dir	*ft_hdoc_redir(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_utils *util
 		return (NULL);
 	redir_node->heredoc = 1;
 	redir_node->filename = ft_random_filename();
-	if (ft_fork_hdoc(lexer_nodes, parser_nodes, redir_node, utils) || g_exit)
+	if (ft_fork_hdoc(lexer_nodes, parser_nodes, redir_node, utils) || g_signal)
 		return (ft_hdoc_error_handler(redir_node, parser_nodes));
 	redir_node->fd = ft_open_fd(redir_node->filename, O_RDONLY);
 	if (redir_node->fd < 0)

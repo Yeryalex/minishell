@@ -6,45 +6,48 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:46:08 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/12 11:40:21 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:03:20 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h" 
 
-/* esta es un desarrollo mas seguro de la memoria*/
-
-
-void	signal_ctrl_c(void)
+void	sigquit_handler(int signal)
 {
-	struct sigaction	ctrl_c;
-
-	ctrl_c.sa_handler = handle_sigint;
-	ctrl_c.sa_flags = SA_RESTART;
-	sigemptyset(&ctrl_c.sa_mask);
-	sigaction(SIGINT, &ctrl_c, NULL);
+	(void)signal;
+	ft_putendl_fd("Quit (core dumped)", STDERR_FILENO);
 }
 
-void	signal_ctrl_backslash(void)
+int	event(void)
 {
-	struct sigaction	ctrl_back_slash;
-
-	ctrl_back_slash.sa_handler = SIG_IGN;
-	ctrl_back_slash.sa_flags = SA_RESTART;
-	sigemptyset(&ctrl_back_slash.sa_mask);
-	sigaction(SIGQUIT, &ctrl_back_slash, NULL);
+	return (EXIT_SUCCESS);
 }
 
-void	handle_sigint(int sig_num)
+void	sigint_handler(int sig)
 {
-	if (sig_num == SIGINT)
+	if (sig == SIGINT)
 	{
-		g_exit = 0;
-		write(1, "\n", 2);
+		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		//rl_replace_line("", 0);
 		rl_redisplay();
+		g_signal = 1;
+		//exit(130);
 	}
+}
+
+void	init_signals(void)
+{
+	struct sigaction	sa;
+
+	rl_event_hook = event;
+	sa.sa_flags = 0;
+	sa.sa_handler = sigint_handler;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa, NULL);
+	rl_catch_signals = 1;
 }
 
 void	*handle_error_ctrl_d(char *stop, int cmds_amount)
@@ -60,11 +63,3 @@ void	*handle_error_ctrl_d(char *stop, int cmds_amount)
 	free(cmds_count);
 	return (NULL);
 }
-
-void	ft_init_signals(void)
-{
-	g_exit = 1;
-	signal_ctrl_backslash();
-	signal_ctrl_c();
-}
-
