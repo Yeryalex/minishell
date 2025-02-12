@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/12 10:27:35 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:15:57 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -83,13 +83,13 @@ int	ft_is_builtin(t_cmds *cmd, t_utils *utils)
 void	ft_exec_builtin(t_cmds *cmd, t_utils *utils, int fd)
 {
 	if (!ft_strncmp(cmd->cmd_array[0], "echo", 4))
-		ft_echo(cmd->cmd_array, fd);
+		utils->exit_status = ft_echo(cmd->cmd_array, fd);
 	else if(!ft_strncmp(cmd->cmd_array[0], "env", 4))
-		ft_env(utils, fd);
+		utils->exit_status = ft_env(utils, fd);
 	else if(!ft_strncmp(cmd->cmd_array[0], "pwd", 4))
-		ft_pwd(utils->environ);
+		utils->exit_status = ft_pwd(utils->environ);
 	else if (!ft_strncmp(cmd->cmd_array[0], "export", 6))
-		ft_export(cmd, utils->environ);
+		utils->exit_status = ft_export(cmd, utils->environ);
 	else if (!ft_strncmp(cmd->cmd_array[0], "unset", 5))
 		ft_unset(cmd->cmd_array, &utils->environ);
 	else if (!ft_strncmp(cmd->cmd_array[0], "cd", 2))
@@ -100,10 +100,17 @@ void	ft_exec_builtin(t_cmds *cmd, t_utils *utils, int fd)
 
 int	ft_verify_cmd(t_cmds *cmd, t_utils *utils)
 {
+	if (!ft_is_builtin(cmd, utils) && !cmd->full_path)
+	{
+		ft_putstr_fd(cmd->cmd_array[0], 2);
+		ft_putstr_fd(": Not such a file or directory\n", 2);
+		utils->exit_status = 127;
+		return (1);
+	}
 	if (!ft_is_builtin(cmd, utils) && access(cmd->full_path, F_OK))
 	{
 		ft_putstr_fd(cmd->cmd_array[0], 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		ft_putstr_fd(": command not found\n", 2);
 		utils->exit_status = 127;
 		return (1);
 	}

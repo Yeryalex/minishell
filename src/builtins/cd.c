@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:40:55 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/06 17:13:43 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:15:31 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -28,7 +28,7 @@ void	ft_modify_especific_env(char *cwd, t_env *env, char *key_value)
 	container[0] = ft_strdup("");
 	container[1] = oldpwd;
 	container[2] = 0;
-	ft_add_node_env(container, env);
+	ft_add_node_env(container, env, (void *)0);
 	ft_free_array(container);
 }
 

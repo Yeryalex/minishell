@@ -25,24 +25,18 @@ static void	ft_check_args(int ac)
 	}
 }
 
-static t_utils	*ft_init_minishell(char **env, char **full_path)
+static t_utils	*ft_init_minishell(char **env)
 {
 	t_env	*environ;
 	t_utils	*utils;
 
 	utils = malloc(sizeof(t_utils));
 	if (!utils)
-	{
-		//perror("Error to asign memory for utils\n");
-		//ft_free_utils(utils);
-		//exit(EXIT_FAILURE);
 		return (NULL);
-	}
 	init_signals();
 	environ = ft_init_env(env);
 	if (!environ)
-		return(free(environ), NULL);
-	*full_path = ft_get_paths_from_env(environ);
+		return(free(utils), NULL);
 	init_utils(utils, environ);
 	return (utils);
 }
@@ -88,10 +82,8 @@ int	main(int ac, char **argv, char **env)
 		empty_env = ft_fill_env();
 		env = empty_env;
 	}
-	utils = ft_init_minishell(env, &full_path);
-	prompt_loop(utils, full_path);
-//	free(full_path);
+	utils = ft_init_minishell(env);
+	prompt_loop(utils, &full_path);
 	ft_free_utils(utils);
-//	This function is being apply for the second time
 	return (0);
 }
