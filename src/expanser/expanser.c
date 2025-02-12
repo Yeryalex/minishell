@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:15:39 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/12 11:50:01 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:19:19 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -68,10 +68,10 @@ void	ft_start_expansion(char **cmd, t_utils *utils, int *j, int *i)
 	old_cmd = *cmd;
 	while ((*cmd)[*i])
 	{
-		if ((*cmd)[*i] == '$' && (*cmd)[*(i + 1)])
+		if ((*cmd)[*i] == '$' && (*cmd)[*i + 1])
 		{
-			if (!(*cmd)[*i + 1] || (*cmd)[*i + 1] == ' ') // If $ is at the end or followed by space
-                result[(*j)++] = (*cmd)[(*i)++];
+			if (!(*cmd)[*i + 1] || (*cmd)[*i + 1] == ' ' || (*cmd)[*i + 1] == '$')
+				result[(*j)++] = (*cmd)[(*i)++];
             else
 			{
 				(*i)++;
