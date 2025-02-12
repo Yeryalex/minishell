@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/12 13:04:32 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:52:29 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,12 @@ static t_utils	*ft_init_minishell(char **env, char **full_path)
 
 	utils = malloc(sizeof(t_utils));
 	if (!utils)
-		return (free(utils), NULL);
+		return (NULL);
+	ft_init_signals();
 	environ = ft_init_env(env);
 	if (!environ)
-	{
-		free(utils);
-		return (free(env), NULL);
-	}
+		return(free(environ), NULL);
 	*full_path = ft_get_paths_from_env(environ);
-	if (!*full_path)
-	{
-		ft_clear_lstenv(environ);
-		ft_free_utils(utils);
-		return (NULL);
-	}
 	init_utils(utils, environ);
 	return (utils);
 }
@@ -91,7 +83,7 @@ int	main(int ac, char **argv, char **env)
 	(void)argv;
 	g_signal = 1;
 	ft_check_args(ac);
-	if (!env ||!env[0])		
+	if (!env || !env[0])		
 	{
 		empty_env = ft_fill_env();
 		env = empty_env;

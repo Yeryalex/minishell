@@ -26,14 +26,14 @@ char	*read_input(char **env, t_utils *utils)
 	input = NULL;
 	input = ft_clean_input(input);
 	input = readline(CYAN "minishell> " RESET);
-	if (g_signal == 1)
-	{
-		utils->status = 0;
-		return (input);
-	}
 	if (input && *input)
 		add_history(input);
-	else if (!input)
+	if (g_signal == 1)
+	{
+		utils->status = 1;
+		return (input);
+	}
+	if (!input)
 	{
         ft_putstr_fd("exit\n", STDOUT_FILENO);
         ft_free_array(env);

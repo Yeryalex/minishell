@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:46:08 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/12 13:03:20 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:43:26 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	sigint_handler(int sig)
 	}
 }
 
-void	init_signals(void)
+void	ft_init_signals(void)
 {
 	struct sigaction	sa;
 

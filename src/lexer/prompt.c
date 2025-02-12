@@ -6,15 +6,17 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/12 13:15:11 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:54:59 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	ft_handle_exit(char *input)
+static void	ft_handle_exit(t_utils *utils, char *input, char **env)
 {
 	free(input);
+	ft_free_array(env);
+	ft_free_utils(utils);
 	ft_putstr_fd("exit\n", 1);
 	exit(EXIT_SUCCESS);
 }
@@ -47,7 +49,7 @@ void	prompt_loop(t_utils *utils, char *path)
 			break;
 		input = read_input(env, utils);
 		if (!input)
-			ft_handle_exit(input);
+			ft_handle_exit(utils, input, env);
 		if (!ft_process_input(input, &commands, &cmd, path, utils))
 			continue;
 		ft_free_tokens(&commands);
