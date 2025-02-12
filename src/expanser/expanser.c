@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:15:39 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/11 19:47:21 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:50:01 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -41,29 +41,53 @@ void	ft_find_command(char *var_name, char *result, int *j, t_env *env)
 		result[(*j)++] = *new_var++;
 }
 
-void	ft_start_expansion(char **cmd, t_env *env)
+void    ft_assign_status(char *result, int *j, t_utils *utils)
+{
+    char    *value;
+    int     k;
+
+    k = 0;
+    value = ft_itoa(utils->exit_status);
+    while (value[k])
+        result[(*j)++] = value[k++];
+    free(value);
+}
+
+void	ft_apply_status(char *result, int *j, t_utils *utils, int *i)
+{
+	ft_assign_status(result, j, utils);
+	(*i)++;
+}
+
+void	ft_start_expansion(char **cmd, t_utils *utils, int *j, int *i)
 {
 	char	result[1024];
 	char	var_name[256];
 	char	*old_cmd;
-	int		i;
-	int		j;
 
-	i = 0;
-	j = 0;
 	old_cmd = *cmd;
-	while ((*cmd)[i])
+	while ((*cmd)[*i])
 	{
-		if ((*cmd)[i] == '$' && (*cmd)[i + 1])
+		if ((*cmd)[*i] == '$' && (*cmd)[*(i + 1)])
 		{
-			i++;
-			ft_create_expansion(*cmd, &i, var_name);
-			ft_find_command(var_name, result, &j, env);
+			if (!(*cmd)[*i + 1] || (*cmd)[*i + 1] == ' ') // If $ is at the end or followed by space
+                result[(*j)++] = (*cmd)[(*i)++];
+            else
+			{
+				(*i)++;
+				if ((*cmd)[*i] == '?')
+					ft_apply_status(result, j, utils, i);
+            	else
+            	{
+                	ft_create_expansion(*cmd, i, var_name);
+                	ft_find_command(var_name, result, j, utils->environ);
+            	}
+			}
 		}
 		else
-			result[j++] = (*cmd)[i++];
+			result[(*j)++] = (*cmd)[(*i)++];
 	}
-	result[j] = '\0';
+	result[*j] = '\0';
 	*cmd = strdup(result);
 	free(old_cmd);
 }
@@ -71,12 +95,16 @@ void	ft_start_expansion(char **cmd, t_env *env)
 void	ft_expanser(char **cmd, t_utils *utils)
 {
 	int	i;
+	int	j;
+	int	k;
 
 	i = 0;
 	while (cmd[i])
 	{
+		j = 0;
+		k = 0;
 		if (ft_strchr(cmd[i], '$'))
-			ft_start_expansion(&cmd[i], utils->environ);
+			ft_start_expansion(&cmd[i], utils, &j, &k);
 		i++;
 	}
 }
