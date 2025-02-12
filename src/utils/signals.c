@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:46:08 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/11 10:19:22 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:40:21 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,6 @@
 
 /* esta es un desarrollo mas seguro de la memoria*/
 
-void	save_settings_and_remove_c(struct termios *mirror_termios)
-{
-	struct termios		termios_settings;
-
-	tcgetattr(1, mirror_termios);
-	tcgetattr(1, &termios_settings);
-	termios_settings.c_lflag &= ~ECHOCTL; //Quita que se vea en pantalla el ^C 
-	tcsetattr(1, TCSAFLUSH, &termios_settings);
-}
 
 void	signal_ctrl_c(void)
 {
@@ -56,10 +47,23 @@ void	handle_sigint(int sig_num)
 	}
 }
 
-void	ft_init_signals(struct termios *mirror_termios)
+void	*handle_error_ctrl_d(char *stop, int cmds_amount)
+{
+	char	*cmds_count;
+
+	cmds_count = ft_itoa(cmds_amount);
+	ft_putstr_fd("minishell: warning: here-document at line ", 2);
+	ft_putstr_fd(cmds_count, 2);
+	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd(stop, 2);
+	ft_putstr_fd("')\n", 2);
+	free(cmds_count);
+	return (NULL);
+}
+
+void	ft_init_signals(void)
 {
 	g_exit = 1;
-	save_settings_and_remove_c(mirror_termios);
 	signal_ctrl_backslash();
 	signal_ctrl_c();
 }

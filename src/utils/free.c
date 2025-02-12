@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:36:31 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/11 19:38:23 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 08:18:00 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,14 @@ void ft_free_env(t_env *env)
 
 void	ft_free_utils(t_utils *utils)
 {
+	int	i;
+
+	i = 0;
 	if (!utils)
 		return;
+	if (utils->builtins[i])
+		while (utils->builtins[i])
+			free(utils->builtins[i++]);
 	if (utils->environ)
 		ft_clear_lstenv(utils->environ);
 	free(utils);
@@ -67,26 +73,35 @@ void ft_free_array(char **array)
 
 void	ft_free_cmd(t_cmds *cmd)
 {
+	t_cmds 	*tmp;
 	int	i;
 	
 	if (!cmd)
 		return;
-	if (cmd->cmd_array)
+	while (cmd)
 	{
-		i = 0;
-		while (cmd->cmd_array[i])
+		tmp = cmd;
+		cmd = cmd->next;
+		if (tmp->cmd_array)
 		{
-			free(cmd->cmd_array[i]);
-			i++;
+			i = 0;
+			while (tmp->cmd_array[i])
+			{
+				free(tmp->cmd_array[i]);
+				tmp->cmd_array[i] = NULL;
+				i++;
+			}
 		}
-		free(cmd->cmd_array);
-	}
-	if (cmd->full_path)
-		free(cmd->full_path);
-	if (cmd->redir_in)
-		ft_free_redir(cmd->redir_in);
-	if (cmd->redir_out)
-		ft_free_redir(cmd->redir_out);
-	free(cmd);
+		free(tmp->cmd_array);
+		tmp->cmd_array = NULL;
+	
+		if (tmp->full_path)
+			free(tmp->full_path);
+		if (tmp->redir_in)
+			ft_free_redir(tmp->redir_in);
+		if (tmp->redir_out)
+			ft_free_redir(tmp->redir_out);
+		free(tmp);
+	}	
 }
 

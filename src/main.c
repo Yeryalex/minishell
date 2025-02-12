@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/11 20:25:19 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 08:50:07 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@ static t_utils	*ft_init_minishell(char **env, char **full_path)
 
 	utils = malloc(sizeof(t_utils));
 	if (!utils)
-		return (NULL);
+		return (free(utils), NULL);
 	environ = ft_init_env(env);
 	if (!environ)
 	{
 		free(utils);
-		return (NULL);
+		return (free(env), NULL);
 	}
 	*full_path = ft_get_paths_from_env(environ);
 	if (!*full_path)
 	{
 		ft_clear_lstenv(environ);
-		free(utils);
+		ft_free_utils(utils);
 		return (NULL);
 	}
 	init_utils(utils, environ);
@@ -105,12 +105,14 @@ int	main(int ac, char **argv, char **env)
 	{
 		perror("Error to asign memory for utils\n");
 		ft_free_array(empty_env);
+		ft_free_array(env);
+		free(full_path);
 		exit(EXIT_FAILURE);
 	}
 	prompt_loop(utils, full_path);
 	if (empty_env)
 		ft_free_array(empty_env);
 	free(full_path);
-	ft_free_utils(utils);
+	//ft_free_utils(utils);
 	exit(g_exit);
 }

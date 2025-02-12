@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:59:53 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/11 19:31:23 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 08:26:52 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ void	ft_free_tokens(t_tokens **tokens)
 		return ;
 	while (*tokens)
 	{
-		temp = (*tokens)->next;
-		free((*tokens)->value);
-		free(*tokens);
-		*tokens = temp;
+		temp = *tokens;
+		*tokens = (*tokens)->next;
+		if (temp->value)
+			free(temp->value);
+		free(temp);
 	}
 }
 

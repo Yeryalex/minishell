@@ -23,6 +23,7 @@ char	*ft_get_word(const char **input)
 
 	i = 0;
 	quote = 0;
+	value = NULL;
 	while ((*input)[i] && (ft_is_metacharacter((*input)[i]) || quote != 0))
 	{
 		if ((*input)[i] == '"' || (*input)[i] == '\'')
@@ -37,11 +38,17 @@ char	*ft_get_word(const char **input)
 	if (quote != 0)
 	{	
 		ft_putstr_fd("minishell: syntax error: unclosed quote\n", 2);
+		free(value);
 		return (NULL);	
 	}
 	value = ft_substr(*input, 0, i);
 	if (!value)
-		return (NULL);
+	{
+		free(value);
+		free(input);
+		value = NULL;
+		return (value);
+	}
 	*input = *input + i;
 	return (value);
 }
@@ -55,6 +62,7 @@ char	*ft_get_value(const char **input)
 	int		i;
 
 	i = 0;
+	value = NULL;
 	if (ft_strchr("<>|", **input))
 	{
 		++i;

@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/02/11 11:18:20 by rbuitrag         ###   ########.fr        #
+#    Updated: 2025/02/12 11:32:43 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ CFILES =	main.c \
 			parser/redir.c \
 			parser/redir_utils.c \
 			parser/redir_utils2.c \
+			parser/read.c \
 			utils/init_env.c \
 			utils/env_export.c \
 			utils/free.c \
@@ -41,7 +42,9 @@ CFILES =	main.c \
 			expanser/expanser.c \
 			expanser/split_path.c \
 			expanser/utils_expanser.c \
+			expanser/expanser_hdoc.c \
 			executor/ft_executor.c\
+			executor/executor_utils.c \
 			builtins/echo.c\
 			builtins/env.c\
 			builtins/pwd.c\
@@ -84,9 +87,9 @@ fclean: clean
 re: fclean all
 
 va: all
-	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --track-origins=yes --suppressions=readline.ignore -q ./minishell
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.ignore -q -s ./minishell
 
 vf: all
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-limit=no --tool=memcheck --suppressions=readline.ignore -q ./minishell
-
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-limit=yes --tool=memcheck --suppressions=readline.ignore -q -s ./minishell
+	
 .PHONY: all clean fclean re library

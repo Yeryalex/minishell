@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/11 13:15:16 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:39:29 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_utils
 	int				status;
 	int				exit_status;
 	char			*builtins[8];
+	int				cmds_amount;
 	struct termios	mirror_termios;
 	struct s_utils	*next;
 	struct s_utils	*prev;
@@ -118,6 +119,9 @@ t_cmds		*ft_create_node_cmd(t_tokens *lexer, int count, char *cmd_path, t_utils 
 void		ft_addlast_pnode(t_cmds **list, t_cmds *node);
 void		*free_cmd_array(char **cmd_array);
 int			ft_process_pipe(t_cmds **all_cmds, int count_tokens, t_tokens **head, char *path, t_utils *utils);
+char		*ft_random_filename(void);
+void		fn(char *name);
+int			ft_read_to_file(char *stop, int cmds_amount, char *f_name);
 
 
 /*          STRUCT FUNCTIONS         */
@@ -133,6 +137,8 @@ void		*ft_exit_redir(int error, t_dir *redir_node, t_utils *utils);
 void		ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
 void		*ft_hdoc_error_handler(t_dir *redir_node, t_cmds *parser_nodes);
 t_dir		*ft_hdoc_redir(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_utils *utils);
+int			ft_fork_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node, t_utils *utils);
+void		ft_child_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, 	t_dir *redir_node, t_utils *utils);
 
 /*          BUILTINS FUNCTION:S         */
 int		ft_echo(char **cmd, int fd);
@@ -145,10 +151,11 @@ int		ft_exit(char **cmd_array, t_utils *utils);
 
 /*          SIGNAL FUNCTIONS         */
 void		signal_ctrl_c(void);
-void		ft_init_signals(struct termios *mirror_termios);
-void		save_settings_and_remove_c(struct termios *mirror_termios);
+void		ft_init_signals(void);
 void		handle_sigint(int sig_num);
 void		signal_ctrl_backslash(void);
+void 		restore_original_settings(void);
+void		*handle_error_ctrl_d(char *stop, int cmds_amount);
 
 /*          ENV FUNCTIONS         */
 t_env		*ft_init_env(char **env);
@@ -183,10 +190,15 @@ t_cmds		*ft_expand_tokens(t_tokens *tokens, t_env *env);
 char		*ft_validate_command(char **paths, const char *command);
 //void		execute_commands(t_cmds *cmd, char **env);
 char		*ft_get_path(char *path, char *cmd);
-
+void		ft_expand_line(char **line, t_utils *utils);
+void		ft_remove_newline(char **line);
+void		ft_exp_hd(t_dir *redir_node, t_utils *utils);
 
 /*          EXECUTOR FUNCTIONS         */
 void		ft_executor(t_cmds *cmd, t_utils *utils, char **env);
+void		ft_wait_for_childs(int i, int *exit_status);
+
+
 /*          AUXILIARS FUNCTIONS         */
 int		ft_isspace(char c);
 void	*ft_exit_error(char quote);

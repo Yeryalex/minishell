@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/11 20:10:45 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 08:43:34 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,6 @@ t_cmds *ft_parser(t_tokens *lexer, char *path, t_utils *utils)
 	if (count_tokens >= 0)
 		if (ft_process_pipe(&all_cmds, count_tokens, &head_parser, path, utils) == 0)
 			return(NULL);
-	ft_free_tokens(&head_parser);
+	//ft_free_tokens(&head_parser);
 	return (all_cmds);
 }

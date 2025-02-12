@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:40:55 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/11 19:00:29 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 09:26:38 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,11 @@ int	ft_change_dir(char *path, t_env *env)
 {
 	char	cwd[1024];
 	char	*pwd;
+	char	*oldpwd;
 
 	if (!getcwd(cwd, 1024))
 	{
+		oldpwd = get_value_from_env(env, "OLDPWD");
 		pwd = get_value_from_env(env, "PWD");
 		ft_modify_especific_env(pwd, env, "OLDPWD=");
 	}
