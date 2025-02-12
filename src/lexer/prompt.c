@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/08 13:37:16 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/12 12:26:27 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,11 @@ void	prompt_loop(t_utils *utils, char *path)
 	cmd = NULL;
 	commands = NULL;
 	env = ft_list_to_char(utils->environ);
-	while (1)
+	while (g_signal)
 	{
 		if (utils->status == 0)
-		{
-			ft_free_array(env);
 			break;
-		}
-		input = read_input(env);
+		input = read_input(env, utils);
 		if (!input)
 			ft_handle_exit(utils, input, env);
 		if (!ft_process_input(input, &commands, &cmd, path))
@@ -60,6 +57,8 @@ void	prompt_loop(t_utils *utils, char *path)
 		ft_free_cmd(cmd);
         free(input);
 	}
+	printf("nada\n");
+	ft_free_array(env);
 	rl_clear_history();
 }
 

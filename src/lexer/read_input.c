@@ -19,16 +19,21 @@ static void    *clean_input(char *input)
     return (NULL);
 }
 
-char	*read_input(char **env)
+char	*read_input(char **env, t_utils *utils)
 {
 	char	*input;
 
 	input = NULL;
 	input = clean_input(input);
-	signal(SIGINT, sigint_handler);
 	input = readline(CYAN "minishell> " RESET);
 	if (input && *input)
 		add_history(input);
+	if (g_signal == 1)
+	{
+		printf("sign sale aqui\n");
+		utils->status = 0;
+		return (input);
+	}
 	else if (!input)
 		{
         ft_putstr_fd("exit\n", STDOUT_FILENO);

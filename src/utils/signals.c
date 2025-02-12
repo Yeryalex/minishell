@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <rbuitrag@student.42barcelona.co  +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:46:08 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/07 13:56:36 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:52:45 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	sigint_handler(int sig)
 		rl_on_new_line();
 		//rl_replace_line("", 0);
 		rl_redisplay();
+		g_signal = 1;
 		//exit(130);
 	}
 	//}

@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/02/11 09:40:00 by yrodrigu         ###   ########.fr        #
+#    Updated: 2025/02/12 11:43:32 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,5 +80,8 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
+
+va: all
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.ignore -q -s ./minishell
 
 .PHONY: all clean fclean re library
