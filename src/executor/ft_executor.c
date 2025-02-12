@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/10 09:37:21 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/12 10:27:35 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -47,13 +47,7 @@ int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
 	//	pid = 3;
 	//	while (pid < 100)
 	//		close(pid++);
-		if (execve(cmd->full_path, cmd->cmd_array, env) == -1)
-		{
-			ft_putstr_fd(cmd->cmd_array[0], 2);
-			ft_putstr_fd(": command not found\n", 2);
-			//ft_free_array(env);
-			//exit(127);
-		}
+		execve(cmd->full_path, cmd->cmd_array, env);
 	}
 	return (1);
 }
@@ -104,6 +98,18 @@ void	ft_exec_builtin(t_cmds *cmd, t_utils *utils, int fd)
 		ft_exit(cmd->cmd_array, utils);
 }
 
+int	ft_verify_cmd(t_cmds *cmd, t_utils *utils)
+{
+	if (!ft_is_builtin(cmd, utils) && access(cmd->full_path, F_OK))
+	{
+		ft_putstr_fd(cmd->cmd_array[0], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		utils->exit_status = 127;
+		return (1);
+	}
+	return (0);
+}
+
 void	ft_call_builtin(t_cmds *cmd, t_utils *utils, int pipe)
 {
 	if (cmd->next)
@@ -132,20 +138,18 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 	while (current)
     {
     	if (current->next && pipe(fd) == -1)
-		{
-            perror("minishell: error in pipe\n");
 			return ;
-        }
 		if (current->cmd_array && current->cmd_array[0])
 		{
-			if (ft_is_builtin(current, utils))
+			if (!ft_verify_cmd(current, utils))
 			{
-				ft_call_builtin(current, utils, fd[1]);
-			}
-			else
-        	i += ft_forking(current, prev_read, fd, env);
-        	ft_reset_read_end(current, &prev_read, fd);
+				if (ft_is_builtin(current, utils))
+					ft_call_builtin(current, utils, fd[1]);
+				else
+					i += ft_forking(current, prev_read, fd, env);
+        	}
 		}
+		ft_reset_read_end(current, &prev_read, fd);
 		current = current->next;
 		
      }

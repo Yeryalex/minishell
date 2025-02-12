@@ -6,81 +6,105 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:15:39 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/17 11:32:00 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:19:19 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*
 #include "../../inc/minishell.h"
 
-static char	*get_env_value(t_env *envs, char *key_value)
+int	ft_valid_env(char c)
 {
-	while (envs)
-    {
-        if (strcmp(envs->key, key_value) == 0)
-            return envs->value;
-        envs = envs->next;
-    }
-    return NULL;
+	return (c == '_' || (c >= 'A' && c <= 'Z')
+		|| (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9'));
 }
 
-t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env)
+void	ft_create_expansion(char *cmd, int *i, char *var_name)
 {
-    t_cmds *head = NULL;
-    t_cmds *current = NULL;
-    t_cmds *new_cmd = NULL;
-    char *path_value;
-    char **paths;
-    char *command_path;
-	int	i;
+	int	k;
 
-    path_value = get_env_value(env, "PATH");
-    if (!path_value)
-        return (NULL);
+	k = 0;
+	while (cmd[*i] && ft_valid_env(cmd[*i]))
+		var_name[k++] = cmd[(*i)++];
+	var_name[k] = '\0';
+}
 
-    paths = ft_split_path(path_value);
-    if (!paths)
-        return (NULL);
-    printf("Llega expanser 1\n");
-    while (tokens)
-    {
-        new_cmd = (t_cmds *)malloc(sizeof(t_cmds));
-        if (!new_cmd)
-        {
-            free (new_cmd);
-            return (NULL);
-        }
-        command_path = ft_validate_command(paths, tokens->value);
-        printf(RED "Valor de comand path expanser %s\n", command_path);
-        if (command_path)
-        {
-            new_cmd->cmd_array = (char **)malloc(2 * sizeof(char *));
-            new_cmd->cmd_array[0] = ft_strdup(command_path);
-            new_cmd->cmd_array[1] = NULL;
-            new_cmd->next = NULL;
+void	ft_find_command(char *var_name, char *result, int *j, t_env *env)
+{
+	char	*new_var;
+	t_env	*find_cmd;
 
-            if (!head)
-                head = new_cmd;
+	find_cmd = ft_find_key_env(env, var_name);
+	if (find_cmd)
+		new_var = find_cmd->value;
+	else
+		new_var = "";
+	while (*new_var)
+		result[(*j)++] = *new_var++;
+}
+
+void    ft_assign_status(char *result, int *j, t_utils *utils)
+{
+    char    *value;
+    int     k;
+
+    k = 0;
+    value = ft_itoa(utils->exit_status);
+    while (value[k])
+        result[(*j)++] = value[k++];
+    free(value);
+}
+
+void	ft_apply_status(char *result, int *j, t_utils *utils, int *i)
+{
+	ft_assign_status(result, j, utils);
+	(*i)++;
+}
+
+void	ft_start_expansion(char **cmd, t_utils *utils, int *j, int *i)
+{
+	char	result[1024];
+	char	var_name[256];
+	char	*old_cmd;
+
+	old_cmd = *cmd;
+	while ((*cmd)[*i])
+	{
+		if ((*cmd)[*i] == '$' && (*cmd)[*i + 1])
+		{
+			if (!(*cmd)[*i + 1] || (*cmd)[*i + 1] == ' ' || (*cmd)[*i + 1] == '$')
+				result[(*j)++] = (*cmd)[(*i)++];
             else
-                current->next = new_cmd;
+			{
+				(*i)++;
+				if ((*cmd)[*i] == '?')
+					ft_apply_status(result, j, utils, i);
+            	else
+            	{
+                	ft_create_expansion(*cmd, i, var_name);
+                	ft_find_command(var_name, result, j, utils->environ);
+            	}
+			}
+		}
+		else
+			result[(*j)++] = (*cmd)[(*i)++];
+	}
+	result[*j] = '\0';
+	*cmd = strdup(result);
+	free(old_cmd);
+}
 
-            current = new_cmd;
-            free(command_path);
-        }
-        tokens = tokens->next;
-    }
-   i = 0;
-   while (paths[i])
-    {
-		free(paths[i]);
+void	ft_expanser(char **cmd, t_utils *utils)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	while (cmd[i])
+	{
+		j = 0;
+		k = 0;
+		if (ft_strchr(cmd[i], '$'))
+			ft_start_expansion(&cmd[i], utils, &j, &k);
 		i++;
 	}
-    free(paths);
-    t_cmds *print = head;
-    while (print)
-        {
-            printf(RED "Value: %s, Full Path: %s\n", print->cmd_array[0], print->full_path);
-            print = print->next;
-        }
-    return (head);
 }
-*/
