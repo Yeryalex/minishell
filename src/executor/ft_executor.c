@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/13 12:15:58 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:13:58 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -102,6 +102,7 @@ int	ft_verify_cmd(t_cmds *cmd, t_utils *utils)
 {
 	if (!ft_is_builtin(cmd, utils) && !cmd->full_path)
 	{
+		ft_putstr_fd("ADVICE:\nType export PATH=/usr/bin:/bin to execute the commands\n", 2);
 		ft_putstr_fd(cmd->cmd_array[0], 2);
 		ft_putstr_fd(": Not such a file or directory\n", 2);
 		utils->exit_status = 127;
