@@ -45,8 +45,7 @@ char	*ft_get_word(const char **input)
 	return (value);
 }
 
-/*
-// recogemos el valor para el nodo WORD hasta los space
+/* recogemos el valor para el nodo WORD hasta los space
 */
 char	*ft_get_value(const char **input)
 {
@@ -54,6 +53,12 @@ char	*ft_get_value(const char **input)
 	int		i;
 
 	i = 0;
+	/* Comprobamos si se encuentran dos pipes seguidos: "||" */
+	if (ft_strncmp(*input, "||", 2) == 0)
+	{
+		ft_putstr_fd("minishell: error: found double token || Not bonus version\n", 2);
+		return (NULL);
+	}
 	if (ft_strchr("<>|", **input))
 	{
 		++i;
