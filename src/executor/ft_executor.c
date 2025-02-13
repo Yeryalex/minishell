@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/12 17:15:57 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/13 12:15:58 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -91,11 +91,11 @@ void	ft_exec_builtin(t_cmds *cmd, t_utils *utils, int fd)
 	else if (!ft_strncmp(cmd->cmd_array[0], "export", 6))
 		utils->exit_status = ft_export(cmd, utils->environ);
 	else if (!ft_strncmp(cmd->cmd_array[0], "unset", 5))
-		ft_unset(cmd->cmd_array, &utils->environ);
+		utils->exit_status = ft_unset(cmd->cmd_array, &utils->environ);
 	else if (!ft_strncmp(cmd->cmd_array[0], "cd", 2))
-		ft_cd(cmd->cmd_array, utils->environ);
+		utils->exit_status = ft_cd(cmd->cmd_array, utils->environ);
 	else if (!ft_strncmp(cmd->cmd_array[0], "exit", 4))
-		ft_exit(cmd->cmd_array, utils);
+		utils->exit_status = ft_exit(cmd->cmd_array, utils);
 }
 
 int	ft_verify_cmd(t_cmds *cmd, t_utils *utils)

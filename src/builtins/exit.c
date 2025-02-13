@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:46:23 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/11 09:39:15 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/13 13:30:44 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -82,5 +82,5 @@ int	ft_exit(char **cmd_array, t_utils *utils)
 		ft_putstr_fd("exit\n", 2);
 		utils->status = 0;
 	}
-	return (0);
+	return (utils->exit_status);
 }

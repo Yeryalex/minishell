@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/08 14:09:26 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/13 13:34:02 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/minishell.h"
@@ -74,6 +74,7 @@ int	main(int ac, char **argv, char **env)
 	t_utils	*utils;
 	char	*full_path;
 	char	**empty_env = NULL;
+	int		exit;
 
 	(void)argv;
 	ft_check_args(ac);
@@ -84,6 +85,7 @@ int	main(int ac, char **argv, char **env)
 	}
 	utils = ft_init_minishell(env);
 	prompt_loop(utils, &full_path);
+	exit = utils->exit_status;
 	ft_free_utils(utils);
-	return (0);
+	return (exit);
 }

@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/12 17:11:02 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/13 12:05:48 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void	ft_expanser(char **cmd, t_utils *utils);
 //char *ft_validate_command(char **paths, const char *command);
 //void execute_commands(t_cmds *cmd, char **env);
 char    *ft_get_path(char *path, char *cmd);
-
+int		ft_valid_export(char *str);
 
 /*          EXECUTOR FUNCTIONS         */
 void	ft_executor(t_cmds *cmd, t_utils *utils, char **env);

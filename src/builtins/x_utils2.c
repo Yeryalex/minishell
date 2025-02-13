@@ -6,22 +6,24 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 13:17:47 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/12 17:14:26 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/13 13:06:03 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
 
 void	ft_check_identifier(char **cmd_array, int *i, int *exit_status)
 {
-	exit_status = 0;
-	while (cmd_array[*i] && cmd_array[*i][0] == '=')
+	if (*exit_status == 42)
+		return ;
+	while (cmd_array[*i] && (cmd_array[*i][0] == '=' || ft_isdigit(cmd_array[*i][0])))
 	{
 		printf("minishell: export: `%s'", cmd_array[*i]);
 		printf(": not a valid identifier\n");
 		*exit_status = 1;
 		(*i)++;
 	}
-	while (cmd_array[*i] && ft_abletojoin(cmd_array[*i]) > 1)
+	while (cmd_array[*i] && ((ft_abletojoin(cmd_array[*i]) > 1)
+			|| ft_valid_export(cmd_array[*i])))
 	{
 		printf("minishell: export: `%s'", cmd_array[*i]);
 		printf(": not a valid identifier\n");
