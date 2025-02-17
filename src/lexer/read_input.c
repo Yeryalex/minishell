@@ -25,11 +25,10 @@ char	*read_input(char **env, t_utils *utils)
 
 	input = NULL;
 	input = clean_input(input);
-	ft_init_signals();
 	input = readline(CYAN "minishell> " RESET);
 	if (input && *input)
 		add_history(input);
-	else if (!input || g_signal == 0)
+	else if (!input || g_exit == 130)
 	       utils->status = 0;
     (void)env;
 	return (input);
