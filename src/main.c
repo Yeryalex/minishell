@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/13 07:58:20 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:48:09 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	ft_check_args(int ac)
 	}
 }
 
-static t_utils	*ft_init_minishell(char **env, char **full_path)
+static t_utils	*ft_init_minishell(char **env)
 {
 	t_env	*environ;
 	t_utils	*utils;
@@ -38,8 +38,7 @@ static t_utils	*ft_init_minishell(char **env, char **full_path)
 		return (NULL);
 	environ = ft_init_env(env);
 	if (!environ)
-		return(free(environ), NULL);
-	*full_path = ft_get_paths_from_env(environ);
+		return(free(utils), NULL);
 	init_utils(utils, environ);
 	return (utils);
 }
@@ -77,6 +76,7 @@ int	main(int ac, char **argv, char **env)
 	t_utils	*utils;
 	char	*full_path;
 	char	**empty_env = NULL;
+	int		exit;
 
 	(void)argv;
 	g_signal = 42;
@@ -86,8 +86,9 @@ int	main(int ac, char **argv, char **env)
 		empty_env = ft_fill_env();
 		env = empty_env;
 	}
-	utils = ft_init_minishell(env, &full_path);
-	prompt_loop(utils, full_path);
+	utils = ft_init_minishell(env);
+	prompt_loop(utils, &full_path);
+	exit = utils->exit_status;
 	ft_free_utils(utils);
-	return (0);
+	return (exit);
 }

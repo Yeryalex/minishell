@@ -64,9 +64,9 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
 	if (ft_fill_cmd_array(node_cmd, lexer, count_tokens) == -1)
 		return (NULL);
 	node_cmd->full_path = ft_get_path(path, node_cmd->cmd_array[0]);
-	if (!node_cmd->full_path)
-		return (free_cmd_array(node_cmd->cmd_array), free(node_cmd), NULL);
-		//return (NULL);
+	//if (!node_cmd->full_path)
+	//	return ();
+		//return (free_cmd_array(node_cmd->cmd_array), free(node_cmd), NULL);
 	return (node_cmd);
 }
 
