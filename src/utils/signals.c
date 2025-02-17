@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <rbuitrag@student.42barcelona.co  +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:46:08 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/07 13:56:36 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/13 07:57:48 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 		rl_redisplay();
 		//exit(130);
 	}
-}
-
+	if (sig == SIGQUIT)
+	{
 		g_signal = 0;
-		utils->exit_status = 130;
+		write(STDOUT_FILENO, "Quit\n", 5);
 	}
 }*/
 
@@ -42,26 +42,19 @@ int	event(void)
 
 void	sigint_handler(int sig)
 {
-	/*if (g_status == 0)
-	{
-		g_status = 2;
-		rl_done = 1;
-	}
-	else
-	{*/
 	if (sig == SIGINT)
 	{
 		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
-		//rl_replace_line("", 0);
+		rl_replace_line("", 0);
+		g_signal = 0;
 		rl_redisplay();
 		//exit(130);
 	}
-	//}
-	//(void)signal;
+	
 }
 
-void	init_signals(void)
+void	ft_init_signals(void)
 {
 	struct sigaction	sa;
 

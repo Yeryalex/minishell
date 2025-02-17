@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/07 12:43:44 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/13 10:29:36 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
 static int	ft_process_pipe(t_cmds **all_cmds, int count_tokens, t_tokens **head, char *path)
 {
 	t_cmds	*new_cmd;
-
+	
 	if (count_tokens == 0)
 		return (perror("minishell: syntax error near unexpected token `|\'\n"), 0);
 	new_cmd = ft_create_node_cmd(*head, count_tokens, path);

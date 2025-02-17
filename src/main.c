@@ -6,10 +6,13 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/13 13:34:02 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:48:09 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../inc/minishell.h"
+
+int 	g_signal;
 
 static void	ft_check_args(int ac)
 {
@@ -33,7 +36,6 @@ static t_utils	*ft_init_minishell(char **env)
 	utils = malloc(sizeof(t_utils));
 	if (!utils)
 		return (NULL);
-	init_signals();
 	environ = ft_init_env(env);
 	if (!environ)
 		return(free(utils), NULL);
@@ -77,6 +79,7 @@ int	main(int ac, char **argv, char **env)
 	int		exit;
 
 	(void)argv;
+	g_signal = 42;
 	ft_check_args(ac);
 	if (!env ||!env[0])		
 	{

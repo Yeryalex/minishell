@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/13 12:05:48 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:46:01 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define BLUE "\033[94m"
 # define GRAY "\033[90m"
 # define RESET "\033[0m"
+
+extern int g_signal;
 
 typedef enum e_type
 {
@@ -97,11 +99,10 @@ void    prompt_loop(t_utils *utils, char **path);
 t_type		ft_determine_type(char *value);
 t_tokens	*ft_create_node(const char **value);
 t_tokens	*ft_lexer_input(const char *input);
-char		*read_input(char **env);
+char		*read_input(char **env, t_utils *utils);
 int			ft_addlast_node(t_tokens **lexer, t_tokens *current_node);
 char		*ft_get_word(const char **line);
 char		*ft_get_value(const char **line);
-char		*read_input(char **env);
 t_tokens	*ft_init_node(void);
 
 
@@ -126,7 +127,7 @@ int		ft_exit(char **cmd_array, t_utils *utils);
 
 /*          SIGNAL FUNCTIONS         */
 //void		ft_ctr_c(int sig);
-void		init_signals(void);
+void		ft_init_signals(void);
 void		sigint_handler(int sig);
 void		sigquit_handler(int signal);
 int			event(void);
