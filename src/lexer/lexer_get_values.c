@@ -53,7 +53,6 @@ char	*ft_get_value(const char **input)
 	int		i;
 
 	i = 0;
-	/* Comprobamos si se encuentran dos pipes seguidos: "||" */
 	if (ft_strncmp(*input, "||", 2) == 0)
 	{
 		ft_putstr_fd("minishell: error: found double token || Not bonus version\n", 2);

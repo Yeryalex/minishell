@@ -44,6 +44,22 @@ int	ft_addlast_node(t_tokens **lexer, t_tokens *current_node)
 	return (0);
 }
 
+int	ft_check_pipes(t_tokens *lexer)
+{
+	t_tokens *temp;
+
+	temp = lexer;
+	if (!ft_strncmp(temp->value, "|", 1))
+			return (0);
+	while (temp)
+	{
+		if (!ft_strncmp(temp->value, "|", 1) && !temp->next)
+			return (0);
+		temp = temp->next;
+	}
+	return (1);
+}
+
 t_tokens	*ft_lexer_input(const char *input)
 {
 	t_tokens	*node;
@@ -61,12 +77,20 @@ t_tokens	*ft_lexer_input(const char *input)
 			break ;
 		node = ft_create_node(&input);
 		if (!node)
-			return (ft_free_tokens(&lexer),NULL);
+			return (ft_free_tokens(&lexer), NULL);
 		if (ft_addlast_node(&lexer, node))
 		{
 			ft_free_tokens(&lexer);
 			ft_free_tokens(&node);
 			return (NULL);
+		}
+	}
+	if (lexer)
+	{
+		if (!ft_check_pipes(lexer))
+		{
+			printf("minishell: syntax error near unexpected token `|'\n");
+			return (ft_free_tokens(&lexer), NULL);
 		}
 	}
 	return (lexer);
