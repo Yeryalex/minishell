@@ -29,7 +29,7 @@ char	*ft_get_paths_from_env(t_env *environ)
 
 	path_env = get_env_value(environ, "PATH");
     if (!path_env)
-		return (free(path_env), NULL);
+		return (NULL);
 	return (path_env);
 }
 

@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/02/13 07:38:04 by rbuitrag         ###   ########.fr        #
+#    Updated: 2025/02/17 12:44:54 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ CFILES =	main.c \
 			utils/init_utils.c \
 			utils/ft_get_value_from_env.c\
 			utils/signals.c \
+			utils/general_utils.c\
 			expanser/expanser.c \
 			expanser/utils_expanser.c \
 			executor/ft_executor.c\

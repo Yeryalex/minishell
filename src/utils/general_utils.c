@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   general_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/25 11:32:09 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/12 17:02:00 by yrodrigu         ###   ########.fr       */
+/*   Created: 2025/02/13 12:07:56 by yrodrigu          #+#    #+#             */
+/*   Updated: 2025/02/13 15:11:59 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
 
-int	ft_pwd(t_env *env)
+int	ft_valid_export(char *str)
 {
-	char	cwd[1024];
-	char	*PWD;
-
-	if (!getcwd(cwd, 1024))
+	int i;
+	int	counter;
+	
+	i = 0;
+	counter = 0;
+	while (str[i] && str[i] != '=')
 	{
-		PWD = get_value_from_env(env, "PWD");
-		printf("%s\n", PWD);
-		return (0);
+		if (!((str[i] == '_' || str[i] == '+'
+				|| (str[i] >= 'A' && str[i] <= 'Z')
+				|| (str[i] >= 'a' && str[i] <= 'z') || (str[i] >= '0' && str[i] <= '9'))))
+			counter++;
+		i++;
 	}
-	printf("%s\n", cwd);
-	return (0);
+	return (counter);
 }

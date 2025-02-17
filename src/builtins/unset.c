@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 14:13:22 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/03 10:39:32 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:08:31 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -57,6 +57,8 @@ int	ft_unset(char **cmd_array, t_env **env)
 	t_env	*node_exists;
 	int		i;
 
+	if (!cmd_array || !*env)
+		return (0);
 	i = 1;
 	if (cmd_array[1])
 	{
@@ -65,6 +67,8 @@ int	ft_unset(char **cmd_array, t_env **env)
 			node_exists = ft_find_unset(*env, cmd_array[i]);
 			if (node_exists)
 				ft_remove_node(env, node_exists);
+			else
+				return (0);
 			i++;
 		}
 	}
