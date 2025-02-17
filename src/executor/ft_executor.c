@@ -6,9 +6,10 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/12 10:27:35 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:31:29 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd)
@@ -42,11 +43,8 @@ int	ft_forking(t_cmds *cmd, int	prev_read, int *fd, char **env)
 	pid = fork();
 	if (pid == 0)
 	{
+		ft_init_signals(1);
 		ft_dup_close(cmd, prev_read, fd);
-
-	//	pid = 3;
-	//	while (pid < 100)
-	//		close(pid++);
 		execve(cmd->full_path, cmd->cmd_array, env);
 	}
 	return (1);
@@ -118,12 +116,29 @@ void	ft_call_builtin(t_cmds *cmd, t_utils *utils, int pipe)
 		ft_exec_builtin(cmd, utils, 1);
 }
 
-void	ft_wait_for_children(int i)
+void	ft_wait_for_children(int i, int *exit_status)
 {
+	int	exit;
+	
+	exit = 0;
 	while (i-- > 0)
 	{
-		wait(NULL);
-     }
+		wait(&exit);
+		if (WIFSIGNALED(exit))
+		{
+			*exit_status = 128 + WTERMSIG(exit);
+			if (WTERMSIG(exit) == SIGQUIT)
+				ft_putstr_fd("Quit (core dumped)\n", 2);
+			else if (WTERMSIG(exit) == SIGINT)
+			{
+				g_exit = 1;
+				ft_putstr_fd("\n", 2);
+			}
+		}
+		else if (WIFEXITED(exit))
+			*exit_status = WEXITSTATUS(exit);
+	}
+	 
 }
 
 void	ft_executor(t_cmds *current, t_utils *utils, char **env)
@@ -134,7 +149,7 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 	
 	i = 0;
 	prev_read = -1;
-	
+	signal(SIGINT, SIG_IGN);
 	while (current)
     {
     	if (current->next && pipe(fd) == -1)
@@ -151,7 +166,6 @@ void	ft_executor(t_cmds *current, t_utils *utils, char **env)
 		}
 		ft_reset_read_end(current, &prev_read, fd);
 		current = current->next;
-		
      }
-	ft_wait_for_children(i);
+	ft_wait_for_children(i, &utils->exit_status);
 }

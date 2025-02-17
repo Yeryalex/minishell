@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/13 10:31:15 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:26:26 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	ft_handle_exit(t_utils *utils, char *input, char **env)
 	free(input);
 	ft_free_array(env);
 	ft_free_utils(utils);
+	rl_clear_history();
 	ft_putstr_fd("exit\n", 1);
 	exit(EXIT_SUCCESS);
 }
@@ -42,9 +43,11 @@ void	prompt_loop(t_utils *utils, char *path)
 	input = NULL;
 	cmd = NULL;
 	commands = NULL;
+	ft_control_c(utils);
 	env = ft_list_to_char(utils->environ);
 	while (1)
 	{
+		ft_init_signals(0);
 		if (utils->status == 0)
 		{
 			ft_free_array(env);

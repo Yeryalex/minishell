@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/13 11:04:03 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:16:57 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ int		ft_cd(char **cmd_array, t_env *env);
 int		ft_exit(char **cmd_array, t_utils *utils);
 
 /*          SIGNAL FUNCTIONS         */
-void		ft_init_signals(void);
+void		ft_init_signals(int child);
+void		ft_control_c(t_utils *utils);
 
 /*          ENV FUNCTIONS         */
 t_env		*ft_init_env(char **env);

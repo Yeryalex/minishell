@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/13 12:04:07 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:39:51 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static t_utils	*ft_init_minishell(char **env, char **full_path)
 	if (!environ)
 		return(free(environ), NULL);
 	*full_path = ft_get_paths_from_env(environ);
-	ft_init_signals();
 	init_utils(utils, environ);
 	return (utils);
 }
@@ -55,16 +54,10 @@ char	**ft_fill_env()
 	if (!env)
 		return (NULL);
 	if (!getcwd(cwd, 1024))
-	{
-		free(env);
-		return (NULL);
-	}
+		return(free(env), NULL);
 	pwd = ft_strjoin("PWD=", cwd);
 	if (!pwd)
-	{
-		free(env);
-		return (NULL);
-	}
+		return(free(env), NULL);
 	env[0] = pwd;
 	env[1] = ft_strdup("SHLVL=1");
 	env[2] = ft_strdup("_=/usr/bin/env");
@@ -82,7 +75,7 @@ int	main(int ac, char **argv, char **env)
 	(void)argv;
 	g_exit = 42;
 	ft_check_args(ac);
-	if (!env ||!env[0])		
+	if (!env || !env[0])		
 	{
 		empty_env = ft_fill_env();
 		env = empty_env;
