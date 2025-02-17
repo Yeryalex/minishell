@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/17 12:49:07 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:55:43 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	prompt_loop(t_utils *utils, char **path)
 		if (utils->status == 0)
 			break;
 		*path = ft_get_paths_from_env(utils->environ);
-		input = read_input(env);
+		input = read_input(env, utils);
 		if (!input)
 			ft_handle_exit(utils, input, env);
 		if (!ft_process_input(input, &commands, &cmd, *path))
