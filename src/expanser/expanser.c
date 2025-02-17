@@ -98,6 +98,8 @@ void	ft_expanser(char **cmd, t_utils *utils)
 	int	j;
 	int	k;
 
+	if (!*cmd)
+		return ;
 	i = 0;
 	while (cmd[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/11 16:16:11 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/13 12:05:48 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ typedef struct s_utils
 }	t_utils;
 
 /*          MAIN FUNCTIONS         */
-void    prompt_loop(t_utils *utils, char *path);
+void    prompt_loop(t_utils *utils, char **path);
 
 /*          LEXER FUNCTIONS         */
 t_type		ft_determine_type(char *value);
@@ -146,11 +146,11 @@ char		**ft_list_to_char(t_env *env);
 void	*ft_print_stderr(char *str);
 //int			ft_print_env(t_env *env_list, int fd);
 void 	ft_print_env_list(t_env *env);
-void	ft_check_identifier(char **cmd_array, int *i);
+void	ft_check_identifier(char **cmd_array, int *i, int *exit_status);
 void	ft_trim_case(char **x_value);
 int		ft_init_key_value(char **cmd_array, char **x_key, char **x_value, int *i);
 void	ft_create_new_node(char **x_key, char **x_value, t_env *env);
-t_env   *ft_add_node_env(char **cmd_array, t_env *env);
+t_env   *ft_add_node_env(char **cmd_array, t_env *env, int *exit_status);
 int		ft_strcmp(char *s1, char *s2);
 void	ft_sort_env(t_env *env);
 t_env	*ft_find_key_env(t_env *env, char *key_value);
@@ -165,7 +165,7 @@ void	ft_expanser(char **cmd, t_utils *utils);
 //char *ft_validate_command(char **paths, const char *command);
 //void execute_commands(t_cmds *cmd, char **env);
 char    *ft_get_path(char *path, char *cmd);
-
+int		ft_valid_export(char *str);
 
 /*          EXECUTOR FUNCTIONS         */
 void	ft_executor(t_cmds *cmd, t_utils *utils, char **env);

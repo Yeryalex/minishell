@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/11 16:18:05 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/13 10:15:20 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	ft_process_input(char *input, t_tokens **commands, t_cmds **cmd, char
 	return (1);
 }
 
-void	prompt_loop(t_utils *utils, char *path)
+void	prompt_loop(t_utils *utils, char **path)
 {
 	char		*input;
 	t_tokens	*commands;
@@ -46,14 +46,12 @@ void	prompt_loop(t_utils *utils, char *path)
 	while (1)
 	{
 		if (utils->status == 0)
-		{
-			ft_free_array(env);
 			break;
-		}
+		*path = ft_get_paths_from_env(utils->environ);
 		input = read_input(env);
 		if (!input)
 			ft_handle_exit(utils, input, env);
-		if (!ft_process_input(input, &commands, &cmd, path))
+		if (!ft_process_input(input, &commands, &cmd, *path))
 			continue;
 		ft_free_tokens(&commands);
 		ft_expanser(cmd->cmd_array, utils);
@@ -61,6 +59,7 @@ void	prompt_loop(t_utils *utils, char *path)
 		ft_free_cmd(cmd);
         free(input);
 	}
+	ft_free_array(env);
 	rl_clear_history();
 }
 
