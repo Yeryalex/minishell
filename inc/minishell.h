@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/17 12:54:32 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/17 13:01:42 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define GRAY "\033[90m"
 # define RESET "\033[0m"
 
-extern int g_signal;
+extern int g_exit;
 
 typedef enum e_type
 {
@@ -126,11 +126,8 @@ int		ft_cd(char **cmd_array, t_env *env);
 int		ft_exit(char **cmd_array, t_utils *utils);
 
 /*          SIGNAL FUNCTIONS         */
-//void		ft_ctr_c(int sig);
-void		ft_init_signals(void);
-void		sigint_handler(int sig);
-void		sigquit_handler(int signal);
-int			event(void);
+void		ft_init_signals(int child);
+void		ft_control_c(t_utils *utils);
 
 /*          ENV FUNCTIONS         */
 t_env		*ft_init_env(char **env);
