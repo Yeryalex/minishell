@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/17 13:02:03 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:16:11 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,10 @@ int	ft_verify_cmd(t_cmds *cmd, t_utils *utils)
 		utils->exit_status = 127;
 		return (1);
 	}
+	/*if (cmd->redir_in && cmd->redir_in->fd == -1)
+		return (1);*/
+	if (cmd->redir_out && isatty(cmd->redir_out->fd))
+		cmd->redir_out = ft_exit_redir(2, cmd->redir_out, utils);
 	return (0);
 }
 

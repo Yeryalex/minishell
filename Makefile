@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/02/17 12:44:54 by rbuitrag         ###   ########.fr        #
+#    Updated: 2025/02/18 09:31:17 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,8 @@ CFILES =	main.c \
 			lexer/quotes_utils.c \
 			parser/parser.c \
 			parser/parser_utils.c \
+			parser/redir.c \
+			parser/redir_utils.c \
 			utils/init_env.c \
 			utils/env_export.c \
 			utils/free.c \
@@ -50,6 +52,7 @@ CFILES =	main.c \
 			builtins/cd.c\
 			builtins/exit.c\
 			builtins/exit_utils.c\
+			
 
 GREEN = "\033[92m"
 RESET = "\033[0m"

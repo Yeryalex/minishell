@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/17 13:01:42 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/18 13:13:32 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include <fcntl.h>
 # include "../inc/libft/libft.h"
 
 # define DEFAULT_ENV "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
@@ -67,6 +68,7 @@ typedef struct s_cmds
 	char			*full_path;
 	t_dir			*redir_in;
 	t_dir			*redir_out;
+	int				error_fd;
 	struct s_cmds 	*next;
 	struct s_cmds	*prev;
 } t_cmds;
@@ -107,14 +109,21 @@ t_tokens	*ft_init_node(void);
 
 
 /*			PARSER FUNCTIONS		*/
-t_cmds	*ft_parser(t_tokens *lexer, char *path);
-t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count, char *cmd_path);
+t_cmds *ft_parser(t_tokens *lexer, char *path, t_utils *utils);
+t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count, char *cmd_path, t_utils *utils);
 void    ft_addlast_pnode(t_cmds **list, t_cmds *node);
 void	*free_cmd_array(char **cmd_array);
 
 /*          STRUCT FUNCTIONS         */
 
 /*          REDIR FUNCTIONS         */
+t_dir	*ft_append_gthan_redir(char *file_name, int token, t_utils *utils, t_cmds *parser_nodes);
+t_dir	*ft_sthan_redir(char *file_name, t_utils *utils, t_cmds *parser_nodes);
+void	*ft_exit_redir(int error, t_dir *redir_node, t_utils *utils);
+void	ft_gthan_append_cmds(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
+void	ft_sthan_hdoc_cmds(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
+int		ft_open_fd(char *filename, int mode);
+
 
 /*          BUILTINS FUNCTION:S         */
 int		ft_echo(char **cmd, int fd);
