@@ -21,16 +21,22 @@ static t_dir	*ft_fill_redirections(t_tokens **lexer, t_cmds *cmds, t_utils *util
 	return (new_node);
 }
 
-void	ft_gthan_append_cmds(t_tokens **lexer, t_cmds *cmds, t_utils *utils)
+int	ft_gthan_append_cmds(t_tokens **lexer, t_cmds *cmds, t_utils *utils)
 {
 	if (cmds->redir_out)
 		cmds->redir_out = ft_free_redir(cmds->redir_out);
 	cmds->redir_out = ft_fill_redirections(lexer, cmds, utils);
+	if (!cmds->redir_out)
+		return (-1);
+	return (0);
 }
 
-void	ft_sthan_hdoc_cmds(t_tokens **lexer, t_cmds *cmds, t_utils *utils)
+int	ft_sthan_hdoc_cmds(t_tokens **lexer, t_cmds *cmds, t_utils *utils)
 {
 	if (cmds->redir_in)
 		cmds->redir_in = ft_free_redir(cmds->redir_in);
 	cmds->redir_in = ft_fill_redirections(lexer, cmds, utils);
+	if (!cmds->redir_in)
+		return (-1);
+	return (0);
 }

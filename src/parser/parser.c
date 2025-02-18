@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/18 14:19:59 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:33:51 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,45 +32,39 @@ static int	ft_init_cmd_node(t_cmds *node, int num)
 	return (0);
 }
 
-static int	ft_fill_cmd(t_cmds *node, t_tokens *lexer, int count, t_utils *utils)
+static int ft_fill_cmd(t_cmds *node, t_tokens *lexer, int count, t_utils *utils)
 {
-	int	i;
+    int i;
 
-	i = 0;
-	while (lexer && lexer->token != PIPE && i < count)
-	{ 
-
-		
-		if (lexer->token == WORD)
+    i = 0;
+	(void)count;
+    while (lexer && lexer->token != PIPE)
+    {
+        if (lexer->token == WORD)
+        {
+			if (!lexer->prev || (lexer->prev->token != GTHAN && lexer->prev->token != APPEND &&
+				lexer->prev->token != STHAN && lexer->prev->token != H_DOC))
+			{		
+            	node->cmd_array[i] = ft_strdup(lexer->value);
+            	if (!node->cmd_array[i])
+                	return (free_cmd_array(node->cmd_array), free(node), -1);
+            	i++;
+			}
+	    }
+        else if (lexer->token == GTHAN || lexer->token == APPEND)
 		{
-			if (!(lexer->prev && (lexer->prev->token != WORD)))
-			{	
-				node->cmd_array[i] = ft_strdup(lexer->value);
-				if (!node->cmd_array[i])
-				{
-					while (i > 0)
-						free(node->cmd_array[--i]);
-					free(node->cmd_array);
-					return (1);
-				}
-				i++;
-			}
-			else
-			{
-				lexer = lexer->next;
-		    	continue;
-			}
-			lexer = lexer->next;
-			continue;
+            if (ft_gthan_append_cmds(&lexer, node, utils) == -1)
+				return (-1);
 		}
-		if (lexer->token == GTHAN || lexer->token == APPEND)
-			ft_gthan_append_cmds(&lexer, node, utils);
-		else if (lexer->token == STHAN || lexer->token == H_DOC)
-			ft_sthan_hdoc_cmds(&lexer, node, utils);
+        else if (lexer->token == STHAN || lexer->token == H_DOC)
+		{
+            if (ft_sthan_hdoc_cmds(&lexer, node, utils) == -1)
+				return (-1);
+		}
 		lexer = lexer->next;
-	}
-	node->cmd_array[i] = NULL;
-	return (0);
+    }
+    node->cmd_array[i] = NULL;
+    return (0);
 }
 
 t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path, t_utils *utils)
@@ -89,18 +83,18 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path, t_util
 		lexer = lexer->next;
 	return (node_cmd);
 }
-
-static int	ft_process_pipe(t_cmds **all_cmds, int count_tokens, t_tokens **head, char *path, t_utils *utils)
+static int ft_process_pipe(t_cmds **all_cmds, int count_tokens, t_tokens **head, char *path, t_utils *utils)
 {
-	t_cmds	*new_cmd;
-	
-	if (count_tokens == 0)
-		return (perror("minishell: syntax error near unexpected token `|\'\n"), 0);
-	new_cmd = ft_create_node_cmd(*head, count_tokens, path, utils);
-	if (!new_cmd)
-		return (ft_free_cmd(*all_cmds), 0);
-	ft_addlast_pnode(all_cmds, new_cmd);
-	return (1);
+    t_cmds *new_cmd;
+
+    if (count_tokens == 0)
+        return (perror("minishell: syntax error near unexpected token `|\\'\n"), 0);
+    new_cmd = ft_create_node_cmd(*head, count_tokens, path, utils);
+    if (!new_cmd)
+        return (ft_free_cmd(*all_cmds), 0);
+    ft_addlast_pnode(all_cmds, new_cmd);
+    *head = (*head)->next;
+    return (1);
 }
 
 t_cmds *ft_parser(t_tokens *lexer, char *path, t_utils *utils)

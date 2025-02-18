@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:40:55 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/13 13:14:53 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:23:00 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -114,11 +114,11 @@ int	ft_change_dir(char *path, t_env *env)
 {
 	char	cwd[1024];
 	char	*pwd;
-	char	*oldpwd;
+	//char	*oldpwd;
 
 	if (!getcwd(cwd, 1024))
 	{
-		oldpwd = get_value_from_env(env, "OLDPWD");
+		//oldpwd = get_value_from_env(env, "OLDPWD");
 		pwd = get_value_from_env(env, "PWD");
 		ft_modify_especific_env(pwd, env, "OLDPWD=");
 	}
