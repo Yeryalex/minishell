@@ -52,7 +52,7 @@ int	ft_check_pipes(t_tokens *lexer)
 	if (!ft_strncmp(temp->value, "|", 1))
 			return (0);
 	if (!ft_strncmp(temp->value, ">", 1))
-		return (-1);
+		return (-2);
 	while (temp)
 	{
 		if (!ft_strncmp(temp->value, "|", 1) && !temp->next)
@@ -66,10 +66,22 @@ int	ft_check_pipes(t_tokens *lexer)
 	return (1);
 }
 
+static t_tokens	*ft_handle_syntax_error(t_tokens **lexer, int check)
+{
+	if (check == 0)
+		printf("minishell: syntax error near unexpected token `|'\n");
+	else if (check == -2)
+		printf("minishell: syntax error near unexpected token `>'\n");	
+	else if (check == -1)
+		printf("minishell: syntax error near unexpected token `newline'\n");
+	return (ft_free_tokens(lexer), NULL);
+}
+
 t_tokens	*ft_lexer_input(const char *input)
 {
 	t_tokens	*node;
 	t_tokens	*lexer;
+	int			check;
 	
 	lexer = NULL;
 
@@ -85,24 +97,13 @@ t_tokens	*ft_lexer_input(const char *input)
 		if (!node)
 			return (ft_free_tokens(&lexer), NULL);
 		if (ft_addlast_node(&lexer, node))
-		{
-			ft_free_tokens(&lexer);
-			ft_free_tokens(&node);
-			return (NULL);
-		}
+			return(ft_free_tokens(&lexer), ft_free_tokens(&node), NULL);
 	}
 	if (lexer)
 	{
-		if (!ft_check_pipes(lexer))
-		{
-			printf("minishell: syntax error near unexpected token > or `|'\n");
-			return (ft_free_tokens(&lexer), NULL);
-		}
-		if (ft_check_pipes(lexer) == -1)
-		{
-			printf("minishell: syntax error near unexpected token `newline'\n");
-			return (ft_free_tokens(&lexer), NULL);
-		}
+		check = ft_check_pipes(lexer);
+		if (check <= 0)
+			return (ft_handle_syntax_error(&lexer, check));
 	}
 	return (lexer);
 }
