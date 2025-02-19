@@ -468,4 +468,4 @@ Manejo de Errores y Limpieza: Si ocurre algún error, se limpian los recursos y 
  valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all  --trace-children=yes --track-origins=yes --suppressions=readline.ignore -q ./minishell
 
  #Hoja de evaluación básica 
- https://github.com/rizky/42-corrections/blob/master/minishell.pdf
+[ https://github.com/rizky/42-corrections/blob/master/minishell.pdf](https://github.com/mharriso/school21-checklists/blob/master/ng_3_minishell.pdf)
