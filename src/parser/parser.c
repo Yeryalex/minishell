@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/18 17:33:51 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/19 07:55:43 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ t_cmds *ft_parser(t_tokens *lexer, char *path, t_utils *utils)
 	all_cmds = NULL;
 	head_parser = lexer;
 	count_tokens = 0;
-	if (lexer && lexer->token == PIPE)
+	//if ((lexer && lexer->token == PIPE) || lexer->token ==GTHAN)
+	if ((lexer && lexer->token == PIPE))
 		return (perror("minishell: syntax error near unexpected token `|\'\n"), NULL);
 	while (lexer)
 	{

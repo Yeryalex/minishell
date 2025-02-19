@@ -51,10 +51,16 @@ int	ft_check_pipes(t_tokens *lexer)
 	temp = lexer;
 	if (!ft_strncmp(temp->value, "|", 1))
 			return (0);
+	if (!ft_strncmp(temp->value, ">", 1))
+		return (-1);
 	while (temp)
 	{
 		if (!ft_strncmp(temp->value, "|", 1) && !temp->next)
 			return (0);
+		if ((!ft_strncmp(temp->value, ">", 1)) && !temp->next)
+			return (-1);
+		if ((!ft_strncmp(temp->value, "<", 1)) && !temp->next)
+			return (-1);
 		temp = temp->next;
 	}
 	return (1);
@@ -89,7 +95,12 @@ t_tokens	*ft_lexer_input(const char *input)
 	{
 		if (!ft_check_pipes(lexer))
 		{
-			printf("minishell: syntax error near unexpected token `|'\n");
+			printf("minishell: syntax error near unexpected token > or `|'\n");
+			return (ft_free_tokens(&lexer), NULL);
+		}
+		if (ft_check_pipes(lexer) == -1)
+		{
+			printf("minishell: syntax error near unexpected token `newline'\n");
 			return (ft_free_tokens(&lexer), NULL);
 		}
 	}
