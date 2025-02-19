@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/19 08:32:25 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/19 11:11:54 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static int ft_fill_cmd(t_cmds *node, t_tokens *lexer, int count, t_utils *utils)
                 	return (free_cmd_array(node->cmd_array), free(node), -1);
             	i++;
 			}
+			lexer = lexer->next;
+			continue ;
 	    }
         else if (lexer->token == GTHAN || lexer->token == APPEND)
 		{

@@ -52,7 +52,7 @@ int	ft_check_pipes(t_tokens *lexer)
 	if (!ft_strncmp(temp->value, "|", 1))
 			return (0);
 	if (!ft_strncmp(temp->value, ">", 1))
-		return (-2);
+		return (-1);
 	while (temp)
 	{
 		if (!ft_strncmp(temp->value, "|", 1) && !temp->next)
