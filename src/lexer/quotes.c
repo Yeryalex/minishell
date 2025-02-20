@@ -73,7 +73,12 @@ char	*ft_remove_quotes(char *value)
 	if (!value || !ft_validate_quotes(value))
 		return (free(value), NULL);
 	if (ft_is_enclosed_by_single_quotes(value))
-		return (ft_strip_outer_quotes(value));
+	{
+		if (*(value + 1) == '"')
+			return (ft_strip_outer_quotes(value));
+		else
+			return (value);
+	}
 	len = ft_strlen(value);
 	double_quotes = ft_count_double_quotes(value);
 	inside_double_quotes = (double_quotes / 2) % 2;

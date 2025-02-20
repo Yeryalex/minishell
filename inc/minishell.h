@@ -88,6 +88,7 @@ typedef struct s_utils
 	int				status;
 	int				exit_status;
 	char			*builtins[8];
+	char			*value_to_expand;
 	struct s_utils	*next;
 	struct s_utils	*prev;
 }	t_utils;
@@ -97,8 +98,8 @@ void    prompt_loop(t_utils *utils, char **path);
 
 /*          LEXER FUNCTIONS         */
 t_type		ft_determine_type(char *value);
-t_tokens	*ft_create_node(const char **value);
-t_tokens	*ft_lexer_input(const char *input);
+t_tokens	*ft_create_node(const char **value, t_utils *utils);
+t_tokens	*ft_lexer_input(const char *input, t_utils *utils);
 char		*read_input(char **env, t_utils *utils);
 int			ft_addlast_node(t_tokens **lexer, t_tokens *current_node);
 char		*ft_get_word(const char **line);

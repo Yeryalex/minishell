@@ -59,7 +59,7 @@ void	ft_apply_status(char *result, int *j, t_utils *utils, int *i)
 	(*i)++;
 }
 
-void	ft_start_expansion(char **cmd, t_utils *utils, int *j, int *i)
+static void	ft_start_expansion(char **cmd, t_utils *utils, int *j, int *i)
 {
 	char	result[1024];
 	char	var_name[256];
