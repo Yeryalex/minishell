@@ -6,11 +6,13 @@ static t_dir	*ft_fill_redirections(t_tokens **lexer, t_cmds *cmds, t_utils *util
 	t_dir		*new_node;
 
 	new_node = NULL;
-	//if (!(*lexer)->next || (*lexer)->next->token != WORD)
+	if (utils->redir_error)
+		return (NULL);
 	if (!lexer || !(*lexer) || !(*lexer)->next || (*lexer)->next->token != WORD)
 	{
-		ft_putstr_fd("minishell: syntax error con la PIPE \n", 2);
+		ft_putstr_fd("minishell: syntax error near token \n", 2);
 		utils->exit_status = 0;
+		utils->redir_error = 1;
 		return (NULL);
 	}
 	if ((*lexer)->token == STHAN)
@@ -28,16 +30,24 @@ int	ft_gthan_append_cmds(t_tokens **lexer, t_cmds *cmds, t_utils *utils)
 		cmds->redir_out = ft_free_redir(cmds->redir_out);
 	cmds->redir_out = ft_fill_redirections(lexer, cmds, utils);
 	if (!cmds->redir_out)
+	{
+		utils->redir_error = 1;
 		return (-1);
+	}
 	return (0);
 }
 
 int	ft_sthan_hdoc_cmds(t_tokens **lexer, t_cmds *cmds, t_utils *utils)
 {
+	if (utils->redir_error == 1)
+		return (-1);
 	if (cmds->redir_in)
 		cmds->redir_in = ft_free_redir(cmds->redir_in);
 	cmds->redir_in = ft_fill_redirections(lexer, cmds, utils);
 	if (!cmds->redir_in)
+	{
+		utils->redir_error = 1;
 		return (-1);
+	}
 	return (0);
 }

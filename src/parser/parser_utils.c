@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:27:04 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/20 08:13:08 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:24:43 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ char	*ft_random_filename(void)
 		name = ft_random_filename();
 	}
 	name = ft_strjoin(ft_strdup("tmp_file"), name);
+	if (!name)
+		return (NULL);
 	return (name);
 }

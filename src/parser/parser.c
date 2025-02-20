@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/20 09:22:49 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/20 13:59:54 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,34 +38,34 @@ static int ft_fill_cmd(t_cmds *node, t_tokens *lexer, int count, t_utils *utils)
 
     i = 0;
 	(void)count;
-    while (lexer && lexer->token != PIPE)
-    {
-        if (lexer->token == WORD)
-        {
+	while (lexer && lexer->token != PIPE)
+	{
+		if (lexer->token == WORD)
+		{
 			if (!lexer->prev || (lexer->prev->token != GTHAN && lexer->prev->token != APPEND &&
 				lexer->prev->token != STHAN && lexer->prev->token != H_DOC))
 			{		
-            	node->cmd_array[i] = ft_strdup(lexer->value);
-            	if (!node->cmd_array[i])
-                	return (free_cmd_array(node->cmd_array), free(node), -1);
-            	i++;
+				node->cmd_array[i] = ft_strdup(lexer->value);
+				if (!node->cmd_array[i])
+					return (free_cmd_array(node->cmd_array), free(node), -1);
+				i++;
 			}
 			lexer = lexer->next;
 			continue ;
-	    }
-        else if (lexer->token == GTHAN || lexer->token == APPEND)
+		}
+		else if (lexer->token == GTHAN || lexer->token == APPEND)
 		{
-            if (ft_gthan_append_cmds(&lexer, node, utils) == -1)
+			if (ft_gthan_append_cmds(&lexer, node, utils) == -1)
 				return (-1);
 		}
-        else if (lexer->token == STHAN || lexer->token == H_DOC)
+		else if (lexer->token == STHAN || lexer->token == H_DOC)
 		{
-            if (ft_sthan_hdoc_cmds(&lexer, node, utils) == -1)
+			if (ft_sthan_hdoc_cmds(&lexer, node, utils) == -1)
 				return (-1);
 		}
 		lexer = lexer->next;
-    }
-    node->cmd_array[i] = NULL;
+	}
+	node->cmd_array[i] = NULL;
     return (0);
 }
 
@@ -93,8 +93,8 @@ static int ft_process_pipe(t_cmds **all_cmds, int count_tokens, t_tokens **head,
         return (perror("minishell: syntax error near unexpected token `|\\'\n"), 0);
     new_cmd = ft_create_node_cmd(*head, count_tokens, path, utils);
     if (!new_cmd)
-        return (ft_free_cmd(*all_cmds), 0);
-    ft_addlast_pnode(all_cmds, new_cmd);
+	    return (ft_free_cmd(*all_cmds), 0);
+	ft_addlast_pnode(all_cmds, new_cmd);
     *head = (*head)->next;
     return (1);
 }

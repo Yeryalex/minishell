@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 10:52:14 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/20 08:18:48 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/20 13:08:58 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_utils(t_utils *utils, t_env *env)
 	utils->stdout =	0;
 	utils->exit_status = 0;
 	utils->cmds_amount = 0;
+	utils->redir_error = 0;
 	utils->builtins[0] = "echo";
 	utils->builtins[1] = "cd";
 	utils->builtins[2] = "pwd";

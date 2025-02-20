@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/20 08:21:49 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/20 13:08:17 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,18 @@ typedef struct s_utils
 	int				status;
 	int				exit_status;
 	int				cmds_amount;
+	int				redir_error;
 	char			*builtins[8];
 	struct s_utils	*next;
 	struct s_utils	*prev;
 }	t_utils;
+
+typedef struct s_expand
+{
+	char			*old_value;
+	char			*new_value;
+	struct s_expand	*next;
+}	t_exp;
 
 /*          MAIN FUNCTIONS         */
 void    prompt_loop(t_utils *utils, char **path);

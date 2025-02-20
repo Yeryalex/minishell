@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/02/20 10:35:01 by rbuitrag         ###   ########.fr        #
+#    Updated: 2025/02/20 12:35:01 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 
 HEADER = inc/minishell.h 
 LIBFT = inc/libft/libft.a
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g 
 #-fsanitize=address -fsanitize=leak
 
 CFILES =	main.c \
