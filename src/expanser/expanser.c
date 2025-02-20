@@ -11,13 +11,13 @@
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
 
-int	ft_valid_env(char c)
+static int	ft_valid_env(char c)
 {
 	return (c == '_' || (c >= 'A' && c <= 'Z')
 		|| (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9'));
 }
 
-void	ft_create_expansion(char *cmd, int *i, char *var_name)
+static 	void ft_create_expansion(char *cmd, int *i, char *var_name)
 {
 	int	k;
 
