@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/18 12:16:11 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/20 08:24:06 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	ft_wait_for_children(int i, int *exit_status)
 				ft_putstr_fd("Quit (core dumped)\n", 2);
 			else if (WTERMSIG(exit) == SIGINT)
 			{
-				g_exit = 1;
+				g_signal = 1;
 				ft_putstr_fd("\n", 2);
 			}
 		}

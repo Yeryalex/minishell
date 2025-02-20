@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/18 09:38:34 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/20 08:15:12 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	prompt_loop(t_utils *utils, char **path)
 		ft_executor(cmd, utils, env);
 		ft_free_cmd(cmd);
         free(input);
+		utils->cmds_amount++;
 	}
 	ft_free_array(env);
 	rl_clear_history();

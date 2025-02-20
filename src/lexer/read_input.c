@@ -28,7 +28,7 @@ char	*read_input(char **env, t_utils *utils)
 	input = readline(CYAN "minishell> " RESET);
 	if (input && *input)
 		add_history(input);
-	else if (!input || g_exit == 130)
+	else if (!input || g_signal == 130)
 	       utils->status = 0;
     (void)env;
 	return (input);

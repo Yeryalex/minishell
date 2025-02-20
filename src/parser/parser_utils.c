@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:27:04 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/24 10:09:07 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/20 08:13:08 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,45 @@ void	*free_cmd_array(char **cmd_array)
 	}
 	free(cmd_array);
 	return (NULL);
+}
+
+void	filename(char *name)
+{
+	int		fd;
+	int		i;
+	char	tmp;
+
+	i = 0;
+	while (i < 6)
+	{
+		fd = open("/dev/urandom", O_RDONLY);
+		if (fd < 0)
+			free (name);
+		if (read(fd, &tmp, 1) != 1)
+		{
+			close (fd);
+			free (name);
+		}
+		close (fd);
+		name[i] = (tmp % 26) + 'a';
+		i++;
+	}
+}
+
+char	*ft_random_filename(void)
+{
+	char			*name;
+
+	name = (char *)malloc(6 + 1 * sizeof(char));
+	if (!name)
+		return (NULL);
+	filename(name);
+	name[6] = '\0';
+	if (!access((const char *)name, F_OK))
+	{
+		free(name);
+		name = ft_random_filename();
+	}
+	name = ft_strjoin(ft_strdup("tmp_file"), name);
+	return (name);
 }
