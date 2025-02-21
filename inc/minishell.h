@@ -158,7 +158,13 @@ int		ft_key_end(char *str);
 void    ft_flag_case1(t_env *node_already_exist, char **x_value);
 
 /*          EXPAND FUNCTIONS         */
-void	ft_expanser(char **cmd, t_utils *utils);
+void	ft_expansion(char *temp_str, int *i, int *j, t_utils *utils);
+void	ft_start_expansion(t_utils *utils, char *temp_str, int *i, int *j);
+void	ft_expand_variable(t_utils *utils, char *value_to_expand, char *temp_str, int *j);
+void	ft_create_expansion(t_utils *utils, char *value_to_expand, int *i);
+void	ft_apply_status(char *temp_str, int *j, t_utils *utils, int *i);
+void    ft_assign_status(char *temp_str, int *j, t_utils *utils);
+//void	ft_expanser(char **cmd, t_utils *utils);
 //t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env);
 //char **ft_split_path(const char *path);
 //char *ft_validate_command(char **paths, const char *command);
@@ -185,6 +191,12 @@ char	*ft_init_long(long *sign, char *str);
 void	init_utils(t_utils *utils, t_env *env);
 char	*get_value_from_env(t_env *env, char *key);
 void	ft_modify_especific_env(char *cwd, t_env *env, char *key_value);
+int		ft_find_quotes(char *str);
+void	ft_double_quotes(t_utils *utils, char *temp_str, int *i, int *j);
+void	ft_single_quotes(char *str_value, char *temp_str, int *i, int *j);
+char	*ft_create_new_str(int *i, int *j, t_utils *utils);
+int		ft_valid_env(char c);
+char	*ft_check_quotes(t_utils *utils);
 /*          FREE FUNCTIONS         */
 void	ft_free_tokens(t_tokens **lexer);
 void    ft_free_cmd(t_cmds *cmd);
