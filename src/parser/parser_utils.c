@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:27:04 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/20 14:24:43 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:16:36 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	filename(char *name)
 	char	tmp;
 
 	i = 0;
-	while (i < 6)
+	while (i < 3)
 	{
 		fd = open("/dev/urandom", O_RDONLY);
 		if (fd < 0)
@@ -73,11 +73,12 @@ char	*ft_random_filename(void)
 {
 	char			*name;
 
-	name = (char *)malloc(6 + 1 * sizeof(char));
+	name = NULL;
+	name = (char *)malloc(3 + 1 * sizeof(char));
 	if (!name)
-		return (NULL);
+		return (free(name), NULL);
 	filename(name);
-	name[6] = '\0';
+	name[3] = '\0';
 	if (!access((const char *)name, F_OK))
 	{
 		free(name);
@@ -85,6 +86,6 @@ char	*ft_random_filename(void)
 	}
 	name = ft_strjoin(ft_strdup("tmp_file"), name);
 	if (!name)
-		return (NULL);
+		return (free(name), NULL);
 	return (name);
 }

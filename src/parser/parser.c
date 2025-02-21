@@ -6,13 +6,13 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/21 07:52:34 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:18:14 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	ft_init_cmd_node(t_cmds *node, int num)
+/*static int	ft_init_cmd_node(t_cmds *node, int num)
 {
 	if (num > 0)
 	{
@@ -30,7 +30,34 @@ static int	ft_init_cmd_node(t_cmds *node, int num)
 	node->redir_in = NULL;
 	node->redir_out = NULL;
 	return (0);
+}*/
+static int	ft_init_cmd_node(t_cmds *node, int num)
+{
+	int	i;
+
+	node->cmd_array = NULL;
+	if (num > 0)
+	{
+		node->cmd_array = (char **)malloc((num + 1) * sizeof(char *));
+		if (!node->cmd_array)
+			return (-1);
+		i = 0;
+		while (i <= num)
+		{
+			node->cmd_array[i] = NULL;
+			i++;
+		}
+	}
+	node->error_fd = 0;
+	node->full_path = NULL;
+	node->prev = NULL;
+	node->next = NULL;
+	node->redir_in = NULL;
+	node->redir_out = NULL;
+	
+	return (0);
 }
+
 
 static int ft_fill_cmd(t_cmds *node, t_tokens *lexer, int count, t_utils *utils)
 {

@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:48:03 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/20 14:05:48 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:11:29 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ void	ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils)
 	free (utils);
 }
 
-void	ft_child_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, 	t_dir *redir_node, t_utils *utils)
+void	ft_child_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node, t_utils *utils)
 {
 	char	*stop;
 	int		cmds_amount;
 	char	f_name[15];
 
+	
 	ft_bzero(f_name, 15);
 	ft_strlcpy(f_name, redir_node->filename,
 		ft_strlen(redir_node->filename) + 1);
@@ -64,18 +65,77 @@ int	ft_fork_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node
 	n_stop = ft_remove_quotes((*lexer_nodes)->next->value);
 	if (n_stop != (*lexer_nodes)->next->value)
 	{
-		free ((*lexer_nodes)->next->value);
+		//free ((*lexer_nodes)->next->value);
 		(*lexer_nodes)->next->value = n_stop;
 		expand = 0;
 	}
 	if (pid == 0)
+	{	
 		ft_child_hdoc(lexer_nodes, parser_nodes, redir_node, utils);
+		exit(EXIT_SUCCESS);
+	}
+	ft_wait_for_children(1, &utils->exit_status);
+	if (expand)
+		printf("Prepare exapanser hdoc\n");
+	//	ft_exp_hd(redir_node, utils);
+	/*if (redir_node && redir_node->filename) */
+	free(redir_node->filename);
+	return (0);
+}
+
+/*void	ft_child_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node, t_utils *utils)
+{
+	char	*stop;
+	int		cmds_amount;
+	char	f_name[15];
+
+	ft_bzero(f_name, 15);
+	ft_strlcpy(f_name, redir_node->filename,
+		ft_strlen(redir_node->filename) + 1);
+	cmds_amount = utils->cmds_amount;
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
+	stop = ft_strdup((*lexer_nodes)->next->value);
+
+	// 🔹 Liberar memoria en el hijo antes de `exit()`
+	ft_free_tokens(lexer_nodes);
+	ft_free_cmd(parser_nodes);
+	free(redir_node->filename);
+	free(redir_node);
+
+	if (ft_read_to_file(stop, cmds_amount, f_name) == -1)
+		exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
+}
+
+int	ft_fork_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node, t_utils *utils)
+{
+	pid_t	pid;
+	char	*n_stop;
+	int		expand;
+
+	expand = 1;
+	n_stop = ft_remove_quotes((*lexer_nodes)->next->value);
+	if (n_stop != (*lexer_nodes)->next->value)
+	{
+		(*lexer_nodes)->next->value = n_stop;
+		expand = 0;
+	}
+	pid = fork();
+	if (pid == -1)
+		return (1);
+	if (pid == 0) // 🔹 Proceso hijo
+	{
+		ft_child_hdoc(lexer_nodes, parser_nodes, redir_node, utils);
+		exit(EXIT_SUCCESS);
+	}
+	// 🔹 Proceso padre: espera al hijo
 	ft_wait_for_children(1, &utils->exit_status);
 	if (expand)
 		printf("Prepare exapanser hdoc\n");
 	//	ft_exp_hd(redir_node, utils);
 	return (0);
-}
+}*/
 
 t_dir	*ft_hdoc_redir(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_utils *utils)
 {
