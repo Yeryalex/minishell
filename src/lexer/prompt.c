@@ -37,13 +37,12 @@ static int	ft_process_input(char *input, t_tokens **commands, t_cmds **cmd, t_ut
 	return (1);
 }
 
-void	prompt_loop(t_utils *utils, char **path)
+void	prompt_loop(t_utils *utils)
 {
 	char		*input;
 	t_tokens	*commands;
 	t_cmds		*cmd;
 	char		**env;
-	(void)path;
 
 	input = NULL;
 	cmd = NULL;
@@ -55,7 +54,6 @@ void	prompt_loop(t_utils *utils, char **path)
 		ft_init_signals(0);
 		if (utils->status == 0)
 			break;
-	//	*path = ft_get_paths_from_env(utils->environ);
 		input = read_input(env, utils);
 		if (!input)
 			ft_handle_exit(utils, input, env);
@@ -64,7 +62,6 @@ void	prompt_loop(t_utils *utils, char **path)
 			utils->exit_status = 2;
 			continue;
 		}
-		//ft_expanser(cmd->cmd_array, utils);
 		ft_free_tokens(&commands);
 		ft_executor(cmd, utils, env);
 		ft_free_cmd(cmd);

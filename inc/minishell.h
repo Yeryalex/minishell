@@ -94,7 +94,7 @@ typedef struct s_utils
 }	t_utils;
 
 /*          MAIN FUNCTIONS         */
-void    prompt_loop(t_utils *utils, char **path);
+void    prompt_loop(t_utils *utils);
 
 /*          LEXER FUNCTIONS         */
 t_type		ft_determine_type(char *value);

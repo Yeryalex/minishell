@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 13:17:47 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/13 13:06:03 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:40:01 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -30,15 +30,6 @@ void	ft_check_identifier(char **cmd_array, int *i, int *exit_status)
 		*exit_status = 1;
 		(*i)++;
 	}
-}
-
-void	ft_trim_case(char **x_value)
-{
-	char	*temp_x_value;
-
-	temp_x_value = *x_value;
-	*x_value = ft_strtrim(*x_value, "\"\'");
-	free(temp_x_value);
 }
 
 int	ft_init_key_value(char **cmd_array, char **x_key, char **x_value, int *i)
@@ -66,10 +57,6 @@ int	ft_init_key_value(char **cmd_array, char **x_key, char **x_value, int *i)
 		free(temp_key);
 		flag = 1;
 	}
-	if (*x_key)
-		ft_trim_case(x_key);
-	if (*x_value)
-		ft_trim_case(x_value);
 	return (flag);
 }
 

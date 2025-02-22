@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:07:56 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/13 15:11:59 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:29:47 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -27,4 +27,10 @@ int	ft_valid_export(char *str)
 		i++;
 	}
 	return (counter);
+}
+
+int ft_valid_env(char c)
+{
+    return (c == '_' || (c >= 'A' && c <= 'Z')
+        || (c >= 'a' && c <= 'z'));
 }

@@ -12,6 +12,12 @@
 
 #include "../../inc/minishell.h"
 
+void	ft_no_pipe(char	*str_value, t_tokens *new_node)
+{
+	if (ft_strchr(str_value, '|') && ft_strlen(str_value) > 1)
+		new_node->token = WORD;
+}
+
 t_tokens *ft_create_node(const char **input, t_utils* utils)
 {
 	char	*str_value;
@@ -21,12 +27,18 @@ t_tokens *ft_create_node(const char **input, t_utils* utils)
         return (NULL);
     new_node->prev = NULL;
 	new_node->next = NULL;
+	new_node->token = NONE;
 	str_value = ft_get_value(input);
+	if (!str_value)
+		return (free(new_node), NULL); 
 	utils->value_to_expand = str_value;
+	ft_no_pipe(str_value, new_node);
  	new_node->value = ft_check_quotes(utils);
 	if (!new_node->value)
         return (free(new_node),NULL);
-    new_node->token = ft_determine_type(new_node->value);
+	if (new_node->token == WORD)
+		return (new_node);
+	new_node->token = ft_determine_type(new_node->value);
 	return (new_node);
 }
 
@@ -53,11 +65,11 @@ int	ft_check_pipes(t_tokens *lexer)
 	t_tokens *temp;
 
 	temp = lexer;
-	if (!ft_strncmp(temp->value, "|", 1))
+	if (!ft_strncmp(temp->value, "|", 1) && temp->token == PIPE)
 			return (0);
 	while (temp)
 	{
-		if (!ft_strncmp(temp->value, "|", 1) && !temp->next)
+		if (!ft_strncmp(temp->value, "|", 1) && !temp->next && temp->token == PIPE)
 			return (0);
 		temp = temp->next;
 	}
