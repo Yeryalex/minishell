@@ -14,8 +14,21 @@
 
 void	ft_no_pipe(char	*str_value, t_tokens *new_node)
 {
-	if (ft_strchr(str_value, '|') && ft_strlen(str_value) > 1)
-		new_node->token = WORD;
+	int i;
+
+	if (ft_strlen(str_value) > 1)
+	{
+		i = 0;
+		while (str_value[i])
+		{
+			if (ft_strchr("<>|", str_value[i]))
+			{
+				new_node->token = WORD;
+				break;
+			}
+			i++;
+		}	
+	}
 }
 
 t_tokens *ft_create_node(const char **input, t_utils* utils)
@@ -33,6 +46,7 @@ t_tokens *ft_create_node(const char **input, t_utils* utils)
 		return (free(new_node), NULL); 
 	utils->value_to_expand = str_value;
 	ft_no_pipe(str_value, new_node);
+	printf("%i\n", new_node->token);
  	new_node->value = ft_check_quotes(utils);
 	if (!new_node->value)
         return (free(new_node),NULL);
