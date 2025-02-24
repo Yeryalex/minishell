@@ -40,10 +40,10 @@ char **ft_list_to_char(t_env *env)
     {
         temp = ft_strjoin(env->key, "=");
        	if (!temp)
-			return (NULL);
+			return (free(temp), ft_free_array(char_env), NULL);
 		key_value = ft_strjoin(temp, env->value);
 		if (!key_value)
-			return (NULL);
+			return (ft_free_array(char_env), NULL);
 		free(temp);
         *char_env = key_value;
         char_env++;

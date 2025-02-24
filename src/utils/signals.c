@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:46:08 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/20 08:23:13 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 08:10:49 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,25 +58,46 @@ void	handle_signal_child(int signal)
 	}
 }
 
-void ft_init_signals(int child)
+/*void ft_init_signals(int child)
 {
     struct sigaction sa;
 
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
     if (child == 1)
     {
         sa.sa_handler = handle_signal_child;
-        sigemptyset(&sa.sa_mask);
-        sa.sa_flags = 0;
         sigaction(SIGINT, &sa, NULL);
         sigaction(SIGQUIT, &sa, NULL);
     }
     else
     {
         sa.sa_handler = handle_signal;
-        sigemptyset(&sa.sa_mask);
-        sa.sa_flags = 0;
         sigaction(SIGINT, &sa, NULL);
 		sa.sa_handler = SIG_IGN;
+        sigaction(SIGQUIT, &sa, NULL);
+    }
+}*/
+
+void ft_init_signals(int child)
+{
+    struct sigaction sa;
+
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+
+    if (child == 1)
+	{
+        sa.sa_handler = SIG_DFL;
+        sigaction(SIGINT, &sa, NULL);
+        sa.sa_handler = SIG_IGN;
+        sigaction(SIGQUIT, &sa, NULL);
+    }
+    else
+    {
+        sa.sa_handler = handle_signal;
+        sigaction(SIGINT, &sa, NULL);
+        sa.sa_handler = SIG_IGN;
         sigaction(SIGQUIT, &sa, NULL);
     }
 }

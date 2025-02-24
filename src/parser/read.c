@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:47:48 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/20 08:38:23 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 07:56:32 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	read_and_write(char *stop, int cmds_amount, char *f_name)
 
 	while (1)
 	{
-		read_line = readline("heredoc> ");
+		read_line = readline("> ");
 		if (!read_line)
 		{
 			handle_error_ctrl_d(stop, cmds_amount);

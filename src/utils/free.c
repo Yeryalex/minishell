@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:36:31 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/08 14:10:29 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/24 09:01:28 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	*ft_free_redir(t_dir *node)
 	{
 		if (node->fd >= 0)
 			close (node->fd);
-		//if (node->here_doc && !access(node->filename, F_OK))
-		//	unlink(node->filename);
+		if (node->heredoc && !access(node->filename, F_OK))
+			unlink(node->filename);
 		free (node->filename);
 		free (node);
 		node = NULL;
