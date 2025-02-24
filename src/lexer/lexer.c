@@ -87,8 +87,11 @@ int	ft_check_syntax(t_tokens *lexer, char *value, t_type token_type)
 	{
 		if (!ft_strncmp(temp->value, value, 2) && !temp->next && temp->token == token_type)
 			return (0);
-		if (!ft_strncmp(temp->value, value, 2) && (!temp->next && temp->next->token != token_type))
-			return (0);
+		if (temp->next && temp->next->token != WORD)
+		{
+			if (!ft_strncmp(temp->value, value, 2) && temp->next->token != token_type)
+				return (0);
+		}	
 		temp = temp->next;
 	}
 	return (1);

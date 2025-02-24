@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:48:03 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/24 17:21:33 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:35:47 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ void	ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils)
 void	ft_child_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node, t_utils *utils)
 {
 	char	*stop;
-	int		cmds_amount;
+	int	cmds_amount;
 	char	f_name[12];
 
 	
 	ft_bzero(f_name, 12);
-	ft_strlcpy(f_name, redir_node->filename,
-		ft_strlen(redir_node->filename) + 1);
+	ft_strlcpy(f_name, redir_node->filename, ft_strlen(redir_node->filename) + 1);
 	cmds_amount = utils->cmds_amount;
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);

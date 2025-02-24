@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:47:48 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/24 07:56:32 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:34:43 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_read_to_file(char *stop, int cmds_amount, char *f_name)
 
 	if (!stop)
 		return (-1);
-	fd = ft_open_fd(f_name, O_CREAT | O_TRUNC);
+	fd = ft_open_fd(f_name, O_WRONLY | O_CREAT | O_TRUNC);
 	if (fd != -1)
 		close(fd);
 	ft_bzero(new_stop, 4096);
