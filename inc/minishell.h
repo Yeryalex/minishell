@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/24 11:51:04 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:50:54 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_utils
 	int				exit_status;
 	char			*builtins[8];
 	char			*value_to_expand;
+	char			*temp_str;
 	struct s_utils	*next;
 	struct s_utils	*prev;
 }	t_utils;
@@ -158,18 +159,20 @@ int		ft_key_end(char *str);
 void    ft_flag_case1(t_env *node_already_exist, char **x_value);
 
 /*          EXPAND FUNCTIONS         */
-void	ft_expansion(char *temp_str, int *i, int *j, t_utils *utils);
+void	ft_expansion(int *i, int *j, t_utils *utils);
 void	ft_start_expansion(t_utils *utils, char *temp_str, int *i, int *j);
 void	ft_expand_variable(t_utils *utils, char *value_to_expand, char *temp_str, int *j);
 void	ft_create_expansion(t_utils *utils, char *value_to_expand, int *i);
 void	ft_apply_status(char *temp_str, int *j, t_utils *utils, int *i);
 void    ft_assign_status(char *temp_str, int *j, t_utils *utils);
+void	ft_expander_special(t_utils *utils, int *i, int *j, char *value_to_expand);
+int		ft_check_special_char(char *str_value, int *i);
 //void	ft_expanser(char **cmd, t_utils *utils);
 //t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env);
 //char **ft_split_path(const char *path);
 //char *ft_validate_command(char **paths, const char *command);
 //void execute_commands(t_cmds *cmd, char **env);
-char    *ft_get_path(char *path, char *cmd);
+
 int		ft_valid_export(char *str);
 
 /*          EXECUTOR FUNCTIONS         */
@@ -204,6 +207,7 @@ char	*ft_create_new_str(int *i, int *j, t_utils *utils);
 int		ft_valid_env(char c);
 char	*ft_check_quotes(t_utils *utils);
 void	ft_modify_especific_env(char *cwd, t_env *env, char *key_value);
+char    *ft_get_path(char *path, char *cmd);
 /*          FREE FUNCTIONS         */
 void	ft_free_tokens(t_tokens **lexer);
 void    ft_free_cmd(t_cmds *cmd);

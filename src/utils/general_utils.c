@@ -6,33 +6,34 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:07:56 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/24 11:26:37 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:45:02 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
 
 int	ft_valid_export(char *str)
 {
-	int i;
+	int	i;
 	int	counter;
-	
+
 	i = 0;
 	counter = 0;
 	while (str[i] && str[i] != '=')
 	{
 		if (!((str[i] == '_' || str[i] == '+'
-				|| (str[i] >= 'A' && str[i] <= 'Z')
-				|| (str[i] >= 'a' && str[i] <= 'z') || (str[i] >= '0' && str[i] <= '9'))))
+					|| (str[i] >= 'A' && str[i] <= 'Z')
+					|| (str[i] >= 'a' && str[i] <= 'z')
+					|| (str[i] >= '0' && str[i] <= '9'))))
 			counter++;
 		i++;
 	}
 	return (counter);
 }
 
-int ft_valid_env(char c)
+int	ft_valid_env(char c)
 {
-    return (c == '_' || (c >= 'A' && c <= 'Z')
-        || (c >= 'a' && c <= 'z'));
+	return (c == '_' || (c >= 'A' && c <= 'Z')
+		|| (c >= 'a' && c <= 'z'));
 }
 
 void	ft_modify_especific_env(char *cwd, t_env *env, char *key_value)

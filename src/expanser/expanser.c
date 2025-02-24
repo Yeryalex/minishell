@@ -6,23 +6,10 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:15:39 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/21 11:31:22 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:50:30 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
-
-
-void    ft_assign_status(char *temp_str, int *j, t_utils *utils)
-{
-    char    *value;
-    int     k;
-
-    k = 0;
-    value = ft_itoa(utils->exit_status);
-    while (value[k])
-        temp_str[(*j)++] = value[k++];
-    free(value);
-}
 
 void	ft_apply_status(char *temp_str, int *j, t_utils *utils, int *i)
 {
@@ -42,7 +29,8 @@ void	ft_create_expansion(t_utils *utils, char *value_to_expand, int *i)
 	value_to_expand[k] = '\0';
 }
 
-void	ft_expand_variable(t_utils *utils, char *value_to_expand, char *temp_str, int *j)
+void	ft_expand_variable(t_utils *utils, char *value_to_expand,
+		char *temp_str, int *j)
 {
 	char	*new_var;
 	t_env	*find_cmd;
@@ -56,30 +44,18 @@ void	ft_expand_variable(t_utils *utils, char *value_to_expand, char *temp_str, i
 		temp_str[(*j)++] = *new_var++;
 }
 
-void	ft_expansion(char *temp_str, int *i, int *j, t_utils *utils)
+void	ft_expansion(int *i, int *j, t_utils *utils)
 {
 	char	*str_value;
+	char	*temp_str;
 	char	value_to_expand[255];
 
 	str_value = utils->value_to_expand;
+	temp_str = utils->temp_str;
 	while (str_value[*i])
 	{
 		if (str_value[*i] == '$' && str_value[*i + 1])
-		{
-			if (str_value[*i + 1] == '$')
-				temp_str[(*j)++] = str_value[(*i)++];
-			else
-			{
-				(*i)++;
-				if (str_value[*i] == '?')
-					ft_apply_status(temp_str, j, utils, i);
-				else
-				{
-					ft_create_expansion(utils, value_to_expand, i);
-            		ft_expand_variable(utils, value_to_expand, temp_str, j);          
-				}
-			}
-		}
+			ft_expander_special(utils, i, j, value_to_expand);
 		else
 		{
 			if (str_value[*i] == '"')
@@ -102,7 +78,7 @@ void	ft_start_expansion(t_utils *utils, char *temp_str, int *i, int *j)
 	{
 		if (str_value[*i] == '$' && str_value[*i + 1])
 		{
-			if (str_value[*i + 1] == '"' || str_value[*i + 1] == '$' || str_value[*i + 1] == ' ')
+			if (ft_check_special_char(str_value, i))
 				temp_str[(*j)++] = str_value[(*i)++];
 			else
 			{
@@ -112,9 +88,9 @@ void	ft_start_expansion(t_utils *utils, char *temp_str, int *i, int *j)
 				else
 				{
 					ft_create_expansion(utils, value_to_expand, i);
-            		ft_expand_variable(utils, value_to_expand, temp_str, j);          
+					ft_expand_variable(utils, value_to_expand, temp_str, j);
 				}
-			}    
+			}
 		}
 		else
 			temp_str[(*j)++] = str_value[(*i)++];
