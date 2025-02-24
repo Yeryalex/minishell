@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/24 11:26:09 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:51:04 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,12 @@ int		ft_valid_export(char *str);
 
 /*          EXECUTOR FUNCTIONS         */
 void	ft_executor(t_cmds *cmd, t_utils *utils, char **env);
+void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd);
+void	ft_reset_read_end(t_cmds *current, int *prev_read, int *fd);
+ void    ft_exec_builtin(t_cmds *cmd, t_utils *utils, int fd);
+int		ft_is_builtin(t_cmds *cmd, t_utils *utils);
+void	ft_call_builtin(t_cmds *cmd, t_utils *utils, int pipe);
+
 /*          AUXILIARS FUNCTIONS         */
 int		ft_isspace(char c);
 void	*ft_exit_error(char quote);

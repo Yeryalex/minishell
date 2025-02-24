@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/02/17 12:44:54 by rbuitrag         ###   ########.fr        #
+#    Updated: 2025/02/24 11:44:38 by yrodrigu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ CFILES =	main.c \
 			expanser/expanser.c \
 			expanser/utils_expanser.c \
 			executor/ft_executor.c\
+			executor/executor_utils.c\
 			builtins/echo.c\
 			builtins/env.c\
 			builtins/pwd.c\
