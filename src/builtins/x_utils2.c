@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 13:17:47 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/21 11:40:01 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:30:45 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -15,7 +15,8 @@ void	ft_check_identifier(char **cmd_array, int *i, int *exit_status)
 {
 	if (*exit_status == 42)
 		return ;
-	while (cmd_array[*i] && (cmd_array[*i][0] == '=' || ft_isdigit(cmd_array[*i][0])))
+	while (cmd_array[*i] && (cmd_array[*i][0] == '='
+		|| ft_isdigit(cmd_array[*i][0])))
 	{
 		printf("minishell: export: `%s'", cmd_array[*i]);
 		printf(": not a valid identifier\n");
@@ -43,7 +44,8 @@ int	ft_init_key_value(char **cmd_array, char **x_key, char **x_value, int *i)
 	if (end_key)
 	{
 		*x_key = ft_substr(cmd_array[*i], 0, end_key);
-		*x_value = ft_substr(cmd_array[*i], end_key + 1, ft_strlen(cmd_array[*i]));
+		*x_value = ft_substr(cmd_array[*i], end_key + 1,
+				ft_strlen(cmd_array[*i]));
 	}
 	else
 	{

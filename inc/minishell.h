@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/17 13:01:42 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:26:09 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ void	ft_single_quotes(char *str_value, char *temp_str, int *i, int *j);
 char	*ft_create_new_str(int *i, int *j, t_utils *utils);
 int		ft_valid_env(char c);
 char	*ft_check_quotes(t_utils *utils);
+void	ft_modify_especific_env(char *cwd, t_env *env, char *key_value);
 /*          FREE FUNCTIONS         */
 void	ft_free_tokens(t_tokens **lexer);
 void    ft_free_cmd(t_cmds *cmd);

@@ -6,7 +6,7 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:44:57 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/13 10:13:13 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:18:23 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
@@ -53,8 +53,6 @@ t_env	*ft_add_node_env(char **cmd_array, t_env *env, int *exit_status)
 	flag = 0;
 	while (cmd_array && cmd_array[i])
 	{
-		x_key = NULL;
-		x_value = NULL;
 		ft_check_identifier(cmd_array, &i, exit_status);
 		if (!cmd_array[i])
 			return (env);
