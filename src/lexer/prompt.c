@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/21 09:27:59 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 09:30:00 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,13 @@ static void	ft_handle_exit(t_utils *utils, char *input, char **env)
 	exit(EXIT_SUCCESS);
 }
 
-static int	ft_process_input(char *input, t_tokens **commands, t_cmds **cmd, char *path, t_utils *utils)
+static int	ft_process_input(char *input, t_tokens **commands, t_cmds **cmd, t_utils *utils)
 {
-	*commands = ft_lexer_input(input);
+	char	*path;
+
+	path = NULL;
+	path = ft_get_paths_from_env(utils->environ);
+	*commands = ft_lexer_input(input, utils);
 	if (!*commands)
 		return (ft_free_tokens(commands), free(input), 0);
 	*cmd = ft_parser(*commands, path, utils);
@@ -33,7 +37,7 @@ static int	ft_process_input(char *input, t_tokens **commands, t_cmds **cmd, char
 	return (1);
 }
 
-void	prompt_loop(t_utils *utils, char **path)
+void	prompt_loop(t_utils *utils)
 {
 	char		*input;
 	t_tokens	*commands;
@@ -50,16 +54,14 @@ void	prompt_loop(t_utils *utils, char **path)
 		ft_init_signals(0);
 		if (utils->status == 0)
 			break;
-		*path = ft_get_paths_from_env(utils->environ);
 		input = read_input(env, utils);
 		if (!input)
 			ft_handle_exit(utils, input, env);
-		if (!ft_process_input(input, &commands, &cmd, *path, utils))
+		if (!ft_process_input(input, &commands, &cmd, utils))
 		{
 			utils->exit_status = 2;
 			continue;
 		}
-		ft_expanser(cmd->cmd_array, utils);
 		ft_free_tokens(&commands);
 		ft_executor(cmd, utils, env);
 		ft_free_cmd(cmd);

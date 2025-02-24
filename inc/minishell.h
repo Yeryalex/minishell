@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/20 13:08:17 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 09:27:22 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_utils
 	int				cmds_amount;
 	int				redir_error;
 	char			*builtins[8];
+	char			*value_to_expand;
 	struct s_utils	*next;
 	struct s_utils	*prev;
 }	t_utils;
@@ -104,12 +105,12 @@ typedef struct s_expand
 }	t_exp;
 
 /*          MAIN FUNCTIONS         */
-void    prompt_loop(t_utils *utils, char **path);
+void    prompt_loop(t_utils *utils);
 
 /*          LEXER FUNCTIONS         */
 t_type		ft_determine_type(char *value);
-t_tokens	*ft_create_node(const char **value);
-t_tokens	*ft_lexer_input(const char *input);
+t_tokens	*ft_create_node(const char **value, t_utils *utils);
+t_tokens	*ft_lexer_input(const char *input, t_utils *utils);
 char		*read_input(char **env, t_utils *utils);
 int			ft_addlast_node(t_tokens **lexer, t_tokens *current_node);
 char		*ft_get_word(const char **line);
@@ -182,7 +183,13 @@ int		ft_key_end(char *str);
 void    ft_flag_case1(t_env *node_already_exist, char **x_value);
 
 /*          EXPAND FUNCTIONS         */
-void	ft_expanser(char **cmd, t_utils *utils);
+void	ft_expansion(char *temp_str, int *i, int *j, t_utils *utils);
+void	ft_start_expansion(t_utils *utils, char *temp_str, int *i, int *j);
+void	ft_expand_variable(t_utils *utils, char *value_to_expand, char *temp_str, int *j);
+void	ft_create_expansion(t_utils *utils, char *value_to_expand, int *i);
+void	ft_apply_status(char *temp_str, int *j, t_utils *utils, int *i);
+void    ft_assign_status(char *temp_str, int *j, t_utils *utils);
+//void	ft_expanser(char **cmd, t_utils *utils);
 //t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env);
 //char **ft_split_path(const char *path);
 //char *ft_validate_command(char **paths, const char *command);
@@ -211,6 +218,12 @@ char	*ft_init_long(long *sign, char *str);
 void	init_utils(t_utils *utils, t_env *env);
 char	*get_value_from_env(t_env *env, char *key);
 void	ft_modify_especific_env(char *cwd, t_env *env, char *key_value);
+int		ft_find_quotes(char *str);
+void	ft_double_quotes(t_utils *utils, char *temp_str, int *i, int *j);
+void	ft_single_quotes(char *str_value, char *temp_str, int *i, int *j);
+char	*ft_create_new_str(int *i, int *j, t_utils *utils);
+int		ft_valid_env(char c);
+char	*ft_check_quotes(t_utils *utils);
 char	*ft_random_filename(void);
 void	filename(char *name);
 

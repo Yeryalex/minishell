@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   x_utils.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 13:12:59 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/18 16:22:31 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 09:42:33 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../inc/minishell.h"
+
 
 int	ft_strcmp(char *s1, char *s2)
 {
@@ -50,9 +50,7 @@ void	ft_sort_env(t_env *env)
 t_env	*ft_find_key_env(t_env *env, char *key_value)
 {
 	t_env	*temp;
-	//int		i;
 
-	//i = 0;
 	temp = env;
 	while (temp)
 	{

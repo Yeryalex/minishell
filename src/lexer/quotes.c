@@ -6,81 +6,87 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 19:20:57 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/30 19:21:00 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:28:37 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../inc/minishell.h"
 
-static int	ft_validate_quotes(const char *value)
+int ft_find_quotes(char *str)
 {
-	char	quote_type;
-	int		i;
-	int		opened;
+	int i;
 
 	i = 0;
-	opened = 0;
-	while (value[i])
+	while (str[i])
 	{
-		if (value[i] == '\'' || value[i] == '"')
-		{
-			quote_type = value[i++];
-			opened++;
-			while (value[i] && value[i] != quote_type)
-				i++;
-			if (value[i] == quote_type)
-				opened--;
-		}
-		if (value[i])
-			i++;
+		if (str[i] == '"' || str[i] == '\'')
+			return (1);
+		i++;
 	}
-	if (opened > 0)
-		return (printf("Unexpected close quote\n"), 0);
-	return (1);
+	return (0);
 }
 
-
-static void	ft_process_quotes(char *value, char *result, int inside_double)
+void	ft_double_quotes(t_utils *utils, char *temp_str, int *i, int *j)
 {
-	int	i;
-	int	j;
-	int	single_quotes;
+	char	*str_value;
+
+	str_value = utils->value_to_expand;
+	(*i)++;
+	while (str_value[*i] && str_value[*i] != '"')
+	{
+		if (str_value[*i] == '$')
+			ft_start_expansion(utils, temp_str, i, j);
+		else
+			temp_str[(*j)++] = str_value[(*i)++];
+	}
+	(*i)++;
+}
+
+void	ft_single_quotes(char *str_value, char *temp_str, int *i, int *j)
+{
+	(*i)++;
+	while (str_value[*i] && str_value[*i] != '\'')
+	{
+		temp_str[(*j)++] = str_value[(*i)++];
+	}
+	(*i)++;
+}
+
+char	*ft_create_new_str(int *i, int *j, t_utils *utils)
+{
+	char	*temp_str;
+	char	*str_value;
+
+	str_value = utils->value_to_expand;
+	temp_str = (char *)malloc(ft_strlen(str_value) + 1000);
+	if (!temp_str)
+		return (NULL);
+	while (str_value[*i])
+	{
+		if (str_value[*i] == '\'')
+			ft_single_quotes(str_value, temp_str, i, j);
+		else if (str_value[*i] == '"')
+			ft_double_quotes(utils, temp_str, i, j);
+		else
+		{	if (str_value[*i] == '$')
+				ft_expansion(temp_str, i, j, utils);
+			else
+				temp_str[(*j)++] = str_value[(*i)++];
+		}
+	}
+	temp_str[*j] = '\0';
+	return (free(str_value), temp_str);
+}
+
+char	*ft_check_quotes(t_utils *utils)
+{
+	int		i;
+	int		j;
+	char	*str_value;
 
 	i = 0;
 	j = 0;
-	single_quotes = 0;
-	while (value[i])
-	{
-		if (value[i] == '"' && !single_quotes)
-			i++;
-		else if (value[i] == '\'' && inside_double)
-			result[j++] = value[i++];
-		else if (value[i] == '\'')
-			i++;
-		else
-			result[j++] = value[i++];
-	}
-	result[j] = '\0';
-}
-
-char	*ft_remove_quotes(char *value)
-{
-	char	*result;
-	int		len;
-	int		double_quotes;
-	int		inside_double_quotes;
-
-	if (!value || !ft_validate_quotes(value))
-		return (free(value), NULL);
-	if (ft_is_enclosed_by_single_quotes(value))
-		return (ft_strip_outer_quotes(value));
-	len = ft_strlen(value);
-	double_quotes = ft_count_double_quotes(value);
-	inside_double_quotes = (double_quotes / 2) % 2;
-	result = (char *)malloc(len + 1);
-	if (!result)
-		return (free(value), NULL);
-	ft_process_quotes(value, result, inside_double_quotes);
-	free(value);
-	return (result);
+	str_value = utils->value_to_expand;
+	if (!str_value)
+		return (NULL);
+	return(ft_create_new_str(&i, &j, utils));
 }

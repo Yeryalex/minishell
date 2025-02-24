@@ -116,6 +116,7 @@ int	ft_change_dir(char *path, t_env *env)
 	char	*pwd;
 	//char	*oldpwd;
 
+	(void)oldpwd;
 	if (!getcwd(cwd, 1024))
 	{
 		//oldpwd = get_value_from_env(env, "OLDPWD");

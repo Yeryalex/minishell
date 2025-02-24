@@ -279,8 +279,193 @@ Autores
 https://github.com/karisti/42_minishell?tab=readme-ov-file#resources
 Para probar con dos terminales y probar bash y tu propia minishell ya que clona el teclado: https://42born2code.slack.com/files/U06D4LACZHA/F07SUS94QMR/init_test.sh 
 
+# Detallando el uso de nuestro propio heredoc
+1. ¿Qué es un heredoc?
+En Bash, un heredoc te permite escribir un bloque de texto (varias líneas) que se usará como entrada estándar de un comando.
+Por ejemplo, si ejecutas en la terminal:
+
+bash
+Copiar
+Editar
+cat <<EOF
+Hola, mundo
+Esta es una prueba
+EOF
+Esto hace que el comando cat lea el texto:
+
+Copiar
+Editar
+Hola, mundo
+Esta es una prueba
+en lugar de leer desde el teclado. El delimitador EOF le indica al intérprete cuándo terminar de leer el bloque.
+
+2. ¿Cómo se recrea esto en el código?
+El código que nos has compartido implementa el heredoc de la siguiente manera:
+
+Crear un archivo temporal donde se almacenarán las líneas ingresadas por el usuario.
+Forkear un proceso hijo que se encargue de leer la entrada del usuario línea a línea, hasta encontrar el delimitador (por ejemplo, EOF).
+Escribir cada línea en el archivo temporal.
+Una vez terminado, el proceso padre abre ese archivo en modo lectura y lo usa para redirigir la entrada estándar del comando.
+A continuación, veamos cada parte importante del proceso.
+
+3. Funciones Clave y su Funcionalidad
+a) hdoc_redir
+Esta es la función principal para configurar el heredoc.
+¿Qué hace?
+
+Ignora señales:
+
+c
+Copiar
+Editar
+signal(SIGINT, SIG_IGN);
+signal(SIGQUIT, SIG_IGN);
+Esto evita que se interrumpa el proceso mientras se configura el heredoc.
+
+Crea un nodo de redirección (t_redir):
+Se reserva memoria para almacenar la información del heredoc y se marca que se trata de un heredoc con redir_node->here_doc = 1.
+
+Genera un nombre de archivo temporal:
+
+c
+Copiar
+Editar
+redir_node->filename = ft_random_filename();
+Esto crea un nombre aleatorio (por ejemplo, en /tmp) para guardar el contenido del heredoc.
+
+Lanza un proceso hijo:
+Llama a la función ft_fork_hdoc que se encarga de crear un proceso hijo para leer la entrada del usuario. Si ocurre algún error (o se recibe una señal de interrupción), se llama a hdoc_error_handler para limpiar recursos.
+
+Abre el archivo temporal para lectura:
+Una vez que el hijo termina de escribir, se abre el archivo para que el comando principal (por ejemplo, cat) pueda leerlo como entrada.
+
+b) ft_fork_hdoc
+Esta función crea un proceso hijo mediante fork().
+
+Preparación del delimitador ("stop"):
+Se toma el token siguiente al operador heredoc para saber cuál es la cadena que indica el final (por ejemplo, EOF). Además, se le eliminan posibles comillas con ft_remove_quotes.
+
+En el proceso hijo (cuando pid == 0):
+Se llama a ft_child_hdoc, que se encargará de leer la entrada del usuario.
+
+En el proceso padre:
+Se espera a que el hijo termine usando ft_wait_for_childs y, si corresponde, se realiza una expansión de variables (con ft_exp_hd).
+
+c) ft_child_hdoc
+Esta función se ejecuta en el proceso hijo y es donde se lleva a cabo la lectura del heredoc.
+
+Restablece las señales:
+
+c
+Copiar
+Editar
+signal(SIGINT, SIG_DFL);
+signal(SIGQUIT, SIG_IGN);
+Así, el usuario puede usar Ctrl-C (SIGINT) para interrumpir la lectura, mientras que SIGQUIT sigue ignorándose.
+
+Prepara el delimitador:
+Se extrae el delimitador (por ejemplo, EOF) del lexer:
+
+c
+Copiar
+Editar
+stop = ft_strdup((*lexer_nodes)->next->value);
+Llama a la función de lectura:
+Se invoca ft_read_to_file(stop, cmds_amount, f_name), que es la función que:
+
+Abre el archivo temporal.
+Lee líneas del usuario con readline("> ").
+Escribe cada línea en el archivo hasta que la línea leída sea exactamente igual al delimitador.
+Finaliza el proceso:
+Si todo sale bien, el hijo hace exit(EXIT_SUCCESS), o si ocurre algún error, termina con exit(EXIT_FAILURE).
+
+d) ft_read_to_file y read_and_write
+Estas funciones se encargan de leer y escribir:
+
+Abrir el archivo temporal:
+Se abre con las opciones O_CREAT | O_TRUNC para crear o truncar (vaciar) el archivo, de modo que esté listo para escribir.
+
+Bucle de lectura (read_and_write):
+Se muestra un prompt ("> ") y se lee la entrada del usuario línea por línea.
+
+Cada línea se compara con el delimitador (stop).
+Si la línea es igual a stop, se detiene el bucle.
+Si no, la línea se escribe en el archivo temporal (usando write_on_file).
+Manejo de Ctrl-D:
+Si readline devuelve NULL (por ejemplo, al presionar Ctrl-D), se llama a handle_error_ctrl_d para gestionar el error.
+Escribir en el archivo (write_on_file):
+Se escribe la línea y se añade un salto de línea. Si ocurre algún error al escribir, se retorna -1 para detener el proceso.
+
+e) Funciones de manejo de errores
+check_file:
+Después de haber creado el archivo, esta función se puede usar para verificar que el archivo existe y es legible. Utiliza access() con los flags F_OK y R_OK y, en caso de error, imprime un mensaje.
+
+hdoc_error_handler y exit_redir:
+Si ocurre algún error en el proceso del heredoc (por ejemplo, error al forkear o escribir en el archivo), estas funciones se encargan de:
+
+Eliminar el archivo temporal (con unlink).
+Liberar la memoria asignada.
+Ajustar el estado de error en la estructura del comando (parser_nodes->error_fd).
+4. Ejemplo Práctico: Recreando un heredoc
+Imagina que en tu minishell escribes:
+
+bash
+Copiar
+Editar
+cat <<EOF
+Hola, mundo
+Esta es una prueba
+EOF
+El proceso sería el siguiente:
+
+Detección del heredoc:
+El lexer identifica el operador << y toma EOF como delimitador.
+
+Configuración del heredoc (hdoc_redir):
+
+Se ignoran las señales para evitar interrupciones.
+Se crea un nodo de redirección y se asigna un nombre de archivo temporal, por ejemplo, /tmp/tmp12345.
+Fork y lectura (ft_fork_hdoc y ft_child_hdoc):
+
+Se crea un proceso hijo.
+En el hijo, se establece el delimitador EOF y se llama a ft_read_to_file.
+Se muestra el prompt > y el usuario escribe:
+Copiar
+Editar
+Hola, mundo
+El texto se escribe en /tmp/tmp12345.
+Se vuelve a mostrar el prompt > y el usuario escribe:
+nginx
+Copiar
+Editar
+Esta es una prueba
+También se escribe en el archivo.
+Al ingresar EOF, la función detecta que es el delimitador y se detiene la lectura.
+Finalización y uso del heredoc:
+
+El proceso hijo termina y el proceso padre espera su finalización.
+El archivo /tmp/tmp12345 se abre en modo lectura.
+Cuando se ejecuta cat, la entrada estándar se redirige a este archivo, y el contenido:
+Copiar
+Editar
+Hola, mundo
+Esta es una prueba
+se muestra en pantalla.
+Limpieza:
+Una vez usado, se liberan los recursos y se puede eliminar el archivo temporal si ya no es necesario.
+
+5. Resumen del Flujo General
+Detección: Se detecta la presencia de un heredoc en el comando.
+Preparación: Se crea un archivo temporal y se configura un nodo de redirección.
+Fork y Lectura:
+Se forkea un proceso hijo.
+El hijo lee líneas del usuario hasta encontrar el delimitador.
+Cada línea se escribe en el archivo temporal.
+Uso: El proceso padre abre el archivo y lo utiliza para redirigir la entrada estándar del comando.
+Manejo de Errores y Limpieza: Si ocurre algún error, se limpian los recursos y se informa del fallo.
+
 # Uso de Valgrind en el programa (sube el archivo <readline.ignore> para probar los leaks sin los errores de readline 
  valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all  --trace-children=yes --track-origins=yes --suppressions=readline.ignore -q ./minishell
 
  #Hoja de evaluación básica 
- https://github.com/rizky/42-corrections/blob/master/minishell.pdf
+[ https://github.com/rizky/42-corrections/blob/master/minishell.pdf](https://github.com/mharriso/school21-checklists/blob/master/ng_3_minishell.pdf)
