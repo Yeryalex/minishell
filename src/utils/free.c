@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:36:31 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/24 09:01:28 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:19:05 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,17 @@ void ft_free_utils(t_utils *utils)
         return ;
     if (utils->environ)
 		ft_free_env(utils->environ);
-	//if (utils->builtins[])
-	//	ft_free_array(utils->builtins);
-    free(utils);
+	free(utils);
 	utils = NULL;
 }
 
 void ft_free_array(char **array)
 {
-    int i = 0;
+    int i;
 
     if (!array)
-        return;
+		return ;
+	i = 0;
     while (array[i])
     {
 		free(array[i]);

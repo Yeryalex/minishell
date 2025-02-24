@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/24 09:30:00 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:22:31 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	prompt_loop(t_utils *utils)
 		ft_init_signals(0);
 		if (utils->status == 0)
 			break;
-		input = read_input(env, utils);
+	    input = read_input(env, utils);
 		if (!input)
 			ft_handle_exit(utils, input, env);
 		if (!ft_process_input(input, &commands, &cmd, utils))

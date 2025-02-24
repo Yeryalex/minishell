@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:48:03 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/24 18:35:47 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:13:56 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,19 @@ void	*ft_hdoc_error_handler(t_dir *redir_node, t_cmds *parser_nodes)
 	unlink(redir_node->filename);
 	free(redir_node->filename);
 	free(redir_node);
-	parser_nodes->error_fd = 1;
+	if (parser_nodes)
+		parser_nodes->error_fd = 1;
 	return (NULL);
 }
 
 void	ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils)
 {
-	ft_free_tokens(lexer);
-	ft_free_cmd(cmds);
-	ft_free_utils(utils);
+    if (lexer && *lexer)
+        ft_free_tokens(lexer);
+    if (cmds)
+        ft_free_cmd(cmds);
+    if (utils)
+        ft_free_utils(utils); 
 }
 
 void	ft_child_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node, t_utils *utils)
@@ -77,7 +81,7 @@ int	ft_fork_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node
 	if (pid == 0)
 	{	
 		ft_child_hdoc(lexer_nodes, parser_nodes, redir_node, utils);
-		exit(EXIT_SUCCESS);
+		//exit(EXIT_SUCCESS);
 	}
 	ft_wait_for_children(1, &utils->exit_status);
 	if (expand)
