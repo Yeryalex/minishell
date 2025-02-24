@@ -87,7 +87,7 @@ int	ft_check_syntax(t_tokens *lexer, char *value, t_type token_type)
 	{
 		if (!ft_strncmp(temp->value, value, 2) && !temp->next && temp->token == token_type)
 			return (0);
-		if (!ft_strncmp(temp->value, value, 2) && !(temp->next->token == token_type))
+		if (!ft_strncmp(temp->value, value, 2) && !(temp->next->tokden == token_type))
 			return (0);
 		temp = temp->next;
 	}
@@ -104,7 +104,7 @@ t_tokens	*ft_syntax(t_tokens *lexer)
 	if (!ft_check_syntax(lexer, ">>", APPEND) || !ft_check_syntax(lexer, "<<", H_DOC)
 		|| !ft_check_syntax(lexer, ">", GTHAN) || !ft_check_syntax(lexer, "<", STHAN))
 	{
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		printf("minishell: syntax error near unexpected token `%s'\n", lexer->value);
 		return (ft_free_tokens(&lexer), NULL);
 	}
 	return (lexer);
