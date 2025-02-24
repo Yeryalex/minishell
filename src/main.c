@@ -68,7 +68,6 @@ char	**ft_fill_env()
 int	main(int ac, char **argv, char **env)
 {
 	t_utils	*utils;
-	char	*full_path;
 	char	**empty_env = NULL;
 	int		exit;
 
@@ -81,7 +80,7 @@ int	main(int ac, char **argv, char **env)
 		env = empty_env;
 	}
 	utils = ft_init_minishell(env);
-	prompt_loop(utils, &full_path);
+	prompt_loop(utils);
 	exit = utils->exit_status;
 	ft_free_utils(utils);
 	return (exit);

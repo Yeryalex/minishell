@@ -50,9 +50,7 @@ void	ft_sort_env(t_env *env)
 t_env	*ft_find_key_env(t_env *env, char *key_value)
 {
 	t_env	*temp;
-	int		i;
 
-	i = 0;
 	temp = env;
 	while (temp)
 	{

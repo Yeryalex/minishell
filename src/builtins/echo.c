@@ -47,6 +47,8 @@ int	ft_echo(char **cmd, int fd)
 	int flag;
 	int i;
 
+	if (!cmd[1])
+		return (0);
 	i = 1;
 	flag = 0;
 	ft_handle_flag(cmd, &i, &flag);
@@ -58,6 +60,6 @@ int	ft_echo(char **cmd, int fd)
 		i++;
 	}
 	if (flag != 1)
-		printf("\n");
+		ft_putstr_fd("\n", fd);
 	return (0);
 }
