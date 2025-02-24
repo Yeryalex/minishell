@@ -38,7 +38,7 @@ static void	ft_expand_hdoc(t_dir *redir_node, t_utils *utils, int new_fd)
 {
 	char			*line;
 
-	line = get_next_line(redir_node->fd);
+	line = get_next_line((char *)redir_node->fd);
 	while (line)
 	{
 		ft_remove_newline(&line);
@@ -46,7 +46,7 @@ static void	ft_expand_hdoc(t_dir *redir_node, t_utils *utils, int new_fd)
 		write(new_fd, line, ft_strlen(line));
 		write(new_fd, "\n", 1);
 		free (line);
-		line = get_next_line(redir_node->fd);
+		line = get_next_line((char *)redir_node->fd);
 	}
 }
 
@@ -64,8 +64,8 @@ void	ft_exp_hd(t_dir *redir_node, t_utils *utils)
 	new_filename = ft_random_filename();
 	if (!new_filename)
 		return ;
-	new_fd = open_fd(new_filename, O_WRONLY | O_CREAT);
-	redir_node->fd = open_fd(redir_node->filename, O_RDONLY);
+	new_fd = ft_open_fd(new_filename, O_WRONLY | O_CREAT);
+	redir_node->fd = ft_open_fd(redir_node->filename, O_RDONLY);
 	if (new_fd < 0 || redir_node->fd < 0)
 	{
 		free (new_filename);

@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:26 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/28 14:16:29 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:52:30 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	ft_check_syntax(t_tokens *lexer, char *value, t_type token_type)
 	{
 		if (!ft_strncmp(temp->value, value, 2) && !temp->next && temp->token == token_type)
 			return (0);
-		if (!ft_strncmp(temp->value, value, 2) && !(temp->next->tokden == token_type))
+		if (!ft_strncmp(temp->value, value, 2) && (!temp->next && temp->next->token != token_type))
 			return (0);
 		temp = temp->next;
 	}

@@ -8,7 +8,6 @@ static t_dir	*ft_fill_redirections(t_tokens **lexer, t_cmds *cmds, t_utils *util
 	new_node = NULL;
 	if ((!lexer || !(*lexer) || !(*lexer)->next) && (*lexer)->next->token != WORD)
 	{
-		ft_putstr_fd("minishell: syntax error near token \n", 2);
 		utils->exit_status = 0;
 		utils->redir_error = 1;
 		return (NULL);
