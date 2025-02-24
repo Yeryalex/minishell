@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:48:03 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/24 09:21:44 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:40:53 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	*ft_hdoc_error_handler(t_dir *redir_node, t_cmds *parser_nodes)
 	unlink(redir_node->filename);
 	free(redir_node->filename);
 	free(redir_node);
-	//ft_free_redir(redir_node);
 	parser_nodes->error_fd = 1;
 	return (NULL);
 }
@@ -26,9 +25,7 @@ void	ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils)
 {
 	ft_free_tokens(lexer);
 	ft_free_cmd(cmds);
-	if(ft_clear_lstenv(utils->environ) == 0)
-	    return;
-	free (utils);
+	ft_free_utils(utils);
 }
 
 void	ft_child_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node, t_utils *utils)
@@ -57,10 +54,7 @@ void	ft_child_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_no
 	free (redir_node->filename);
 	free (redir_node);
 	if (ft_read_to_file(stop, cmds_amount, f_name) == -1)
-	{
-		free(stop);
 		exit(EXIT_FAILURE);
-	}
 	exit(EXIT_SUCCESS);
 }
 
@@ -74,7 +68,7 @@ int	ft_fork_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node
 	pid = fork();
 	if (pid == -1)
 		return (1);
-	n_stop = ft_remove_quotes((*lexer_nodes)->next->value);
+	n_stop = (*lexer_nodes)->next->value;
 	if (n_stop != (*lexer_nodes)->next->value)
 	{
 		//free ((*lexer_nodes)->next->value);
@@ -88,7 +82,7 @@ int	ft_fork_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node
 	}
 	ft_wait_for_children(1, &utils->exit_status);
 	if (expand)
-		printf("Prepare exapanser hdoc\n");
+		printf("Prepare expanser hdoc\n");
 	//	ft_exp_hd(redir_node, utils);
 	return (0);
 }

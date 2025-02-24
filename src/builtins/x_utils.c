@@ -6,10 +6,11 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 13:12:59 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/24 09:42:33 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 09:45:46 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../inc/minishell.h"
 
 int	ft_strcmp(char *s1, char *s2)
 {

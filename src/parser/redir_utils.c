@@ -28,7 +28,7 @@ int	ft_check_file(t_dir *node, t_utils *utils)
 	}
 	if (access(node->filename, R_OK) != 0)
 	{
-		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd("minishell: ", 2);	
 		ft_putstr_fd(node->filename, 2);
 		ft_putstr_fd(": Permission denied\n", 2);
 		utils->redir_error = 1;
@@ -95,9 +95,10 @@ t_dir	*ft_sthan_redir(char *file_name, t_utils *utils, t_cmds *parser_nodes)
 	redir_node->fd = -1;
 	if (!redir_node->filename)
 		return (ft_exit_redir(3, redir_node, utils));
-	if (ft_check_file(redir_node, utils) <= 0)
+	if (ft_check_file(redir_node, utils))
 	{
 		utils->redir_error = 1;
+		ft_free_redir(redir_node);
 		return (NULL);
 	}
 	else

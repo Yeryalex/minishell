@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:46:08 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/24 08:10:49 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:47:09 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,12 @@ void ft_init_signals(int child)
 {
     struct sigaction sa;
 
-    sigemptyset(&sa.sa_mask);
     sa.sa_flags = 0;
-
+	sigemptyset(&sa.sa_mask);
     if (child == 1)
 	{
-        sa.sa_handler = SIG_DFL;
+        //sa.sa_handler = SIG_DFL;
+		sa.sa_handler = handle_signal_child;
         sigaction(SIGINT, &sa, NULL);
         sa.sa_handler = SIG_IGN;
         sigaction(SIGQUIT, &sa, NULL);

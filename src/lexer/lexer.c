@@ -24,7 +24,6 @@ void	ft_no_pipe(char	*str_value, t_tokens *new_node)
 		i = 0;
 		while (str_value[i])
 		{
-			
 			if (ft_strchr("<>|", str_value[i]))
 			{
 				new_node->token = WORD;
@@ -34,8 +33,6 @@ void	ft_no_pipe(char	*str_value, t_tokens *new_node)
 		}	
 	}
 }
-
-
 
 t_tokens *ft_create_node(const char **input, t_utils* utils)
 {
@@ -86,36 +83,15 @@ int	ft_check_syntax(t_tokens *lexer, char *value, t_type token_type)
 	
 	if (!ft_strncmp(value, "|", 1) && !ft_strncmp(temp->value, value, 2) && temp->token == token_type)
 			return (0);
-	if (!ft_strncmp(temp->value, ">", 1))
-		return (-1);
 	while (temp)
 	{
 		if (!ft_strncmp(temp->value, value, 2) && !temp->next && temp->token == token_type)
 			return (0);
-		if ((!ft_strncmp(temp->value, ">", 1)) && !temp->next)
-			return (-1);
-		if ((!ft_strncmp(temp->value, ">", 1)) && temp->next->token != WORD)
-			return (-2);
-		if ((!ft_strncmp(temp->value, "<", 1)) && !temp->next)
-			return (-1);
-		if ((!ft_strncmp(temp->value, "<", 1)) && temp->next->token != WORD)
-			return (-3);
+		if (!ft_strncmp(temp->value, value, 2) && !(temp->next->token == token_type))
+			return (0);
 		temp = temp->next;
 	}
 	return (1);
-}
-
-static t_tokens	*ft_handle_syntax_error(t_tokens **lexer, int check)
-{
-	if (check == 0)
-		printf("minishell: syntax error near unexpected token `|'\n");
-	else if (check == -1)
-		printf("minishell: syntax error near unexpected token `newline'\n");
-	else if (check == -2)
-		printf("minishell: syntax error near unexpected token `>'\n");
-	else if (check == -3)
-		printf("minishell: syntax error near unexpected token `<'\n");
-	return (ft_free_tokens(lexer), NULL);
 }
 
 t_tokens	*ft_syntax(t_tokens *lexer)
@@ -138,7 +114,7 @@ t_tokens	*ft_lexer_input(const char *input, t_utils *utils)
 {
 	t_tokens	*node;
 	t_tokens	*lexer;
-	int			check;
+	//int			check;
 	
 	lexer = NULL;
 
@@ -156,12 +132,7 @@ t_tokens	*ft_lexer_input(const char *input, t_utils *utils)
 		if (ft_addlast_node(&lexer, node))
 			return(ft_free_tokens(&lexer), ft_free_tokens(&node), NULL);
 	}
-	if (lexer)
-	{
-		check = ft_check_pipes(lexer);
-		if (check <= 0)
-			return (ft_handle_syntax_error(&lexer, check));
-	}
-		//return (ft_syntax(lexer));
+	 if (lexer)
+	 	return (ft_syntax(lexer));
 	return (lexer);
 }

@@ -6,31 +6,13 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/24 09:37:05 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:26:08 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*static int	ft_init_cmd_node(t_cmds *node, int num)
-{
-	if (num > 0)
-	{
-		node->cmd_array = (char **)malloc((num + 1) * sizeof(char *));
-		if (!node->cmd_array)
-			return (free(node->cmd_array), -1);
-		node->cmd_array[num] = NULL;
-	}
-	else
-		node->cmd_array = NULL;
-	node->error_fd = 0;
-	node->full_path = NULL;
-	node->prev = NULL;
-	node->next = NULL;
-	node->redir_in = NULL;
-	node->redir_out = NULL;
-	return (0);
-}*/
+
 static int	ft_init_cmd_node(t_cmds *node, int num)
 {
 	int	i;
@@ -104,21 +86,22 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path, t_util
 	if (!lexer)
 		return (NULL);
 	node_cmd = (t_cmds *)malloc(sizeof(t_cmds));
-	if (!node_cmd || ft_init_cmd_node(node_cmd, count_tokens) == -1)
+	if (!node_cmd)
+		return (NULL);
+	if (ft_init_cmd_node(node_cmd, count_tokens) == -1 || !node_cmd)
 		return (ft_free_tokens(&lexer), NULL);
 	if (ft_fill_cmd(node_cmd, lexer, count_tokens, utils) == -1)
-		return (NULL);
+		return (ft_free_cmd(node_cmd), NULL);
 	node_cmd->full_path = ft_get_path(path, node_cmd->cmd_array[0]);
 	if (lexer && lexer->next && lexer->token == PIPE)
 		lexer = lexer->next;
 	return (node_cmd);
 }
+
 static int ft_process_pipe(t_cmds **all_cmds, int count_tokens, t_tokens **head, char *path, t_utils *utils)
 {
     t_cmds *new_cmd;
 
-    if (count_tokens == 0)
-        return (perror("minishell: syntax error near unexpected token `|\\'\n"), 0);
     new_cmd = ft_create_node_cmd(*head, count_tokens, path, utils);
     if (!new_cmd)
 	    return (ft_free_cmd(*all_cmds), 0);
