@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/24 09:27:22 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:10:53 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,13 +189,10 @@ void	ft_expand_variable(t_utils *utils, char *value_to_expand, char *temp_str, i
 void	ft_create_expansion(t_utils *utils, char *value_to_expand, int *i);
 void	ft_apply_status(char *temp_str, int *j, t_utils *utils, int *i);
 void    ft_assign_status(char *temp_str, int *j, t_utils *utils);
-//void	ft_expanser(char **cmd, t_utils *utils);
-//t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env);
-//char **ft_split_path(const char *path);
-//char *ft_validate_command(char **paths, const char *command);
-//void execute_commands(t_cmds *cmd, char **env);
+void	ft_exp_hd(t_dir *redir_node, t_utils *utils);
 char    *ft_get_path(char *path, char *cmd);
 int		ft_valid_export(char *str);
+
 
 /*          EXECUTOR FUNCTIONS         */
 void	ft_executor(t_cmds *cmd, t_utils *utils, char **env);

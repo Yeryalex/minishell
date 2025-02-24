@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:27:04 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/24 08:32:20 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:11:59 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,31 +95,20 @@ char	*ft_random_filename(void)
 	char	*prefix;
 	char	*final_name;
 
-	// 🔹 Reservar memoria para el nombre
 	name = (char *)malloc(4 * sizeof(char));
 	if (!name)
 		return (NULL);
 	filename(name);
 	name[3] = '\0';
-
-	// 🔹 Si el archivo ya existe, liberar `name` y generar otro
 	if (!access((const char *)name, F_OK))
-	{
-		free(name);
-		return (ft_random_filename());
-	}
-
-	// 🔹 Crear el nombre final con prefijo "tmp_file"
+		return (free(name), ft_random_filename());
 	prefix = ft_strdup("tmp_file");
 	if (!prefix)
 		return (free(name), NULL);
-
 	final_name = ft_strjoin(prefix, name);
 	free(name);
-	free(prefix); // 🔹 Liberar `prefix` después de usarlo
-
+	free(prefix);
 	if (!final_name)
 		return (NULL);
-
 	return (final_name);
 }
