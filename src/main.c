@@ -6,13 +6,13 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/17 13:00:28 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/25 11:27:39 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int 	g_exit;
+int	g_exit;
 
 static void	ft_check_args(int ac)
 {
@@ -38,12 +38,12 @@ static t_utils	*ft_init_minishell(char **env)
 		return (NULL);
 	environ = ft_init_env(env);
 	if (!environ)
-		return(free(utils), NULL);
+		return (free(utils), NULL);
 	init_utils(utils, environ);
 	return (utils);
 }
 
-char	**ft_fill_env()
+char	**ft_fill_env(void)
 {
 	char	cwd[1024];
 	char	**env;
@@ -53,10 +53,10 @@ char	**ft_fill_env()
 	if (!env)
 		return (NULL);
 	if (!getcwd(cwd, 1024))
-		return(free(env), NULL);
+		return (free(env), NULL);
 	pwd = ft_strjoin("PWD=", cwd);
 	if (!pwd)
-		return(free(env), NULL);
+		return (free(env), NULL);
 	env[0] = pwd;
 	env[1] = ft_strdup("SHLVL=1");
 	env[2] = ft_strdup("_=/usr/bin/env");
@@ -68,13 +68,14 @@ char	**ft_fill_env()
 int	main(int ac, char **argv, char **env)
 {
 	t_utils	*utils;
-	char	**empty_env = NULL;
+	char	**empty_env;
 	int		exit;
 
 	(void)argv;
+	empty_env = NULL;
 	g_exit = 42;
 	ft_check_args(ac);
-	if (!env || !env[0])		
+	if (!env || !env[0])
 	{
 		empty_env = ft_fill_env();
 		env = empty_env;
