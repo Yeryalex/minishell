@@ -20,7 +20,11 @@ int	ft_forking(t_cmds *cmd, int prev_read, int *fd, char **env)
 	{
 		ft_init_signals(1);
 		ft_dup_close(cmd, prev_read, fd);
+		pid = 3;
+		while (pid < 100)
+			close(pid++);
 		execve(cmd->full_path, cmd->cmd_array, env);
+		exit(EXIT_FAILURE);
 	}
 	return (1);
 }
@@ -32,15 +36,15 @@ void	ft_exec_builtin(t_cmds *cmd, t_utils *utils, int fd)
 	else if (!ft_strncmp(cmd->cmd_array[0], "env", 4))
 		utils->exit_status = ft_env(utils, fd);
 	else if (!ft_strncmp(cmd->cmd_array[0], "pwd", 4))
-		utils->exit_status = ft_pwd(utils->environ);
+		utils->exit_status = ft_pwd(utils->environ, fd);
 	else if (!ft_strncmp(cmd->cmd_array[0], "export", 6))
-		utils->exit_status = ft_export(cmd, utils->environ);
+		utils->exit_status = ft_export(cmd, utils->environ, fd);
 	else if (!ft_strncmp(cmd->cmd_array[0], "unset", 5))
 		utils->exit_status = ft_unset(cmd->cmd_array, &utils->environ);
 	else if (!ft_strncmp(cmd->cmd_array[0], "cd", 2))
 		utils->exit_status = ft_cd(cmd->cmd_array, utils->environ);
 	else if (!ft_strncmp(cmd->cmd_array[0], "exit", 4))
-		utils->exit_status = ft_exit(cmd->cmd_array, utils);
+		utils->exit_status = ft_exit(cmd->cmd_array, utils, fd);
 }
 
 int	ft_verify_cmd(t_cmds *cmd, t_utils *utils)

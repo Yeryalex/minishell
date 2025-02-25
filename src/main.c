@@ -84,5 +84,5 @@ int	main(int ac, char **argv, char **env)
 	prompt_loop(utils);
 	exit = utils->exit_status;
 	ft_free_utils(utils);
-	return (exit);
+	return (printf("%i\n", exit), exit);
 }

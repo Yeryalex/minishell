@@ -121,11 +121,11 @@ void	*free_cmd_array(char **cmd_array);
 /*          BUILTINS FUNCTION:S         */
 int		ft_echo(char **cmd, int fd);
 int		ft_env(t_utils *utils, int fd);
-int		ft_pwd(t_env *env);
-int		ft_export(t_cmds *cmd, t_env *env);
+int		ft_pwd(t_env *env, int fd);
+int		ft_export(t_cmds *cmd, t_env *env, int fd);
 int		ft_unset(char **cmd_array, t_env  **env);
 int		ft_cd(char **cmd_array, t_env *env);
-int		ft_exit(char **cmd_array, t_utils *utils);
+int		ft_exit(char **cmd_array, t_utils *utils, int fd);
 
 /*          SIGNAL FUNCTIONS         */
 void		ft_init_signals(int child);

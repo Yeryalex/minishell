@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
 
-int	ft_pwd(t_env *env)
+int	ft_pwd(t_env *env, int fd)
 {
 	char	cwd[1024];
 	char	*_pwd;
@@ -19,9 +19,11 @@ int	ft_pwd(t_env *env)
 	if (!getcwd(cwd, 1024))
 	{
 		_pwd = get_value_from_env(env, "PWD");
-		printf("%s\n", _pwd);
+		ft_putstr_fd(_pwd, fd);
+		ft_putstr_fd("\n", fd);
 		return (0);
 	}
-	printf("%s\n", cwd);
+	ft_putstr_fd(cwd, fd);
+	ft_putstr_fd("\n", fd);
 	return (0);
 }
