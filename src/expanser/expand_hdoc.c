@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 11:29:50 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/25 12:50:47 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:40:08 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,12 @@ void	ft_remove_newline(char **line)
 		free (*line);
 		*line = tmp;
 	}
-	
 }
 
 static void	ft_expand_hdoc(t_dir *redir_node, t_utils *utils, int new_fd)
 {
-	char			*line;
-	char			*trimmed;
+	char	*line;
+	char	*trimmed;
 
 	line = get_next_line(redir_node->fd);
 	while (line)
@@ -61,7 +60,7 @@ static void	ft_expand_hdoc(t_dir *redir_node, t_utils *utils, int new_fd)
 		trimmed = ft_check_quotes(utils);
 		write(new_fd, trimmed, ft_strlen(trimmed));
 		write(new_fd, "\n", 1);
-		//free (line);
+		free(trimmed);
 		line = get_next_line(redir_node->fd);
 	}
 	free(line);

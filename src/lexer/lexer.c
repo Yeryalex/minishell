@@ -38,6 +38,7 @@ t_tokens *ft_create_node(const char **input, t_utils* utils)
 {
 	char	*str_value;
 
+	str_value = NULL;
 	t_tokens *new_node = (t_tokens *)malloc(sizeof(t_tokens));
     if (!new_node)
         return (NULL);
@@ -51,7 +52,7 @@ t_tokens *ft_create_node(const char **input, t_utils* utils)
 	ft_no_pipe(str_value, new_node);
  	new_node->value = ft_check_quotes(utils);
 	if (!new_node->value)
-        return (free(new_node),NULL);
+        return (ft_free_tokens(&new_node), NULL);
 	if (new_node->token == WORD)
 		return (new_node);
 	new_node->token = ft_determine_type(new_node->value);
@@ -61,7 +62,6 @@ t_tokens *ft_create_node(const char **input, t_utils* utils)
 int	ft_addlast_node(t_tokens **lexer, t_tokens *current_node)
 {
 	t_tokens	*tmp_node;
-
 	
 	if (!*lexer)
 	{
@@ -117,10 +117,8 @@ t_tokens	*ft_lexer_input(const char *input, t_utils *utils)
 {
 	t_tokens	*node;
 	t_tokens	*lexer;
-	//int			check;
-	
+		
 	lexer = NULL;
-
 	if (!input)
 		return (NULL);
 	while(*input)

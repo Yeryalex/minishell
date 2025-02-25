@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 14:13:22 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/12 16:08:31 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:20:18 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 t_env	*ft_find_unset(t_env *env, char *key_value)
@@ -67,8 +68,6 @@ int	ft_unset(char **cmd_array, t_env **env)
 			node_exists = ft_find_unset(*env, cmd_array[i]);
 			if (node_exists)
 				ft_remove_node(env, node_exists);
-			else
-				return (0);
 			i++;
 		}
 	}

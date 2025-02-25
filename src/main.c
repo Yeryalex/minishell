@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/20 08:03:59 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:02:49 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ int	main(int ac, char **argv, char **env)
 	prompt_loop(utils);
 	exit = utils->exit_status;
 	ft_free_utils(utils);
-	return (exit);
+	return (printf("%i\n", exit), exit);
 }

@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/25 11:56:28 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:51:28 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ t_dir	*ft_sthan_redir(char *file_name, t_utils *utils, t_cmds *parser_nodes);
 t_dir	*ft_hdoc_redir(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_utils *utils);
 void	*ft_exit_redir(int error, t_dir *redir_node, t_utils *utils);
 void	ft_child_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node, t_utils *utils);
-void	ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
+//void	ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
 void	*ft_hdoc_error_handler(t_dir *redir_node, t_cmds *parser_nodes);
 int		ft_gthan_append_cmds(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
 int		ft_sthan_hdoc_cmds(t_tokens **lexer, t_cmds *cmds, t_utils *utils);

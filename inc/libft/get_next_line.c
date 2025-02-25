@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 13:12:32 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/25 12:40:24 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:00:16 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,12 @@ char	*get_next_line(int fd)
 	{
 		buffer[fd] = (char *)malloc(sizeof(char) * 1);
 		if (!buffer[fd])
-			return (free(buffer[fd]), NULL);
+			return (NULL);
 		buffer[fd][0] = '\0';
 	}
 	buffer[fd] = ft_read_file(buffer[fd], fd);
 	if (!buffer[fd])
-		return (free(buffer[fd]), NULL);
+		return (NULL);
 	if (ft_strlen(buffer[fd]) == 0)
 	{
 		free (buffer[fd]);

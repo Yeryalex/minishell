@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:46:23 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/17 14:04:14 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:27:15 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../inc/minishell.h"
 
 void	ft_error_exit(char	*str, t_utils *utils)
@@ -30,7 +29,7 @@ int	ft_contains_alpha(char *str)
 		i++;
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]))
+		if (ft_isalpha(str[i]) || !ft_isdigit(str[i]))
 			return (1);
 		i++;
 	}
@@ -58,9 +57,7 @@ void	ft_save_status_value(char *value, t_utils *utils)
 
 void	ft_handle_exit_status(char **cmd_array, t_utils *utils)
 {
-	if (ft_contains_alpha(cmd_array[1]))
-		ft_error_exit(cmd_array[1], utils);
-	else if (cmd_array[2])
+	if (cmd_array[2])
 	{
 		utils->exit_status = 1;
 		ft_putstr_fd("exit\n", 2);
@@ -68,7 +65,12 @@ void	ft_handle_exit_status(char **cmd_array, t_utils *utils)
 		printf("too many arguments\n");
 	}
 	else
-		ft_save_status_value(cmd_array[1], utils);
+	{
+		if (ft_contains_alpha(cmd_array[1]))
+			ft_error_exit(cmd_array[1], utils);
+		else
+			ft_save_status_value(cmd_array[1], utils);
+	}
 }
 
 int	ft_exit(char **cmd_array, t_utils *utils)
