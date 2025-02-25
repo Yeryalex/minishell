@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_hdoc.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/25 11:29:50 by rbuitrag          #+#    #+#             */
+/*   Updated: 2025/02/25 12:50:47 by rbuitrag         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+/*
 void	ft_expand_line(char **line, t_utils *utils)
 {
 	t_exp	*exp_node;
@@ -19,6 +31,7 @@ void	ft_expand_line(char **line, t_utils *utils)
 		}
 	}
 }
+*/
 
 void	ft_remove_newline(char **line)
 {
@@ -32,22 +45,26 @@ void	ft_remove_newline(char **line)
 		free (*line);
 		*line = tmp;
 	}
+	
 }
 
 static void	ft_expand_hdoc(t_dir *redir_node, t_utils *utils, int new_fd)
 {
 	char			*line;
+	char			*trimmed;
 
-	line = get_next_line((char *)redir_node->fd);
+	line = get_next_line(redir_node->fd);
 	while (line)
 	{
 		ft_remove_newline(&line);
-		ft_expand_line(&line, utils);
-		write(new_fd, line, ft_strlen(line));
+		utils->value_to_expand = line;
+		trimmed = ft_check_quotes(utils);
+		write(new_fd, trimmed, ft_strlen(trimmed));
 		write(new_fd, "\n", 1);
-		free (line);
-		line = get_next_line((char *)redir_node->fd);
+		//free (line);
+		line = get_next_line(redir_node->fd);
 	}
+	free(line);
 }
 
 static void	ft_close_fds_exp_hdoc(int new_fd, int redir_node_fd)

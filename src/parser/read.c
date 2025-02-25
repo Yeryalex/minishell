@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:47:48 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/24 18:34:43 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:41:21 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static int	read_and_write(char *stop, int cmds_amount, char *f_name)
 	char	*read_line;
 	int		fd;
 
+
 	while (1)
 	{
 		read_line = readline("> ");
@@ -62,6 +63,7 @@ int	ft_read_to_file(char *stop, int cmds_amount, char *f_name)
 {
 	char	new_stop[4096];
 	int		fd;
+
 
 	if (!stop)
 		return (-1);

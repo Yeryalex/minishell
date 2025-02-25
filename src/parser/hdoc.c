@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:48:03 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/24 19:13:56 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:52:21 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,13 @@ void	ft_child_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_no
 {
 	char	*stop;
 	int	cmds_amount;
-	char	f_name[12];
+	char	f_name[1096];
 
-	
-	ft_bzero(f_name, 12);
-	ft_strlcpy(f_name, redir_node->filename, ft_strlen(redir_node->filename) + 1);
-	cmds_amount = utils->cmds_amount;
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);
+	ft_bzero(f_name, ft_strlen(redir_node->filename) + 1);
+	ft_strlcpy(f_name, redir_node->filename, ft_strlen(redir_node->filename) + 1);
+	cmds_amount = utils->cmds_amount;
 	stop = ft_strdup((*lexer_nodes)->next->value);
 	if (!stop)
 	{
@@ -53,6 +52,7 @@ void	ft_child_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_no
 		free(redir_node);
 		exit(EXIT_FAILURE);
 	}
+	ft_free_array(*(utils)->env_in_char);
 	ft_free_child_hdoc(lexer_nodes, parser_nodes, utils);
 	free (redir_node->filename);
 	free (redir_node);
@@ -74,21 +74,19 @@ int	ft_fork_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node
 	n_stop = (*lexer_nodes)->next->value;
 	if (n_stop != (*lexer_nodes)->next->value)
 	{
-		//free ((*lexer_nodes)->next->value);
+		free ((*lexer_nodes)->next->value);
 		(*lexer_nodes)->next->value = n_stop;
 		expand = 0;
 	}
 	if (pid == 0)
 	{	
 		ft_child_hdoc(lexer_nodes, parser_nodes, redir_node, utils);
-		//exit(EXIT_SUCCESS);
+		exit(EXIT_SUCCESS);
 	}
+	ft_init_signals(1);
 	ft_wait_for_children(1, &utils->exit_status);
 	if (expand)
-	{
-		printf("Prepare expanser hdoc\n");
-		//ft_exp_hd(redir_node, utils);
-	}
+		ft_exp_hd(redir_node, utils);
 	return (0);
 }
 

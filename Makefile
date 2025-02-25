@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/02/25 08:55:50 by rbuitrag         ###   ########.fr        #
+#    Updated: 2025/02/25 11:32:03 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME = minishell
 
 HEADER = inc/minishell.h 
 LIBFT = inc/libft/libft.a
-CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address -fsanitize=leak
+
+CFLAGS = -Wall -Werror -Wextra  -g #-fsanitize=address -fsanitize=leak
 
 CFILES =	main.c \
 			lexer/prompt.c \
@@ -42,6 +43,7 @@ CFILES =	main.c \
 			utils/general_utils.c\
 			expanser/expanser.c \
 			expanser/utils_expanser.c \
+			expanser/expand_hdoc.c \
 			executor/ft_executor.c\
 			builtins/echo.c\
 			builtins/env.c\
@@ -89,6 +91,6 @@ va: all
 	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --track-origins=yes --suppressions=readline.ignore -q -s ./minishell
 
 valog: all
-	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes --track-origins=yes --log-file=valgrind_output.log --suppressions=readline.ignore -q -s ./minishell
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --log-file=valgrind_output.log --suppressions=readline.ignore -q -s ./minishell
 
 .PHONY: all clean fclean re library

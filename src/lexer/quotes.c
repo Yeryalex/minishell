@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <rbuitrag@student.42barcelona.co  +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 19:20:57 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/21 11:28:37 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:49:40 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 int ft_find_quotes(char *str)
@@ -59,7 +60,7 @@ char	*ft_create_new_str(int *i, int *j, t_utils *utils)
 	str_value = utils->value_to_expand;
 	temp_str = (char *)malloc(ft_strlen(str_value) + 1000);
 	if (!temp_str)
-		return (NULL);
+		return (free (str_value), NULL);
 	while (str_value[*i])
 	{
 		if (str_value[*i] == '\'')
