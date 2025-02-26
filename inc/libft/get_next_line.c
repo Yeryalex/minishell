@@ -6,166 +6,92 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 13:12:32 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/26 08:58:45 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:33:46 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_free_ptr(void **ptr)
+char	*multiple_free(char **ptr)
 {
-	free (*ptr);
+	free(*ptr);
 	*ptr = NULL;
+	return (NULL);
 }
 
-static char	*ft_get_remind(char *buffer, char *line)
+static char	*fd_lector(int fd, char *buff, char *saved_text)
 {
-	int		len;
-	int		i;
-	int		j;
-	char	*remind;
+	ssize_t	bytes;
+	char	*temp;
 
-	if (!line)
+	bytes = 1;
+	while (bytes > 0)
 	{
-		free (buffer);
-		return (NULL);
+		bytes = read(fd, buff, BUFFER_SIZE);
+		if (bytes == -1)
+			return (multiple_free(&saved_text));
+		if (bytes == 0)
+			return (saved_text);
+		buff[bytes] = '\0';
+		if (!saved_text)
+			saved_text = ft_strdup("");
+		if (!saved_text)
+			return (multiple_free(&saved_text));
+		temp = saved_text;
+		saved_text = ft_strjoin(temp, buff);
+		free(temp);
+		temp = NULL;
+		if (ft_strchr(buff, '\n'))
+			return (saved_text);
 	}
-	i = 0;
-	while (line[i])
-		++i;
-	len = ft_strlen(&buffer[i]) + 1;
-	remind = (char *)malloc(sizeof(char) * len);
-	if (!remind)
-		return (NULL);
-	j = 0;
-	while (buffer[i])
-		remind[j++] = buffer[i++];
-	remind[j] = '\0';
-	free (buffer);
-	if (ft_strlen(remind) == 0)
-		ft_free_ptr ((void **)&remind);
-	return (remind);
+	return (saved_text);
 }
 
-static char	*ft_get_line(char *buffer)
+static char	*ft_line_remover(char *line)
 {
-	char	*line;
-	char	*end;
-	int		len;
-	int		i;
+	size_t	count;
+	char	*saved_text;
 
-	end = ft_strchr(buffer, '\n');
-	if (!end)
-		return (ft_strdup(buffer));
-	len = (end - buffer) + 2;
-	line = (char *)malloc(sizeof(char) * len);
-	if (!line)
-		return (NULL);
-	i = 0;
-	while (&buffer[i] != end + 1)
+	count = 0;
+	while (line[count] != '\n' && line[count] != '\0')
+		count++;
+	if (line[count] == '\0')
+		return (0);
+	saved_text = ft_substr(line, count + 1, ft_strlen(line) - (count + 1));
+	if (!saved_text)
+		return (multiple_free(&saved_text));
+	if (*saved_text == '\0')
 	{
-		line[i] = buffer[i];
-		++i;
+		free(saved_text);
+		saved_text = NULL;
 	}
-	line[i] = '\0';
-	if (ft_strlen(line) == 0)
-		return (NULL);
-	return (line);
-}
-
-static char	*ft_read_file(char *buffer, int fd)
-{
-	char	*read_buf;
-	int		bytes_read;
-
-	bytes_read = 1;
-	while (bytes_read > 0)
-	{
-		read_buf = (char *)malloc((sizeof(char) * BUFFER_SIZE) + 1);
-		if (!read_buf)
-			return (NULL);
-		ft_bzero(read_buf, BUFFER_SIZE + 1);
-		bytes_read = read(fd, read_buf, BUFFER_SIZE);
-		if (bytes_read == -1)
-		{
-			free (read_buf);
-			free (buffer);
-			return (NULL);
-		}
-		buffer = ft_strjoin(buffer, read_buf);
-		free(read_buf);
-		if (ft_strchr(buffer, '\n') || buffer == NULL)
-			break ;
-	}
-	return (buffer);
+	line[count + 1] = '\0';
+	return (saved_text);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer[FOPEN_MAX];
+	char		*buff;
+	static char	*saved_text;
 	char		*line;
+	char		*tmp;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	if (!buffer[fd])
+	if (fd == -1 || BUFFER_SIZE <= 0)
+		return (0);
+	buff = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	line = fd_lector(fd, buff, saved_text);
+	free(buff);
+	buff = NULL;
+	if (!line)
 	{
-		buffer[fd] = (char *)malloc(sizeof(char) * 1);
-		if (!buffer[fd])
-			return (NULL);
-		buffer[fd][0] = '\0';
-	}
-	buffer[fd] = ft_read_file(buffer[fd], fd);
-	if (!buffer[fd])
-		return (NULL);
-	if (ft_strlen(buffer[fd]) == 0)
-	{
-		free (buffer[fd]);
-		buffer[fd] = NULL;
+		saved_text = NULL;
 		return (NULL);
 	}
-	line = ft_get_line(buffer[fd]);
-	buffer[fd] = ft_get_remind(buffer[fd], line);
+	saved_text = ft_line_remover(line);
+	tmp = ft_strdup(line);
+	free(line);
+	line = tmp;
+	if (!line)
+		return (multiple_free(&saved_text));
 	return (line);
 }
-
-/*
-int	main(void)
-{
-	int	fd;
-
-	fd = open("prueba.txt", O_RDONLY);
-	if (fd == -1)
-	{
-		perror ("open");
-		exit(EXIT_FAILURE);
-	}
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	close(fd);
-	return (0);
-	int		fd;
-	char	*line;
-	int		count;
-
-	count = 0;
-	fd = open("prueba.txt", O_RDONLY);
-	if (fd == -1)
-	{
-		printf("Error opening file");
-		return (1);
-	}
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (line == NULL)
-			break ;
-		count++;
-		printf("[%d]:%s\n", count, line);
-		free(line);
-		line = NULL;
-	}
-	close(fd);
-		return (0);
-}
-*/

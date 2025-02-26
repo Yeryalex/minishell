@@ -6,13 +6,13 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 11:29:50 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/26 11:23:27 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:37:08 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_remove_newline(char **line)
+static void	ft_remove_newline(char **line)
 {
 	int		len;
 	char	*tmp;
@@ -42,7 +42,6 @@ static void	ft_expand_hdoc(t_dir *redir_node, t_utils *utils, int new_fd)
 		free(trimmed);
 		line = get_next_line(redir_node->fd);
 	}
-	free(line);
 }
 
 void	ft_exp_hd(t_dir *redir_node, t_utils *utils)

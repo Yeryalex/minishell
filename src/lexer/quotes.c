@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 19:20:57 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/26 11:37:10 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:08:25 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ char	*ft_create_new_str(int *i, int *j, t_utils *utils)
 	temp_str[*j] = '\0';
 	return (free(str_value), temp_str);
 }
-
 
 char	*ft_check_quotes(t_utils *utils)
 {

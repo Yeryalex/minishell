@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/26 12:41:20 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:04:27 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,13 @@ char	*ft_no_path(t_cmds *node_cmd)
 {
 	char *path;
 
+	if (!node_cmd || !node_cmd->cmd_array || !node_cmd->cmd_array[0])
+		return (NULL);
 	if (node_cmd->cmd_array[0][0] == '/')
 	{
 		path = ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:");
+		if (!path)
+			return (NULL);
 		return (path);
 	}
 	return (NULL);
@@ -113,8 +117,8 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path, t_util
 			node_cmd->full_path = ft_get_path(no_path, node_cmd->cmd_array[0]);
 		free(no_path);
 	}
-	//if (lexer && lexer->next && lexer->token == PIPE)
-	//	lexer = lexer->next;
+	if (lexer && lexer->next && lexer->token == PIPE)
+		lexer = lexer->next;
 	return (node_cmd);
 }
 
