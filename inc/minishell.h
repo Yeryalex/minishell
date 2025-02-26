@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/26 11:48:29 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:22:07 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_utils
 	char			*builtins[8];
 	char			*value_to_expand;
 	char			*temp_str;
-	char			***env_in_char;
+	char			**env_in_char;
 	struct s_utils	*next;
 	struct s_utils	*prev;
 }	t_utils;
@@ -111,7 +111,7 @@ void    prompt_loop(t_utils *utils);
 
 /*          LEXER FUNCTIONS         */
 t_type		ft_determine_type(char *value);
-t_tokens	*ft_create_node(const char **value, t_utils *utils);
+t_tokens	*ft_create_node(const char **value, t_utils *utils, t_tokens *lexer);
 t_tokens	*ft_lexer_input(const char *input, t_utils *utils);
 char		*read_input(char **env, t_utils *utils);
 int			ft_addlast_node(t_tokens **lexer, t_tokens *current_node);

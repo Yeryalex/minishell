@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 11:29:50 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/26 15:37:08 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:06:08 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,38 @@ static void	ft_expand_hdoc(t_dir *redir_node, t_utils *utils, int new_fd)
 {
 	char	*line;
 	char	*trimmed;
+	int		flag;
 
+	flag = 0;
 	line = get_next_line(redir_node->fd);
 	while (line)
 	{
 		ft_remove_newline(&line);
 		utils->value_to_expand = line;
+		if (line[0] == '\'')
+			flag = 1;
+		else if ((line[0] == '\"'))
+			flag = 2;
 		trimmed = ft_check_quotes(utils);
-		write(new_fd, trimmed, ft_strlen(trimmed));
-		write(new_fd, "\n", 1);
+		if (flag == 1)
+		{
+			write(new_fd, "'", 1);
+			write(new_fd, trimmed, ft_strlen(trimmed));
+			write(new_fd, "'", 1);
+			write(new_fd, "\n", 1);
+		}
+		if (flag == 2)
+		{
+			write(new_fd, "\"", 1);
+			write(new_fd, trimmed, ft_strlen(trimmed));
+			write(new_fd, "\"", 1);
+			write(new_fd, "\n", 1);
+		}
+		else
+		{
+			write(new_fd, trimmed, ft_strlen(trimmed));
+			write(new_fd, "\n", 1);
+		}
 		free(trimmed);
 		line = get_next_line(redir_node->fd);
 	}

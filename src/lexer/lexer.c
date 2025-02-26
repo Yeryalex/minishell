@@ -35,9 +35,22 @@ void	ft_no_pipe(char	*str_value, t_tokens *new_node)
 	}
 }
 
+int	ft_check_quotes_hdoc(t_tokens *lexer)
+{
+	t_tokens	*tmp;
 
+	tmp = lexer;
+	if (tmp)
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		if (!ft_strncmp(tmp->value, "<<", 3))
+			return (0);
+	}
+	return (1);
+}
 
-t_tokens *ft_create_node(const char **input, t_utils* utils)
+t_tokens *ft_create_node(const char **input, t_utils* utils, t_tokens *lexer)
 {
 	char	*str_value;
 
@@ -52,7 +65,10 @@ t_tokens *ft_create_node(const char **input, t_utils* utils)
 		return (free(new_node), NULL); 
 	utils->value_to_expand = str_value;
 	ft_no_pipe(str_value, new_node);
- 	new_node->value = ft_check_quotes(utils);
+	if (!ft_check_quotes_hdoc(lexer))
+		new_node->value = str_value;
+	else
+		new_node->value = ft_check_quotes(utils);
 	if (!new_node->value)
         return (free(new_node),NULL);
 	if (new_node->token == WORD)
@@ -161,6 +177,28 @@ t_tokens	*ft_syntax(t_tokens *lexer, t_utils *utils)
 	return (lexer);
 }
 
+t_tokens	*ft_check_no_redir(t_tokens *lexer, t_utils *utils)
+{
+	t_tokens	*temp;
+
+	temp = lexer;
+	while (temp)
+	{
+		if (temp->next)
+		{
+			if ((!ft_strncmp(temp->value, ">", 2) || !ft_strncmp(temp->value, ">>", 3)
+				|| !ft_strncmp(temp->value, "<", 2)) && !ft_strncmp("", temp->next->value, 1))
+			{
+				printf("Minishell: ambiguous redirect\n");
+				utils->exit_status = 1;
+				return (ft_free_tokens(&lexer), NULL);
+			}
+		}
+		temp = temp->next;
+	}
+	return (lexer);
+}
+
 t_tokens	*ft_lexer_input(const char *input, t_utils *utils)
 {
 	t_tokens	*node;
@@ -176,7 +214,7 @@ t_tokens	*ft_lexer_input(const char *input, t_utils *utils)
 			input++;
 		if (!*input)
 			break ;
-		node = ft_create_node(&input, utils);
+		node = ft_create_node(&input, utils, lexer);
 		if (!node)
 			return (ft_free_tokens(&lexer), NULL);
 		if (ft_addlast_node(&lexer, node))
@@ -186,6 +224,8 @@ t_tokens	*ft_lexer_input(const char *input, t_utils *utils)
 			return (NULL);
 		}
 	}
+	if (lexer)
+		return(ft_check_no_redir(lexer, utils));
 	if (lexer)
 		return (ft_syntax(lexer, utils));
 	return (lexer);
