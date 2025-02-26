@@ -6,10 +6,11 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:46:23 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/26 12:08:47 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:12:39 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../inc/minishell.h"
 
 void	ft_error_exit(char	*str, t_utils *utils, int fd)
 {

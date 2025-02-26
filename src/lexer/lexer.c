@@ -131,7 +131,7 @@ int	ft_check_syntax(t_tokens *lexer, char *value, t_type token_type)
 
 t_tokens	*ft_syntax(t_tokens *lexer, t_utils *utils)
 {
-	if (!ft_strncmp(lexer->value, ".", 1))
+	if (!ft_strncmp(lexer->value, ".", 1) && !lexer->value[1])
 	{
 		if (lexer->next && !ft_strncmp(lexer->next->value, ".", 1))
 		{

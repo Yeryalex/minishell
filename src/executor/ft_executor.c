@@ -6,10 +6,11 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/26 12:07:47 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:28:43 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../inc/minishell.h"
 
 int	ft_forking(t_cmds *cmd, int prev_read, int *fd, char **env)
 {
@@ -60,8 +61,16 @@ int	ft_verify_cmd(t_cmds *cmd, t_utils *utils)
 	}
 	if (!ft_is_builtin(cmd, utils) && access(cmd->full_path, F_OK))
 	{
-		ft_putstr_fd(cmd->cmd_array[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
+		if (access(cmd->full_path, F_OK))
+		{
+			ft_putstr_fd(cmd->cmd_array[0], 2);
+			ft_putstr_fd(": Not such a file or directory\n", 2);
+		}
+		else
+		{
+			ft_putstr_fd(cmd->cmd_array[0], 2);
+			ft_putstr_fd(": command not found\n", 2);
+		}
 		utils->exit_status = 127;
 		return (1);
 	}
