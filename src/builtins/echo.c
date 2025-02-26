@@ -6,14 +6,14 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 10:50:55 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/07 10:24:56 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:28:49 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
 
 int	ft_is_option(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!ft_strncmp(str, "-n", 2))
@@ -44,8 +44,8 @@ int	ft_handle_flag(char **cmd, int *i, int *flag)
 
 int	ft_echo(char **cmd, int fd)
 {
-	int flag;
-	int i;
+	int	flag;
+	int	i;
 
 	if (!cmd[1])
 		return (0);

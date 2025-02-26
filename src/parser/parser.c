@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/24 12:26:08 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:06:26 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,18 @@ static int ft_fill_cmd(t_cmds *node, t_tokens *lexer, int count, t_utils *utils)
     return (0);
 }
 
+char	*ft_no_path(t_cmds *node_cmd)
+{
+	char *path;
+
+	if (node_cmd->cmd_array[0][0] == '/')
+	{
+		path = ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:");
+		return (path);
+	}
+	return (NULL);
+}
+
 t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path, t_utils *utils)
 {
 	t_cmds	*node_cmd;
@@ -93,6 +105,8 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path, t_util
 	if (ft_fill_cmd(node_cmd, lexer, count_tokens, utils) == -1)
 		return (ft_free_cmd(node_cmd), NULL);
 	node_cmd->full_path = ft_get_path(path, node_cmd->cmd_array[0]);
+	if (!node_cmd->full_path)
+		node_cmd->full_path = ft_get_path(ft_no_path(node_cmd), node_cmd->cmd_array[0]);
 	if (lexer && lexer->next && lexer->token == PIPE)
 		lexer = lexer->next;
 	return (node_cmd);

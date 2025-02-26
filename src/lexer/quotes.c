@@ -61,6 +61,7 @@ char	*ft_create_new_str(int *i, int *j, t_utils *utils)
 	temp_str = (char *)malloc(ft_strlen(str_value) + 1000);
 	if (!temp_str)
 		return (NULL);
+	utils->temp_str = temp_str;
 	while (str_value[*i])
 	{
 		if (str_value[*i] == '\'')
@@ -69,7 +70,7 @@ char	*ft_create_new_str(int *i, int *j, t_utils *utils)
 			ft_double_quotes(utils, temp_str, i, j);
 		else
 		{	if (str_value[*i] == '$')
-				ft_expansion(temp_str, i, j, utils);
+				ft_expansion(i, j, utils); //ft_expansion(temp_str, i, j, utils);
 			else
 				temp_str[(*j)++] = str_value[(*i)++];
 		}

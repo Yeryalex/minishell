@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:46:08 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/25 09:50:45 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:52:33 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_control_c(t_utils *utils)
 	{
 		g_signal = 0;
 		utils->exit_status = 130;
-	}	
+	}
 }
 
 void	*handle_error_ctrl_d(char *stop, int cmd_num)
@@ -35,7 +35,7 @@ void	*handle_error_ctrl_d(char *stop, int cmd_num)
 	return (NULL);
 }
 
- void handle_signal(int sig)
+void	handle_signal(int sig)
 {
     if (sig == SIGINT)
 	{ 
@@ -58,9 +58,9 @@ void	handle_signal_child(int signal)
 	}
 }
 
-void ft_init_signals(int child)
+void	ft_init_signals(int child)
 {
-    struct sigaction sa;
+	struct sigaction	sa;
 
     sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);

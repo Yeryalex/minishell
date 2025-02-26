@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/25 19:15:40 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:07:26 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ void	prompt_loop(t_utils *utils)
 		if (!input)
 			ft_handle_exit(utils, input, env);
 		if (!ft_process_input(input, &commands, &cmd, utils))
-		{
-			utils->exit_status = 2;
 			continue;
-		}	
 		ft_free_tokens(&commands);
 		ft_executor(cmd, utils, env);
 		ft_free_cmd(cmd);
@@ -74,4 +71,3 @@ void	prompt_loop(t_utils *utils)
 	ft_free_array(env);
 	rl_clear_history();
 }
-

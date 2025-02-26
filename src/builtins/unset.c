@@ -53,7 +53,7 @@ void	ft_remove_node(t_env **env, t_env *node_exists)
 	}
 }
 
-int	ft_unset(char **cmd_array, t_env **env)
+int	ft_unset(char **cmd_array, t_env **env, int fd)
 {
 	t_env	*node_exists;
 	int		i;
@@ -66,7 +66,7 @@ int	ft_unset(char **cmd_array, t_env **env)
 		while (cmd_array && cmd_array[i])
 		{
 			node_exists = ft_find_unset(*env, cmd_array[i]);
-			if (node_exists)
+			if (node_exists && fd == 1)
 				ft_remove_node(env, node_exists);
 			i++;
 		}
