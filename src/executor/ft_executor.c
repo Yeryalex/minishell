@@ -40,7 +40,7 @@ void	ft_exec_builtin(t_cmds *cmd, t_utils *utils, int fd)
 	else if (!ft_strncmp(cmd->cmd_array[0], "export", 6))
 		utils->exit_status = ft_export(cmd, utils->environ, fd);
 	else if (!ft_strncmp(cmd->cmd_array[0], "unset", 5))
-		utils->exit_status = ft_unset(cmd->cmd_array, &utils->environ);
+		utils->exit_status = ft_unset(cmd->cmd_array, &utils->environ, fd);
 	else if (!ft_strncmp(cmd->cmd_array[0], "cd", 2))
 		utils->exit_status = ft_cd(cmd->cmd_array, utils->environ);
 	else if (!ft_strncmp(cmd->cmd_array[0], "exit", 4))

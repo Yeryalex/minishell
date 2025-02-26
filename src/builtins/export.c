@@ -125,7 +125,7 @@ int	ft_export(t_cmds *cmd, t_env *env, int fd)
 				ft_putstr_fd("\"\n", fd);
 			}
 			else
-				ft_putstr_fd("\"\n", fd);//printf("\n");
+				ft_putstr_fd("\n", fd);//printf("\n");
 			temp = temp->next;
 		}
 		ft_clear_lstenv(env_copy);
