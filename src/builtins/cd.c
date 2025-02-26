@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:40:55 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/24 11:26:30 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:03:00 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 int	ft_cd_home(t_env *env)

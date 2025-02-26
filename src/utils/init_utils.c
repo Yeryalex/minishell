@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 10:52:14 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/24 21:43:09 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:41:49 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	init_utils(t_utils *utils, t_env *env)
 	utils->stdin = 0;
 	utils->stdout = 0;
 	utils->exit_status = 0;
+	utils->cmds_amount = 0;
+	utils->redir_error = 0;
 	utils->builtins[0] = "echo";
 	utils->builtins[1] = "cd";
 	utils->builtins[2] = "pwd";

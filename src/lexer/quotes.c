@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <rbuitrag@student.42barcelona.co  +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 19:20:57 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/21 11:28:37 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:08:25 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 int ft_find_quotes(char *str)

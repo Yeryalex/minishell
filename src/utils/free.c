@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:36:31 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/24 20:41:04 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:02:37 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@ void	*ft_free_redir(t_dir *node)
 	{
 		if (node->fd >= 0)
 			close (node->fd);
-		//if (node->here_doc && !access(node->filename, F_OK))
-		//	unlink(node->filename);
+		if (node->heredoc && !access(node->filename, F_OK))
+			unlink(node->filename);
 		free (node->filename);
 		free (node);
-		node = NULL;
 	}
 	return (NULL);
 }
@@ -48,21 +47,18 @@ void	ft_free_utils(t_utils *utils)
 		return ;
 	if (utils->environ)
 		ft_free_env(utils->environ);
-	//if (utils->builtins[])
-	//ft_free_array(utils->builtins);
 	free(utils);
-	utils = NULL;
 }
 
 void	ft_free_array(char **array)
 {
-	int	i;
+    int i;
 
-	i = 0;
-	if (!array)
+    if (!array)
 		return ;
-	while (array[i])
-	{
+	i = 0;
+    while (array[i])
+    {
 		free(array[i]);
 		i++;
 	}

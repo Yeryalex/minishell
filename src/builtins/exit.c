@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 19:46:23 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/17 14:04:14 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:12:39 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_contains_alpha(char *str)
 		i++;
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]))
+		if (ft_isalpha(str[i]) || !ft_isdigit(str[i]))
 			return (1);
 		i++;
 	}

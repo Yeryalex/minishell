@@ -12,6 +12,7 @@
 
 #include "../../inc/minishell.h"
 
+
 /*
  * // Recoge el total de chars en word y controlo comillas sin cerrar
  */

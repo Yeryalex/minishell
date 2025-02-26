@@ -30,25 +30,27 @@ char **ft_list_to_char(t_env *env)
     char    **char_env;
     int     size;
     char    *key_value;
-	char	*temp;
+    char    *temp;
+    int     i;
 
+    char_env = NULL;
     size = ft_lstsize(env);
     char_env = (char **)malloc(sizeof(char *) * (size + 1));
     if (!char_env)
-        return (NULL);
+		return (NULL);
+	i = 0;
     while (env)
     {
         temp = ft_strjoin(env->key, "=");
-       	if (!temp)
-			return (NULL);
-		key_value = ft_strjoin(temp, env->value);
-		if (!key_value)
-			return (NULL);
-		free(temp);
-        *char_env = key_value;
-        char_env++;
+        if (!temp)
+            return (ft_free_array(char_env), NULL);
+        key_value = ft_strjoin(temp, env->value);
+        if (!key_value)
+			return (ft_free_array(char_env), free(temp), NULL);
+        free(temp);
+        char_env[i++] = key_value;
         env = env->next;
     }
-	*char_env = NULL;
-	return (char_env - size);
+    char_env[i] = NULL;
+    return (char_env);
 }

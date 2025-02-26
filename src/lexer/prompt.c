@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/17 14:06:23 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:22:13 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	ft_process_input(char *input, t_tokens **commands, t_cmds **cmd, t_ut
 	*commands = ft_lexer_input(input, utils);
 	if (!*commands)
 		return (ft_free_tokens(commands), free(input), 0);
-	*cmd = ft_parser(*commands, path);
+	*cmd = ft_parser(*commands, path, utils);
 	if (!cmd)
 		return (ft_free_tokens(commands), free(input), 0);
 	return (1);
@@ -47,14 +47,17 @@ void	prompt_loop(t_utils *utils)
 	input = NULL;
 	cmd = NULL;
 	commands = NULL;
+	env = NULL;
 	ft_control_c(utils);
 	env = ft_list_to_char(utils->environ);
+	utils->env_in_char = env;
 	while (1)
 	{
 		ft_init_signals(0);
 		if (utils->status == 0)
 			break;
-		input = read_input(env, utils);
+		
+	    input = read_input(env, utils);
 		if (!input)
 			ft_handle_exit(utils, input, env);
 		if (!ft_process_input(input, &commands, &cmd, utils))
@@ -63,6 +66,7 @@ void	prompt_loop(t_utils *utils)
 		ft_executor(cmd, utils, env);
 		ft_free_cmd(cmd);
         free(input);
+		utils->cmds_amount++;
 	}
 	ft_free_array(env);
 	rl_clear_history();

@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/24 19:50:54 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:22:07 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include <fcntl.h>
 # include "../inc/libft/libft.h"
 
 # define DEFAULT_ENV "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
@@ -32,7 +33,7 @@
 # define GRAY "\033[90m"
 # define RESET "\033[0m"
 
-extern int g_exit;
+extern int g_signal;
 
 typedef enum e_type
 {
@@ -67,6 +68,7 @@ typedef struct s_cmds
 	char			*full_path;
 	t_dir			*redir_in;
 	t_dir			*redir_out;
+	int				error_fd;
 	struct s_cmds 	*next;
 	struct s_cmds	*prev;
 } t_cmds;
@@ -87,19 +89,29 @@ typedef struct s_utils
 	int				stdout;
 	int				status;
 	int				exit_status;
+	int				cmds_amount;
+	int				redir_error;
 	char			*builtins[8];
 	char			*value_to_expand;
 	char			*temp_str;
+	char			**env_in_char;
 	struct s_utils	*next;
 	struct s_utils	*prev;
 }	t_utils;
+
+typedef struct s_expand
+{
+	char			*old_value;
+	char			*new_value;
+	struct s_expand	*next;
+}	t_exp;
 
 /*          MAIN FUNCTIONS         */
 void    prompt_loop(t_utils *utils);
 
 /*          LEXER FUNCTIONS         */
 t_type		ft_determine_type(char *value);
-t_tokens	*ft_create_node(const char **value, t_utils *utils);
+t_tokens	*ft_create_node(const char **value, t_utils *utils, t_tokens *lexer);
 t_tokens	*ft_lexer_input(const char *input, t_utils *utils);
 char		*read_input(char **env, t_utils *utils);
 int			ft_addlast_node(t_tokens **lexer, t_tokens *current_node);
@@ -109,14 +121,27 @@ t_tokens	*ft_init_node(void);
 
 
 /*			PARSER FUNCTIONS		*/
-t_cmds	*ft_parser(t_tokens *lexer, char *path);
-t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count, char *cmd_path);
+t_cmds *ft_parser(t_tokens *lexer, char *path, t_utils *utils);
+t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count, char *cmd_path, t_utils *utils);
 void    ft_addlast_pnode(t_cmds **list, t_cmds *node);
 void	*free_cmd_array(char **cmd_array);
 
 /*          STRUCT FUNCTIONS         */
 
 /*          REDIR FUNCTIONS         */
+t_dir	*ft_append_gthan_redir(char *file_name, int token, t_utils *utils, t_cmds *parser_nodes);
+t_dir	*ft_sthan_redir(char *file_name, t_utils *utils, t_cmds *parser_nodes);
+t_dir	*ft_hdoc_redir(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_utils *utils);
+void	*ft_exit_redir(int error, t_dir *redir_node, t_utils *utils);
+void	ft_child_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node, t_utils *utils);
+//void	ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
+void	*ft_hdoc_error_handler(t_dir *redir_node, t_cmds *parser_nodes);
+int		ft_gthan_append_cmds(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
+int		ft_sthan_hdoc_cmds(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
+int		ft_fork_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node, t_utils *utils);
+int		ft_open_fd(char *filename, int mode);
+int		ft_read_to_file(char *stop, int cmds_amount, char *f_name);
+
 
 /*          BUILTINS FUNCTION:S         */
 int		ft_echo(char **cmd, int fd);
@@ -130,6 +155,7 @@ int		ft_exit(char **cmd_array, t_utils *utils, int fd);
 /*          SIGNAL FUNCTIONS         */
 void		ft_init_signals(int child);
 void		ft_control_c(t_utils *utils);
+void		*handle_error_ctrl_d(char *stop, int cmd_num);
 
 /*          ENV FUNCTIONS         */
 t_env		*ft_init_env(char **env);
@@ -173,7 +199,9 @@ int		ft_check_special_char(char *str_value, int *i);
 //char *ft_validate_command(char **paths, const char *command);
 //void execute_commands(t_cmds *cmd, char **env);
 
+void	ft_exp_hd(t_dir *redir_node, t_utils *utils);
 int		ft_valid_export(char *str);
+
 
 /*          EXECUTOR FUNCTIONS         */
 void	ft_executor(t_cmds *cmd, t_utils *utils, char **env);
@@ -182,6 +210,8 @@ void	ft_reset_read_end(t_cmds *current, int *prev_read, int *fd);
  void    ft_exec_builtin(t_cmds *cmd, t_utils *utils, int fd);
 int		ft_is_builtin(t_cmds *cmd, t_utils *utils);
 void	ft_call_builtin(t_cmds *cmd, t_utils *utils, int pipe);
+
+void	ft_wait_for_children(int i, int *exit_status);
 
 /*          AUXILIARS FUNCTIONS         */
 int		ft_isspace(char c);
@@ -208,6 +238,9 @@ int		ft_valid_env(char c);
 char	*ft_check_quotes(t_utils *utils);
 void	ft_modify_especific_env(char *cwd, t_env *env, char *key_value);
 char    *ft_get_path(char *path, char *cmd);
+char	*ft_random_filename(void);
+void	filename(char *name);
+
 /*          FREE FUNCTIONS         */
 void	ft_free_tokens(t_tokens **lexer);
 void    ft_free_cmd(t_cmds *cmd);

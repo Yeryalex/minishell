@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/02/24 18:58:28 by yrodrigu         ###   ########.fr        #
+#    Updated: 2025/02/26 17:11:03 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ NAME = minishell
 
 HEADER = inc/minishell.h 
 LIBFT = inc/libft/libft.a
-CFLAGS = -Wall -Werror -Wextra -g
-#-fsanitize=address -fsanitize=leak
+
+CFLAGS = -Wall -Werror -Wextra  -g #-fsanitize=address -fsanitize=leak
 
 CFILES =	main.c \
 			lexer/prompt.c \
@@ -30,6 +30,10 @@ CFILES =	main.c \
 			lexer/quotes_utils.c \
 			parser/parser.c \
 			parser/parser_utils.c \
+			parser/redir.c \
+			parser/redir_utils.c \
+			parser/hdoc.c \
+			parser/read.c \
 			utils/init_env.c \
 			utils/env_export.c \
 			utils/free.c \
@@ -40,6 +44,7 @@ CFILES =	main.c \
 			utils/general_utils2.c\
 			expanser/expanser.c \
 			expanser/utils_expanser.c \
+			expanser/expand_hdoc.c \
 			executor/ft_executor.c\
 			executor/executor_utils.c\
 			builtins/echo.c\
@@ -52,6 +57,7 @@ CFILES =	main.c \
 			builtins/cd.c\
 			builtins/exit.c\
 			builtins/exit_utils.c\
+			
 
 GREEN = "\033[92m"
 RESET = "\033[0m"
@@ -84,7 +90,9 @@ fclean: clean
 re: fclean all
 
 va: all
-	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --track-origins=yes --suppressions=readline.ignore -q -s ./minishell
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.ignore -q -s ./minishell
 
+valog: all
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --log-file=valgrind_output.log --suppressions=readline.ignore -q -s ./minishell
 
 .PHONY: all clean fclean re library
