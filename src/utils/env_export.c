@@ -6,62 +6,19 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:31:54 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/10 12:11:41 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:34:20 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*t_env    *ft_env_init(char **env)
+void	ft_print_env_list(t_env *envs)
 {
-    t_env	*env_list;
-    t_env	*new;
-    int		i;
-
-    i = 0;
-    env_list = NULL;
-    while (env[i])
-    {
-        new = (t_env *)malloc(sizeof(t_env));
-        if (!new)
-        {
-            free(new);
-            return (NULL);
-        }
-        new->key = ft_strdup(ft_split(*env, '=')[0]);
-        new->value = ft_strdup(ft_split(*env, '=')[1]);
-        new->next = env_list;
-        env_list = new;
-        i++;
-    }
-
-    return (env_list);
-}
-int	ft_print_env(t_env *env_list, int fd)
-{
-	while (env_list)
+	while (envs)
 	{
-		ft_putstr_fd("declare -x ", fd);
-		ft_putstr_fd(env_list->key, fd);
-		if (env_list->exported)
-		{
-			ft_putstr_fd("=\"", fd);
-			ft_putstr_fd(env_list->value, fd);
-			ft_putchar_fd('\"', fd);
-		}
-		ft_putchar_fd('\n', fd);
-		env_list = env_list->next;
+		printf("Key: %s\n", envs->key);
+		envs = envs->next;
 	}
-	return (0);
-}*/
-
-void ft_print_env_list(t_env *envs)
-{
-    while (envs)
-    {
-        printf("Key: %s\n", envs->key);
-        envs = envs->next;
-    }
 }
 
 void	*ft_print_stderr(char *str)

@@ -48,6 +48,18 @@ static int	ft_fill_cmd_array(t_cmds *node, t_tokens *lexer, int count)
 	return (0);
 }
 
+char	*ft_no_path(t_cmds *node_cmd)
+{
+	char *path;
+
+	if (node_cmd->cmd_array[0][0] == '/')
+	{
+		path = ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:");
+		return (path);
+	}
+	return (NULL);
+}
+
 t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
 {
 	t_cmds	*node_cmd;
@@ -60,6 +72,8 @@ t_cmds *ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path)
 	if (ft_fill_cmd_array(node_cmd, lexer, count_tokens) == -1)
 		return (NULL);
 	node_cmd->full_path = ft_get_path(path, node_cmd->cmd_array[0]);
+	if (!node_cmd->full_path)
+		node_cmd->full_path = ft_get_path(ft_no_path(node_cmd), node_cmd->cmd_array[0]);
 	return (node_cmd);
 }
 

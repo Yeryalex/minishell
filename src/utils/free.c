@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:36:31 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/08 14:10:29 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:41:04 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,44 +27,45 @@ void	*ft_free_redir(t_dir *node)
 	return (NULL);
 }
 
-void ft_free_env(t_env *env)
+void	ft_free_env(t_env *env)
 {
-    t_env *tmp;
+	t_env	*tmp;
 
-    while (env)
-    {
+	while (env)
+	{
 		tmp = env;
-        env = env->next;
-        free(tmp->key);
-        free(tmp->value);
-        free(tmp);
-    }
+		env = env->next;
+		free(tmp->key);
+		free(tmp->value);
+		free(tmp);
+	}
 	free(env);
 }
 
-void ft_free_utils(t_utils *utils)
+void	ft_free_utils(t_utils *utils)
 {
-    if (!utils)
-        return ;
-    if (utils->environ)
+	if (!utils)
+		return ;
+	if (utils->environ)
 		ft_free_env(utils->environ);
 	//if (utils->builtins[])
-	//	ft_free_array(utils->builtins);
-    free(utils);
+	//ft_free_array(utils->builtins);
+	free(utils);
 	utils = NULL;
 }
 
-void ft_free_array(char **array)
+void	ft_free_array(char **array)
 {
-    int i = 0;
+	int	i;
 
-    if (!array)
-        return;
-    while (array[i])
-    {
+	i = 0;
+	if (!array)
+		return ;
+	while (array[i])
+	{
 		free(array[i]);
 		i++;
-    }
+	}
 	free(array);
 }
 
@@ -92,18 +93,4 @@ void	*ft_free_one_to_cmd(t_cmds *cmd)
 	}
 	free(cmd);
 	return (NULL);
-}
-
-void	ft_free_cmd(t_cmds *cmd)
-{
-	t_cmds	*tmp;
-
-	if (!cmd)
-		return;
-	while (cmd)
-	{
-		tmp = cmd->next;
-		ft_free_one_to_cmd(cmd);
-		cmd = tmp;
-	}
 }

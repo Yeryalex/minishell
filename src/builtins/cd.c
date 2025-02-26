@@ -6,33 +6,10 @@
 /*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 10:40:55 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/13 13:14:53 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:26:30 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../inc/minishell.h"
-
-void	ft_modify_especific_env(char *cwd, t_env *env, char *key_value)
-{
-	char	**container;
-	char	*oldpwd;
-	int		x;
-
-	x = 42;
-	container = (char **)malloc(sizeof(char *) * 3);
-	if (!container)
-		return ;
-	oldpwd = ft_strjoin(key_value, cwd);
-	if (!oldpwd)
-	{
-		free(container);
-		return ;
-	}
-	container[0] = ft_strdup("");
-	container[1] = oldpwd;
-	container[2] = 0;
-	ft_add_node_env(container, env, &x);
-	ft_free_array(container);
-}
 
 int	ft_cd_home(t_env *env)
 {
@@ -58,10 +35,7 @@ int	ft_cd_home(t_env *env)
 		return (1);
 	}
 	if (!getcwd(cwd, 1024))
-	{
-		printf("minishel: cd: error retrieving cwd\n");
-		return (1);
-	}
+		return (printf("minishel: cd: error retrieving cwd\n"), 1);
 	ft_modify_especific_env(cwd, env, "PWD=");
 	return (0);
 }

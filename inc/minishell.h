@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/17 13:01:42 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:50:54 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_utils
 	int				exit_status;
 	char			*builtins[8];
 	char			*value_to_expand;
+	char			*temp_str;
 	struct s_utils	*next;
 	struct s_utils	*prev;
 }	t_utils;
@@ -120,11 +121,11 @@ void	*free_cmd_array(char **cmd_array);
 /*          BUILTINS FUNCTION:S         */
 int		ft_echo(char **cmd, int fd);
 int		ft_env(t_utils *utils, int fd);
-int		ft_pwd(t_env *env);
-int		ft_export(t_cmds *cmd, t_env *env);
-int		ft_unset(char **cmd_array, t_env  **env);
+int		ft_pwd(t_env *env, int fd);
+int		ft_export(t_cmds *cmd, t_env *env, int fd);
+int		ft_unset(char **cmd_array, t_env  **env, int fd);
 int		ft_cd(char **cmd_array, t_env *env);
-int		ft_exit(char **cmd_array, t_utils *utils);
+int		ft_exit(char **cmd_array, t_utils *utils, int fd);
 
 /*          SIGNAL FUNCTIONS         */
 void		ft_init_signals(int child);
@@ -158,22 +159,30 @@ int		ft_key_end(char *str);
 void    ft_flag_case1(t_env *node_already_exist, char **x_value);
 
 /*          EXPAND FUNCTIONS         */
-void	ft_expansion(char *temp_str, int *i, int *j, t_utils *utils);
+void	ft_expansion(int *i, int *j, t_utils *utils);
 void	ft_start_expansion(t_utils *utils, char *temp_str, int *i, int *j);
 void	ft_expand_variable(t_utils *utils, char *value_to_expand, char *temp_str, int *j);
 void	ft_create_expansion(t_utils *utils, char *value_to_expand, int *i);
 void	ft_apply_status(char *temp_str, int *j, t_utils *utils, int *i);
 void    ft_assign_status(char *temp_str, int *j, t_utils *utils);
+void	ft_expander_special(t_utils *utils, int *i, int *j, char *value_to_expand);
+int		ft_check_special_char(char *str_value, int *i);
 //void	ft_expanser(char **cmd, t_utils *utils);
 //t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env);
 //char **ft_split_path(const char *path);
 //char *ft_validate_command(char **paths, const char *command);
 //void execute_commands(t_cmds *cmd, char **env);
-char    *ft_get_path(char *path, char *cmd);
+
 int		ft_valid_export(char *str);
 
 /*          EXECUTOR FUNCTIONS         */
 void	ft_executor(t_cmds *cmd, t_utils *utils, char **env);
+void	ft_dup_close(t_cmds *cmd, int prev_read, int *fd);
+void	ft_reset_read_end(t_cmds *current, int *prev_read, int *fd);
+ void    ft_exec_builtin(t_cmds *cmd, t_utils *utils, int fd);
+int		ft_is_builtin(t_cmds *cmd, t_utils *utils);
+void	ft_call_builtin(t_cmds *cmd, t_utils *utils, int pipe);
+
 /*          AUXILIARS FUNCTIONS         */
 int		ft_isspace(char c);
 void	*ft_exit_error(char quote);
@@ -197,6 +206,8 @@ void	ft_single_quotes(char *str_value, char *temp_str, int *i, int *j);
 char	*ft_create_new_str(int *i, int *j, t_utils *utils);
 int		ft_valid_env(char c);
 char	*ft_check_quotes(t_utils *utils);
+void	ft_modify_especific_env(char *cwd, t_env *env, char *key_value);
+char    *ft_get_path(char *path, char *cmd);
 /*          FREE FUNCTIONS         */
 void	ft_free_tokens(t_tokens **lexer);
 void    ft_free_cmd(t_cmds *cmd);
