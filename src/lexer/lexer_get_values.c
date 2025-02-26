@@ -12,6 +12,7 @@
 
 #include "../../inc/minishell.h"
 
+
 /*
  * // Recoge el total de chars en word y controlo comillas sin cerrar
  */
@@ -42,7 +43,6 @@ char	*ft_get_word(const char **input)
 	if (!value)
 		return (NULL);
 	*input = *input + i;
-	//*input += i;
 	return (value);
 }
 
@@ -57,16 +57,6 @@ char	*ft_get_value(const char **input)
 	if (ft_strncmp(*input, "||", 2) == 0)
 	{
 		ft_putstr_fd("minishell: error: found double token || Not bonus version\n", 2);
-		return (NULL);
-	}
-	if (ft_strncmp(*input, "<>", 2) == 0)
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `<'\n", 2);
-		return (NULL);
-	}
-	if (ft_strncmp(*input, "><", 2) == 0)
-	{
-		ft_putstr_fd("minishell syntax error near unexpected token `>'\n", 2);
 		return (NULL);
 	}
 	if (ft_strchr("<>|", **input))

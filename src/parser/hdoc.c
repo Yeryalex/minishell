@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:48:03 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/25 21:01:33 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:42:56 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ void	*ft_hdoc_error_handler(t_dir *redir_node, t_cmds *parser_nodes)
 	return (NULL);
 }
 
-static void	ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds)
+static void	ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils)
 {
     ft_free_tokens(lexer);
     ft_free_cmd(cmds);
+	ft_free_utils(utils);
 }
 
 void	ft_child_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node, t_utils *utils)
@@ -41,9 +42,17 @@ void	ft_child_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_no
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);
 	stop = ft_strdup((*lexer_nodes)->next->value);
+	if (!stop)
+	{
+		ft_putstr_fd("minishell: heredoc: unexpected EOF\n", 2);
+		ft_free_child_hdoc(lexer_nodes, parser_nodes, utils);
+		free(redir_node->filename);
+		free(redir_node);
+		exit(EXIT_FAILURE);
+	}
 	ft_clear_lstenv(utils->environ);
+	ft_free_cmd(parser_nodes);
 	free(utils);
-	ft_free_child_hdoc(lexer_nodes, parser_nodes);
 	free(redir_node->filename);
 	free(redir_node);
 	if (ft_read_to_file(stop, cmds_amount, f_name) == -1)
@@ -54,7 +63,10 @@ void	ft_child_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_no
 int	ft_fork_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node, t_utils *utils)
 {
 	pid_t	pid;
+	//int		expand;
+	//char	*stop;
 
+	//makeexpand = 1;
 	pid = fork();
 	if (pid == -1)
 		return (1);
@@ -64,7 +76,8 @@ int	ft_fork_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node
 		ft_child_hdoc(lexer_nodes, parser_nodes, redir_node, utils);
 	}
 	ft_wait_for_children(1, &utils->exit_status);
-	ft_exp_hd(redir_node, utils);
+	//if (expand)
+	//	ft_exp_hd(redir_node, utils);
 	return (0);
 }
 

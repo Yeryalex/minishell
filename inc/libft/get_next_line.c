@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 13:12:32 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/25 18:00:16 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 08:58:45 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*ft_get_remind(char *buffer, char *line)
 	len = ft_strlen(&buffer[i]) + 1;
 	remind = (char *)malloc(sizeof(char) * len);
 	if (!remind)
-		return (free(buffer), NULL);
+		return (NULL);
 	j = 0;
 	while (buffer[i])
 		remind[j++] = buffer[i++];
@@ -83,7 +83,7 @@ static char	*ft_read_file(char *buffer, int fd)
 	{
 		read_buf = (char *)malloc((sizeof(char) * BUFFER_SIZE) + 1);
 		if (!read_buf)
-			return (free(buffer), NULL);
+			return (NULL);
 		ft_bzero(read_buf, BUFFER_SIZE + 1);
 		bytes_read = read(fd, read_buf, BUFFER_SIZE);
 		if (bytes_read == -1)
@@ -93,6 +93,7 @@ static char	*ft_read_file(char *buffer, int fd)
 			return (NULL);
 		}
 		buffer = ft_strjoin(buffer, read_buf);
+		free(read_buf);
 		if (ft_strchr(buffer, '\n') || buffer == NULL)
 			break ;
 	}
@@ -101,7 +102,7 @@ static char	*ft_read_file(char *buffer, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer[70000];
+	static char	*buffer[FOPEN_MAX];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
@@ -126,6 +127,7 @@ char	*get_next_line(int fd)
 	buffer[fd] = ft_get_remind(buffer[fd], line);
 	return (line);
 }
+
 /*
 int	main(void)
 {

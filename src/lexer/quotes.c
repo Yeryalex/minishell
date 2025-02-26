@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 19:20:57 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/25 16:55:56 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:37:10 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_create_new_str(int *i, int *j, t_utils *utils)
 	str_value = utils->value_to_expand;
 	temp_str = (char *)malloc(ft_strlen(str_value) + 1000);
 	if (!temp_str)
-		return (free(str_value), NULL);
+		return (NULL);
 	while (str_value[*i])
 	{
 		if (str_value[*i] == '\'')
