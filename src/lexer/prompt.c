@@ -58,10 +58,7 @@ void	prompt_loop(t_utils *utils)
 		if (!input)
 			ft_handle_exit(utils, input, env);
 		if (!ft_process_input(input, &commands, &cmd, utils))
-		{
-			utils->exit_status = 2;
 			continue;
-		}
 		ft_free_tokens(&commands);
 		ft_executor(cmd, utils, env);
 		ft_free_cmd(cmd);
@@ -70,4 +67,3 @@ void	prompt_loop(t_utils *utils)
 	ft_free_array(env);
 	rl_clear_history();
 }
-

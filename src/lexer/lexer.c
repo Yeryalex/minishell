@@ -83,7 +83,7 @@ int	ft_check_syntax_pipe(t_tokens *lexer, char *value, t_type token_type)
 {
 	t_tokens *temp;
 	temp = lexer;
-	
+
 	if (!ft_strncmp(temp->value, value, 1) && temp->token == token_type)
 		return (0);
 	while (temp)
@@ -129,17 +129,32 @@ int	ft_check_syntax(t_tokens *lexer, char *value, t_type token_type)
 	return (1);
 }
 
-t_tokens	*ft_syntax(t_tokens *lexer)
+t_tokens	*ft_syntax(t_tokens *lexer, t_utils *utils)
 {
+	if (!ft_strncmp(lexer->value, ".", 1))
+	{
+		if (lexer->next && !ft_strncmp(lexer->next->value, ".", 1))
+		{
+			utils->exit_status = 1;
+			return (printf("Minishell: .: .: is a directory\n"), NULL);
+		}
+		else
+		{
+			utils->exit_status = 2;
+			printf("Minishell: .: filename argument required\n");
+			return (ft_free_tokens(&lexer), NULL);
+		}
+	}
 	if (!ft_check_syntax_pipe(lexer, "|", PIPE))
 	{
+		utils->exit_status = 2;
 		printf("minishell: syntax error near unexpected token `|'\n");
 		return (ft_free_tokens(&lexer), NULL);
 	}
 	if (!ft_check_syntax(lexer, ">>", APPEND) || !ft_check_syntax(lexer, "<<", H_DOC)
 		|| !ft_check_syntax(lexer, ">", GTHAN) || !ft_check_syntax(lexer, "<", STHAN))
 	{
-		
+		utils->exit_status = 2;
 		return (ft_free_tokens(&lexer), NULL);
 	}
 	return (lexer);
@@ -171,6 +186,6 @@ t_tokens	*ft_lexer_input(const char *input, t_utils *utils)
 		}
 	}
 	if (lexer)
-		return (ft_syntax(lexer));
+		return (ft_syntax(lexer, utils));
 	return (lexer);
 }
