@@ -136,7 +136,8 @@ t_tokens	*ft_syntax(t_tokens *lexer, t_utils *utils)
 		if (lexer->next && !ft_strncmp(lexer->next->value, ".", 1))
 		{
 			utils->exit_status = 1;
-			return (printf("Minishell: .: .: is a directory\n"), NULL);
+			printf("Minishell: .: .: is a directory\n");
+			return (ft_free_tokens(&lexer), NULL);
 		}
 		else
 		{
