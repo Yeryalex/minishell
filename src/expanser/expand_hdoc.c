@@ -6,11 +6,12 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 11:29:50 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/27 15:24:56 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:20:42 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
 
 static void	ft_remove_newline(char **line)
 {
@@ -26,84 +27,44 @@ static void	ft_remove_newline(char **line)
 	}
 }
 
-static void	ft_write_expanded(int flag, char *trimmed, int new_fd)
+char	*ft_expand_line(int *i, int *j, t_utils *utils)
 {
-	if (flag == 1)
-		write(new_fd, "'", 1);
-	else if (flag == 2)
-		write(new_fd, "\"", 1);
-	write(new_fd, trimmed, ft_strlen(trimmed));
-	if (flag == 1)
-		write(new_fd, "'", 1);
-	else if (flag == 2)
-		write(new_fd, "\"", 1);
-	write(new_fd, "\n", 1);
+	char	*temp_str;
+	char	*str_value;
+
+	str_value = utils->value_to_expand;
+	temp_str = (char *)malloc(ft_strlen(str_value) + 1000);
+	if (!temp_str)
+		return (NULL);
+	utils->temp_str = temp_str;
+	while (str_value[*i])
+	{
+		if (str_value[*i] == '$')
+			ft_expand_with_quotes(i, j, utils);
+		else
+			temp_str[(*j)++] = str_value[(*i)++];
+	}
+	temp_str[*j] = '\0';
+	return (free(str_value), temp_str);
 }
 
 static void	ft_expand_hdoc(t_dir *redir_node, t_utils *utils, int new_fd)
 {
 	char	*line;
 	char	*trimmed;
-	int		flag;
 
 	line = get_next_line(redir_node->fd);
 	while (line)
 	{
 		ft_remove_newline(&line);
 		utils->value_to_expand = line;
-		if (line[0] == '\'')
-			flag = 1;
-		else if (line[0] == '"')
-			flag = 2;
-		else
-			flag = 0;
-		trimmed = ft_check_quotes(utils);
-		ft_write_expanded(flag, trimmed, new_fd);
+		trimmed = ft_quotes_in_hdoc(utils);
+		write(new_fd, trimmed, ft_strlen(trimmed));
+		write(new_fd, "\n", 1);
 		free(trimmed);
 		line = get_next_line(redir_node->fd);
 	}
 }
-
-/*static void	ft_expand_hdoc(t_dir *redir_node, t_utils *utils, int new_fd)
-{
-	char	*line;
-	char	*trimmed;
-	int		flag;
-
-	flag = 0;
-	line = get_next_line(redir_node->fd);
-	while (line)
-	{
-		ft_remove_newline(&line);
-		utils->value_to_expand = line;
-		if (line[0] == '\'')
-			flag = 1;
-		else if ((line[0] == '\"'))
-			flag = 2;
-		trimmed = ft_check_quotes(utils);
-		if (flag == 1)
-		{
-			write(new_fd, "'", 1);
-			write(new_fd, trimmed, ft_strlen(trimmed));
-			write(new_fd, "'", 1);
-			write(new_fd, "\n", 1);
-		}
-		if (flag == 2)
-		{
-			write(new_fd, "\"", 1);
-			write(new_fd, trimmed, ft_strlen(trimmed));
-			write(new_fd, "\"", 1);
-			write(new_fd, "\n", 1);
-		}
-		else
-		{
-			write(new_fd, trimmed, ft_strlen(trimmed));
-			write(new_fd, "\n", 1);
-		}
-		free(trimmed);
-		line = get_next_line(redir_node->fd);
-	}
-}*/
 
 void	ft_exp_hd(t_dir *redir_node, t_utils *utils)
 {
