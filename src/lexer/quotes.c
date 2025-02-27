@@ -6,15 +6,15 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 19:20:57 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/26 13:08:25 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:07:55 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int ft_find_quotes(char *str)
+int	ft_find_quotes(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -69,8 +69,9 @@ char	*ft_create_new_str(int *i, int *j, t_utils *utils)
 		else if (str_value[*i] == '"')
 			ft_double_quotes(utils, temp_str, i, j);
 		else
-		{	if (str_value[*i] == '$')
-				ft_expansion(i, j, utils); //ft_expansion(temp_str, i, j, utils);
+		{
+			if (str_value[*i] == '$')
+				ft_expansion(i, j, utils);
 			else
 				temp_str[(*j)++] = str_value[(*i)++];
 		}
@@ -90,5 +91,5 @@ char	*ft_check_quotes(t_utils *utils)
 	str_value = utils->value_to_expand;
 	if (!str_value)
 		return (NULL);
-	return(ft_create_new_str(&i, &j, utils));
+	return (ft_create_new_str(&i, &j, utils));
 }

@@ -28,6 +28,8 @@ CFILES =	main.c \
 			lexer/lexer_get_values.c \
 			lexer/quotes.c \
 			lexer/quotes_utils.c \
+			lexer/token_syntax.c \
+			lexer/ft_norminette.c \
 			parser/parser.c \
 			parser/parser_utils.c \
 			parser/redir.c \
