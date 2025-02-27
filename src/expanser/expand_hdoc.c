@@ -6,12 +6,11 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 11:29:50 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/27 16:20:42 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:24:14 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 
 static void	ft_remove_newline(char **line)
 {
