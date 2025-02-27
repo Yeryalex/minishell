@@ -66,7 +66,7 @@ int	ft_check_syntax(t_tokens *lexer, t_type token_type)
 	{
 		if (temp->token == token_type)
 		{
-			if (temp->prev && temp->prev->token == token_type)
+			if (temp->prev && ft_strchr("<>", *temp->value))
 			{
 				if (temp->token == token_type)
 					return (ft_print_syntax_error(temp));
