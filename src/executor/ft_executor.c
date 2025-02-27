@@ -61,21 +61,13 @@ int	ft_verify_cmd(t_cmds *cmd, t_utils *utils)
 	}
 	if (!ft_is_builtin(cmd, utils) && access(cmd->full_path, F_OK))
 	{
-		if (access(cmd->full_path, F_OK))
-		{
-			ft_putstr_fd(cmd->cmd_array[0], 2);
-			ft_putstr_fd(": Not such a file or directory\n", 2);
-		}
-		else
-		{
-			ft_putstr_fd(cmd->cmd_array[0], 2);
-			ft_putstr_fd(": command not found\n", 2);
-		}
+		ft_putstr_fd(cmd->cmd_array[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
 		utils->exit_status = 127;
 		return (1);
 	}
-	/*if (cmd->redir_in && cmd->redir_in->fd == -1)
-		return (1);*/
+	if (cmd->redir_in && cmd->redir_in->fd == -1)
+		return (1);
 	if (cmd->redir_out && isatty(cmd->redir_out->fd))
 		cmd->redir_out = ft_exit_redir(2, cmd->redir_out, utils);
 	return (0);

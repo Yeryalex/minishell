@@ -6,16 +6,18 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:40 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/01/28 14:16:45 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:04:05 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+char	*ft_unclosed_error(void)
+{
+	ft_putstr_fd("minishell: syntax error: unclosed quote\n", 2);
+	return (NULL);
+}
 
-/*
- * // Recoge el total de chars en word y controlo comillas sin cerrar
- */
 char	*ft_get_word(const char **input)
 {
 	int		i;
@@ -36,9 +38,7 @@ char	*ft_get_word(const char **input)
 		++i;
 	}
 	if (quote != 0)
-	{	ft_putstr_fd("minishell: syntax error: unclosed quote\n", 2);
-		return(NULL);	
-	}
+		return (ft_unclosed_error());
 	value = ft_substr(*input, 0, i);
 	if (!value)
 		return (NULL);
@@ -46,8 +46,6 @@ char	*ft_get_word(const char **input)
 	return (value);
 }
 
-/* recogemos el valor para el nodo WORD hasta los space
-*/
 char	*ft_get_value(const char **input)
 {
 	char	*value;
@@ -56,7 +54,7 @@ char	*ft_get_value(const char **input)
 	i = 0;
 	if (ft_strncmp(*input, "||", 2) == 0)
 	{
-		ft_putstr_fd("minishell: error: found double token || Not bonus version\n", 2);
+		ft_putstr_fd("minishell: error: found double token\n", 2);
 		return (NULL);
 	}
 	if (ft_strchr("<>|", **input))
@@ -70,6 +68,6 @@ char	*ft_get_value(const char **input)
 	else
 		value = ft_get_word(input);
 	if (!value)
-		return(NULL);
+		return (NULL);
 	return (value);
 }
