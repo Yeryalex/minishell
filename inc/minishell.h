@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/27 15:17:09 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:33:27 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <fcntl.h>
+#include <sys/stat.h>
 # include "../inc/libft/libft.h"
 
 # define DEFAULT_ENV "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
@@ -230,28 +231,34 @@ char	*ft_init_long(long *sign, char *str);
 
 /* UTILS FUNCTIONS */
 
-void	init_utils(t_utils *utils, t_env *env);
-char	*get_value_from_env(t_env *env, char *key);
-void	ft_modify_especific_env(char *cwd, t_env *env, char *key_value);
-int		ft_find_quotes(char *str);
-void	ft_double_quotes(t_utils *utils, char *temp_str, int *i, int *j);
-void	ft_single_quotes(char *str_value, char *temp_str, int *i, int *j);
-char	*ft_create_new_str(int *i, int *j, t_utils *utils);
-int		ft_valid_env(char c);
-char	*ft_check_quotes(t_utils *utils);
-void	ft_modify_especific_env(char *cwd, t_env *env, char *key_value);
-char    *ft_get_path(char *path, char *cmd);
-char	*ft_random_filename(void);
-void	filename(char *name);
-
+void		init_utils(t_utils *utils, t_env *env);
+char		*get_value_from_env(t_env *env, char *key);
+void		ft_modify_especific_env(char *cwd, t_env *env, char *key_value);
+int			ft_find_quotes(char *str);
+void		ft_double_quotes(t_utils *utils, char *temp_str, int *i, int *j);
+void		ft_single_quotes(char *str_value, char *temp_str, int *i, int *j);
+char		*ft_create_new_str(int *i, int *j, t_utils *utils);
+int			ft_valid_env(char c);
+char		*ft_check_quotes(t_utils *utils);
+void		ft_modify_especific_env(char *cwd, t_env *env, char *key_value);
+char    	*ft_get_path(char *path, char *cmd);
+char		*ft_random_filename(void);
+void		filename(char *name);
+void		ft_no_pipe(char *str_value, t_tokens *new_node);
+int			ft_check_quotes_hdoc(t_tokens *lexer);
+t_tokens	*ft_check_no_redir(t_tokens *lexer, t_utils *utils);
+int			ft_check_syntax_pipe(t_tokens *lexer);
+int			ft_check_dot(t_tokens *lexer, t_utils *utils);
 /*          FREE FUNCTIONS         */
-void	ft_free_tokens(t_tokens **lexer);
-void    ft_free_cmd(t_cmds *cmd);
-void    *ft_free_one_to_cmd(t_cmds *cmd);
-void    *ft_free_redir(t_dir *node);
-void	ft_free_array(char **array);
-void	ft_free_utils(t_utils *utils);
-void	ft_free_env(t_env *env);
-
+void		ft_free_tokens(t_tokens **lexer);
+void		ft_free_cmd(t_cmds *cmd);
+void		*ft_free_one_to_cmd(t_cmds *cmd);
+void		*ft_free_redir(t_dir *node);
+void		ft_free_array(char **array);
+void		ft_free_utils(t_utils *utils);
+void		ft_free_env(t_env *env);
+int			ft_print_syntax_error(t_tokens *temp);
+t_tokens	*ft_free_in_input(t_tokens *lexer, t_tokens *node);
+void		ft_auxiliar_free(t_cmds *cmd, char *input);
 
 #endif

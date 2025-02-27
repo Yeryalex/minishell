@@ -6,17 +6,17 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:17:33 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/07 14:19:48 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:06:13 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void    *clean_input(char *input)
+static void	*clean_input(char *input)
 {
-    if (input)
-        free(input);
-    return (NULL);
+	if (input)
+		free(input);
+	return (NULL);
 }
 
 char	*read_input(char **env, t_utils *utils)
@@ -29,7 +29,7 @@ char	*read_input(char **env, t_utils *utils)
 	if (input && *input)
 		add_history(input);
 	else if (!input || g_signal == 130)
-	       utils->status = 0;
-    (void)env;
+		utils->status = 0;
+	(void)env;
 	return (input);
 }

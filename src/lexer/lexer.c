@@ -6,63 +6,26 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:26 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/24 17:52:30 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:31:44 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_no_pipe(char	*str_value, t_tokens *new_node)
+t_tokens	*ft_create_node(const char **input, t_utils *utils, t_tokens *lexer)
 {
-	int i;
+	char		*str_value;
+	t_tokens	*new_node;
 
-	if (!ft_strncmp(str_value, ">>", 2) || !ft_strncmp(str_value, "<<", 2)
-		|| !ft_strncmp(str_value, "||", 2))
-		return ;
-	if (ft_strlen(str_value) > 1)
-	{
-		i = 0;
-		while (str_value[i])
-		{
-			
-			if (ft_strchr("<>|", str_value[i]))
-			{
-				new_node->token = WORD;
-				break;
-			}
-			i++;
-		}	
-	}
-}
-
-int	ft_check_quotes_hdoc(t_tokens *lexer)
-{
-	t_tokens	*tmp;
-
-	tmp = lexer;
-	if (tmp)
-	{
-		while (tmp->next)
-			tmp = tmp->next;
-		if (!ft_strncmp(tmp->value, "<<", 3))
-			return (0);
-	}
-	return (1);
-}
-
-t_tokens *ft_create_node(const char **input, t_utils* utils, t_tokens *lexer)
-{
-	char	*str_value;
-
-	t_tokens *new_node = (t_tokens *)malloc(sizeof(t_tokens));
-    if (!new_node)
-        return (NULL);
-    new_node->prev = NULL;
+	new_node = (t_tokens *)malloc(sizeof(t_tokens));
+	if (!new_node)
+		return (NULL);
+	new_node->prev = NULL;
 	new_node->next = NULL;
 	new_node->token = NONE;
 	str_value = ft_get_value(input);
 	if (!str_value)
-		return (free(new_node), NULL); 
+		return (free(new_node), NULL);
 	utils->value_to_expand = str_value;
 	ft_no_pipe(str_value, new_node);
 	if (!ft_check_quotes_hdoc(lexer))
@@ -70,7 +33,7 @@ t_tokens *ft_create_node(const char **input, t_utils* utils, t_tokens *lexer)
 	else
 		new_node->value = ft_check_quotes(utils);
 	if (!new_node->value)
-        return (free(new_node),NULL);
+		return (free(new_node), NULL);
 	if (new_node->token == WORD)
 		return (new_node);
 	new_node->token = ft_determine_type(new_node->value);
@@ -81,7 +44,6 @@ int	ft_addlast_node(t_tokens **lexer, t_tokens *current_node)
 {
 	t_tokens	*tmp_node;
 
-	
 	if (!*lexer)
 	{
 		*lexer = current_node;
@@ -95,48 +57,24 @@ int	ft_addlast_node(t_tokens **lexer, t_tokens *current_node)
 	return (0);
 }
 
-int	ft_check_syntax_pipe(t_tokens *lexer, char *value, t_type token_type)
+int	ft_check_syntax(t_tokens *lexer, t_type token_type)
 {
-	t_tokens *temp;
-	temp = lexer;
+	t_tokens	*temp;
 
-	if (!ft_strncmp(temp->value, value, 1) && temp->token == token_type)
-		return (0);
+	temp = lexer;
 	while (temp)
 	{
-		if (temp->prev)
+		if (temp->token == token_type)
 		{
-			if (!ft_strncmp("|", temp->prev->value, 1) && !ft_strncmp("|", temp->value, 1))
-				return (0);
-		}
-		if (!ft_strncmp(temp->value, value, 1) && !temp->next && temp->token == token_type)
-			return (0);
-		temp = temp->next;
-	}
-	return (1);
-}
-
-int	ft_check_syntax(t_tokens *lexer, char *value, t_type token_type)
-{
-	t_tokens *temp;
-	temp = lexer;
-	
-	while (temp)
-	{
-
-		if (!ft_strncmp(temp->value, value, 2) && temp->token == token_type)
-		{
-			if (temp->prev && ft_strchr("<>", *(temp)->prev->value))
+			if (temp->prev && temp->prev->token == token_type)
 			{
-				if (ft_strchr("<>", *(temp)->value))
-				{
-					printf("minishell: syntax error near unexpected token `%s'\n", temp->value);
-					return (0);
-				}
+				if (temp->token == token_type)
+					return (ft_print_syntax_error(temp));
 			}
 			else if (!temp->next)
 			{
-				printf("minishell: syntax error near unexpected token `newline'\n");
+				printf("minishell: syntax error near");
+				printf(" unexpected token `newline'\n");
 				return (0);
 			}
 		}
@@ -147,29 +85,16 @@ int	ft_check_syntax(t_tokens *lexer, char *value, t_type token_type)
 
 t_tokens	*ft_syntax(t_tokens *lexer, t_utils *utils)
 {
-	if (!ft_strncmp(lexer->value, ".", 1) && !lexer->value[1])
-	{
-		if (lexer->next && !ft_strncmp(lexer->next->value, ".", 1))
-		{
-			utils->exit_status = 1;
-			printf("minishell: .: .: is a directory\n");
-			return (ft_free_tokens(&lexer), NULL);
-		}
-		else
-		{
-			utils->exit_status = 2;
-			printf("minishell: .: filename argument required\n");
-			return (ft_free_tokens(&lexer), NULL);
-		}
-	}
-	if (!ft_check_syntax_pipe(lexer, "|", PIPE))
+	if (!ft_check_dot(lexer, utils))
+		return (ft_free_tokens(&lexer), NULL);
+	if (!ft_check_syntax_pipe(lexer))
 	{
 		utils->exit_status = 2;
 		printf("minishell: syntax error near unexpected token `|'\n");
 		return (ft_free_tokens(&lexer), NULL);
 	}
-	if (!ft_check_syntax(lexer, ">>", APPEND) || !ft_check_syntax(lexer, "<<", H_DOC)
-		|| !ft_check_syntax(lexer, ">", GTHAN) || !ft_check_syntax(lexer, "<", STHAN))
+	if (!ft_check_syntax(lexer, STHAN) || !ft_check_syntax(lexer, GTHAN)
+		|| !ft_check_syntax(lexer, APPEND) || !ft_check_syntax(lexer, H_DOC))
 	{
 		utils->exit_status = 2;
 		utils->redir_error = 1;
@@ -178,38 +103,15 @@ t_tokens	*ft_syntax(t_tokens *lexer, t_utils *utils)
 	return (lexer);
 }
 
-t_tokens	*ft_check_no_redir(t_tokens *lexer, t_utils *utils)
-{
-	t_tokens	*temp;
-
-	temp = lexer;
-	while (temp)
-	{
-		if (temp->next)
-		{
-			if ((!ft_strncmp(temp->value, ">", 2) || !ft_strncmp(temp->value, ">>", 3)
-				|| !ft_strncmp(temp->value, "<", 2)) && !ft_strncmp("", temp->next->value, 1))
-			{
-				printf("minishell: ambiguous redirect\n");
-				utils->exit_status = 1;
-				return (ft_free_tokens(&lexer), NULL);
-			}
-		}
-		temp = temp->next;
-	}
-	return (lexer);
-}
-
 t_tokens	*ft_lexer_input(const char *input, t_utils *utils)
 {
 	t_tokens	*node;
 	t_tokens	*lexer;
-	
-	lexer = NULL;
 
+	lexer = NULL;
 	if (!input)
 		return (NULL);
-	while(*input)
+	while (*input)
 	{
 		while (ft_isspace(*input))
 			input++;
@@ -219,16 +121,12 @@ t_tokens	*ft_lexer_input(const char *input, t_utils *utils)
 		if (!node)
 			return (ft_free_tokens(&lexer), NULL);
 		if (ft_addlast_node(&lexer, node))
-		{
-			ft_free_tokens(&lexer);
-			ft_free_tokens(&node);
-			return (NULL);
-		}
+			return (ft_free_in_input(lexer, node));
 	}
 	if (lexer)
-	{	
+	{
 		lexer = ft_check_no_redir(lexer, utils);
-		if(lexer)
+		if (lexer)
 			return (ft_syntax(lexer, utils));
 	}
 	return (lexer);

@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/02/27 13:58:22 by rbuitrag         ###   ########.fr        #
+#    Updated: 2025/02/27 15:30:06 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,8 @@ CFILES =	main.c \
 			lexer/lexer_get_values.c \
 			lexer/quotes.c \
 			lexer/quotes_utils.c \
+			lexer/token_syntax.c \
+			lexer/ft_norminette.c \
 			parser/init_cmd.c \
 			parser/parser.c \
 			parser/parser_utils.c \
