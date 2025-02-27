@@ -6,13 +6,14 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:48:03 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/27 12:36:15 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:41:39 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_dir *redir, t_utils *utils)
+void	ft_child_hdoc(t_tokens **lexer, t_cmds *cmds,
+		t_dir *redir, t_utils *utils)
 {
 	char	f_name[12];
 	char	*stop;
@@ -43,7 +44,8 @@ int	ft_fork_hdoc(t_tokens **lexer, t_cmds *cmds, t_dir *redir, t_utils *utils)
 {
 	pid_t	pid;
 
-	if ((pid = fork()) == -1)
+	pid = fork();
+	if (pid == -1)
 		return (1);
 	if (pid == 0)
 		ft_child_hdoc(lexer, cmds, redir, utils);
@@ -63,7 +65,7 @@ static t_dir	*ft_init_hdoc_node(void)
 	redir_node->heredoc = 1;
 	redir_node->filename = ft_random_filename();
 	if (!(redir_node->filename))
-		return(free(redir_node), NULL);
+		return (free (redir_node), NULL);
 	return (redir_node);
 }
 

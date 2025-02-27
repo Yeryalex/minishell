@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:34:24 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/27 11:34:32 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:40:28 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ft_no_path(t_cmds *node_cmd)
 	if (!node_cmd || !node_cmd->cmd_array || !node_cmd->cmd_array[0])
 		return (NULL);
 	if (node_cmd->cmd_array[0][0] == '/')
-		return (ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:"));
+		return (ft_strdup("/usr/local/bin:/usr/sbin:/usr/bin:"));
 	return (NULL);
 }
 

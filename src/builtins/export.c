@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yrodrigu <yrodrigu@student.42barcelo>      +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:44:57 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/24 11:18:23 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:15:52 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	ft_flag_case2(t_env *node_already_exist, char **x_value)
@@ -115,17 +116,12 @@ int	ft_export(t_cmds *cmd, t_env *env, int fd)
 		temp = env_copy;
 		while (temp)
 		{
-			//printf("declare -x %s", temp->key);
 			ft_putstr_fd("declare -x ", fd);
 			ft_putstr_fd(temp->key, fd);
 			if (temp->value)
-			{
-				ft_putstr_fd("=\"", fd);//printf("=\"%s\"\n", temp->value);
-				ft_putstr_fd(temp->value, fd);
-				ft_putstr_fd("\"\n", fd);
-			}
+				ft_print_x(temp, fd);
 			else
-				ft_putstr_fd("\n", fd);//printf("\n");
+				ft_putstr_fd("\n", fd);
 			temp = temp->next;
 		}
 		ft_clear_lstenv(env_copy);

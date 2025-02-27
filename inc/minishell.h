@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/27 12:28:09 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:17:09 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_utils
 	char			*value_to_expand;
 	char			*temp_str;
 	char			**env_in_char;
+	char			*path_to_input;
 	struct s_utils	*next;
 	struct s_utils	*prev;
 }	t_utils;
@@ -121,7 +122,7 @@ t_tokens	*ft_init_node(void);
 
 
 /*			PARSER FUNCTIONS		*/
-t_cmds *ft_parser(t_tokens *lexer, char *path, t_utils *utils);
+t_cmds *ft_parser(t_tokens *lexer, t_utils *utils);
 t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count, char *cmd_path, t_utils *utils);
 void    ft_addlast_pnode(t_cmds **list, t_cmds *node);
 void	*free_cmd_array(char **cmd_array);
@@ -178,7 +179,6 @@ char		**ft_list_to_char(t_env *env);
 
 /*          EXPORT FUNCTIONS         */
 void	*ft_print_stderr(char *str);
-//int			ft_print_env(t_env *env_list, int fd);
 void 	ft_print_env_list(t_env *env);
 void	ft_check_identifier(char **cmd_array, int *i, int *exit_status);
 void	ft_trim_case(char **x_value);
@@ -191,6 +191,7 @@ t_env	*ft_find_key_env(t_env *env, char *key_value);
 int		ft_abletojoin(char *str);
 int		ft_key_end(char *str);
 void    ft_flag_case1(t_env *node_already_exist, char **x_value);
+void	ft_print_x(t_env *temp, int fd);
 
 /*          EXPAND FUNCTIONS         */
 void	ft_expansion(int *i, int *j, t_utils *utils);
@@ -200,9 +201,8 @@ void	ft_create_expansion(t_utils *utils, char *value_to_expand, int *i);
 void	ft_apply_status(char *temp_str, int *j, t_utils *utils, int *i);
 void    ft_assign_status(char *temp_str, int *j, t_utils *utils);
 void	ft_expander_special(t_utils *utils, int *i, int *j, char *value_to_expand);
-int		ft_check_special_char(char *str_value, int *i);
-
 void	ft_exp_hd(t_dir *redir_node, t_utils *utils);
+int		ft_check_special_char(char *str_value, int *i);
 int		ft_valid_export(char *str);
 
 

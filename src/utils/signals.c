@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:46:08 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/26 11:52:33 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:34:27 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	*handle_error_ctrl_d(char *stop, int cmd_num)
 
 void	handle_signal(int sig)
 {
-    if (sig == SIGINT)
-	{ 
+	if (sig == SIGINT)
+	{
 		g_signal = 1;
 		ft_putstr_fd("\n", 1);
 		rl_replace_line("", 1);
@@ -62,21 +62,20 @@ void	ft_init_signals(int child)
 {
 	struct sigaction	sa;
 
-    sa.sa_flags = 0;
+	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
-    if (child == 1)
+	if (child == 1)
 	{
-        //sa.sa_handler = SIG_DFL;
 		sa.sa_handler = handle_signal_child;
-        sigaction(SIGINT, &sa, NULL);
-        sa.sa_handler = SIG_IGN;
-        sigaction(SIGQUIT, &sa, NULL);
-    }
-    else
-    {
-        sa.sa_handler = handle_signal;
-        sigaction(SIGINT, &sa, NULL);
-        sa.sa_handler = SIG_IGN;
-        sigaction(SIGQUIT, &sa, NULL);
-    }
+		sigaction(SIGINT, &sa, NULL);
+		sa.sa_handler = SIG_IGN;
+		sigaction(SIGQUIT, &sa, NULL);
+	}
+	else
+	{
+		sa.sa_handler = handle_signal;
+		sigaction(SIGINT, &sa, NULL);
+		sa.sa_handler = SIG_IGN;
+		sigaction(SIGQUIT, &sa, NULL);
+	}
 }

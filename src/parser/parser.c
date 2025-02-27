@@ -6,13 +6,14 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 10:24:15 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/27 11:38:02 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:04:02 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	ft_handle_redirections(t_tokens **lexer, t_cmds *node, t_utils *utils)
+static int	ft_handle_redirections(t_tokens **lexer,
+		t_cmds *node, t_utils *utils)
 {
 	if ((*lexer)->token == GTHAN || (*lexer)->token == APPEND)
 	{
@@ -27,7 +28,8 @@ static int	ft_handle_redirections(t_tokens **lexer, t_cmds *node, t_utils *utils
 	return (0);
 }
 
-static int	ft_fill_cmd(t_cmds *node, t_tokens *lexer, int count, t_utils *utils)
+static int	ft_fill_cmd(t_cmds *node,
+		t_tokens *lexer, int count, t_utils *utils)
 {
 	int	i;
 
@@ -38,15 +40,15 @@ static int	ft_fill_cmd(t_cmds *node, t_tokens *lexer, int count, t_utils *utils)
 		if (lexer->token == WORD)
 		{
 			if (!lexer->prev || (lexer->prev->token != GTHAN
-				&& lexer->prev->token != APPEND && lexer->prev->token != STHAN
-				&& lexer->prev->token != H_DOC))
-			{		
+					&& lexer->prev->token != APPEND
+					&& lexer->prev->token != STHAN
+					&& lexer->prev->token != H_DOC))
 				node->cmd_array[i++] = ft_strdup(lexer->value);
-			}
 			lexer = lexer->next;
 			continue ;
 		}
-		if (!utils->redir_error && ft_handle_redirections(&lexer, node, utils) == -1)
+		if (!utils->redir_error
+			&& ft_handle_redirections(&lexer, node, utils) == -1)
 			return (-1);
 		utils->redir_error = 0;
 		lexer = lexer->next;
@@ -55,7 +57,8 @@ static int	ft_fill_cmd(t_cmds *node, t_tokens *lexer, int count, t_utils *utils)
 	return (0);
 }
 
-t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path, t_utils *utils)
+t_cmds	*ft_create_node_cmd(t_tokens *lexer,
+		int count_tokens, char *path, t_utils *utils)
 {
 	t_cmds	*node_cmd;
 
@@ -74,11 +77,13 @@ t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count_tokens, char *path, t_util
 	return (node_cmd);
 }
 
-static int	ft_process_pipe(t_cmds **all_cmds, int count_tokens, t_tokens **head, char *path, t_utils *utils)
+static int	ft_process_pipe(t_cmds **all_cmds,
+		int count_tokens, t_tokens **head, t_utils *utils)
 {
 	t_cmds	*new_cmd;
 
-	new_cmd = ft_create_node_cmd(*head, count_tokens, path, utils);
+	new_cmd = ft_create_node_cmd(*head, count_tokens,
+			utils->path_to_input, utils);
 	if (!new_cmd)
 		return (ft_free_cmd(*all_cmds), 0);
 	ft_addlast_pnode(all_cmds, new_cmd);
@@ -86,7 +91,7 @@ static int	ft_process_pipe(t_cmds **all_cmds, int count_tokens, t_tokens **head,
 	return (1);
 }
 
-t_cmds	*ft_parser(t_tokens *lexer, char *path, t_utils *utils)
+t_cmds	*ft_parser(t_tokens *lexer, t_utils *utils)
 {
 	t_cmds		*all_cmds;
 	t_tokens	*head_parser;
@@ -101,7 +106,7 @@ t_cmds	*ft_parser(t_tokens *lexer, char *path, t_utils *utils)
 			count_tokens++;
 		else if (lexer->token == PIPE)
 		{
-			if (!ft_process_pipe(&all_cmds, count_tokens, &head_parser, path, utils))
+			if (!ft_process_pipe(&all_cmds, count_tokens, &head_parser, utils))
 				return (NULL);
 			head_parser = lexer->next;
 			count_tokens = 0;
@@ -109,7 +114,7 @@ t_cmds	*ft_parser(t_tokens *lexer, char *path, t_utils *utils)
 		lexer = lexer->next;
 	}
 	if (count_tokens >= 0)
-		if (!ft_process_pipe(&all_cmds, count_tokens, &head_parser, path, utils))
+		if (!ft_process_pipe(&all_cmds, count_tokens, &head_parser, utils))
 			return (NULL);
 	return (all_cmds);
 }

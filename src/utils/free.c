@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 08:36:31 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/26 12:02:37 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:07:19 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ void	ft_free_utils(t_utils *utils)
 
 void	ft_free_array(char **array)
 {
-    int i;
+	int	i;
 
-    if (!array)
+	if (!array)
 		return ;
 	i = 0;
-    while (array[i])
-    {
+	while (array[i])
+	{
 		free(array[i]);
 		i++;
 	}
