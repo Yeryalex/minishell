@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/26 18:22:07 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:30:55 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,9 @@ t_cmds *ft_parser(t_tokens *lexer, char *path, t_utils *utils);
 t_cmds	*ft_create_node_cmd(t_tokens *lexer, int count, char *cmd_path, t_utils *utils);
 void    ft_addlast_pnode(t_cmds **list, t_cmds *node);
 void	*free_cmd_array(char **cmd_array);
+void	ft_set_full_path(t_cmds *node_cmd, char *path);
+char	*ft_no_path(t_cmds *node_cmd);
+int		ft_init_cmd_node(t_cmds *node, int num);
 
 /*          STRUCT FUNCTIONS         */
 
@@ -193,11 +196,6 @@ void	ft_apply_status(char *temp_str, int *j, t_utils *utils, int *i);
 void    ft_assign_status(char *temp_str, int *j, t_utils *utils);
 void	ft_expander_special(t_utils *utils, int *i, int *j, char *value_to_expand);
 int		ft_check_special_char(char *str_value, int *i);
-//void	ft_expanser(char **cmd, t_utils *utils);
-//t_cmds *ft_expand_tokens(t_tokens *tokens, t_env *env);
-//char **ft_split_path(const char *path);
-//char *ft_validate_command(char **paths, const char *command);
-//void execute_commands(t_cmds *cmd, char **env);
 
 void	ft_exp_hd(t_dir *redir_node, t_utils *utils);
 int		ft_valid_export(char *str);

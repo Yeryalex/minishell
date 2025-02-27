@@ -98,8 +98,8 @@ t_dir	*ft_sthan_redir(char *file_name, t_utils *utils, t_cmds *parser_nodes)
 	if (ft_check_file(redir_node, utils))
 	{
 		utils->redir_error = 1;
-		ft_free_redir(redir_node);
-		return (NULL);
+		//ft_free_redir(redir_node);
+		return (redir_node);
 	}
 	else
 		redir_node->fd = ft_open_fd(redir_node->filename, O_RDONLY);

@@ -152,13 +152,13 @@ t_tokens	*ft_syntax(t_tokens *lexer, t_utils *utils)
 		if (lexer->next && !ft_strncmp(lexer->next->value, ".", 1))
 		{
 			utils->exit_status = 1;
-			printf("Minishell: .: .: is a directory\n");
+			printf("minishell: .: .: is a directory\n");
 			return (ft_free_tokens(&lexer), NULL);
 		}
 		else
 		{
 			utils->exit_status = 2;
-			printf("Minishell: .: filename argument required\n");
+			printf("minishell: .: filename argument required\n");
 			return (ft_free_tokens(&lexer), NULL);
 		}
 	}
@@ -172,6 +172,7 @@ t_tokens	*ft_syntax(t_tokens *lexer, t_utils *utils)
 		|| !ft_check_syntax(lexer, ">", GTHAN) || !ft_check_syntax(lexer, "<", STHAN))
 	{
 		utils->exit_status = 2;
+		utils->redir_error = 1;
 		return (ft_free_tokens(&lexer), NULL);
 	}
 	return (lexer);
@@ -189,7 +190,7 @@ t_tokens	*ft_check_no_redir(t_tokens *lexer, t_utils *utils)
 			if ((!ft_strncmp(temp->value, ">", 2) || !ft_strncmp(temp->value, ">>", 3)
 				|| !ft_strncmp(temp->value, "<", 2)) && !ft_strncmp("", temp->next->value, 1))
 			{
-				printf("Minishell: ambiguous redirect\n");
+				printf("minishell: ambiguous redirect\n");
 				utils->exit_status = 1;
 				return (ft_free_tokens(&lexer), NULL);
 			}
@@ -225,8 +226,10 @@ t_tokens	*ft_lexer_input(const char *input, t_utils *utils)
 		}
 	}
 	if (lexer)
-		return(ft_check_no_redir(lexer, utils));
-	if (lexer)
-		return (ft_syntax(lexer, utils));
+	{	
+		lexer = ft_check_no_redir(lexer, utils);
+		if(lexer)
+			return (ft_syntax(lexer, utils));
+	}
 	return (lexer);
 }
