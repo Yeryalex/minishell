@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 11:29:50 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/26 18:06:08 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:20:46 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,40 @@ static void	ft_remove_newline(char **line)
 	}
 }
 
+static void	ft_write_expanded(int flag, char *trimmed, int new_fd)
+{
+	if (flag == 1)
+		write(new_fd, "'", 1);
+	else if (flag == 2)
+		write(new_fd, "\"", 1);
+	write(new_fd, trimmed, ft_strlen(trimmed));
+	if (flag == 1)
+		write(new_fd, "'", 1);
+	else if (flag == 2)
+		write(new_fd, "\"", 1);
+	write(new_fd, "\n", 1);
+}
+
 static void	ft_expand_hdoc(t_dir *redir_node, t_utils *utils, int new_fd)
+{
+	char	*line;
+	char	*trimmed;
+	int		flag;
+
+	line = get_next_line(redir_node->fd);
+	while (line)
+	{
+		ft_remove_newline(&line);
+		utils->value_to_expand = line;
+		flag = (line[0] == '\'') ? 1 : (line[0] == '"') ? 2 : 0;
+		trimmed = ft_check_quotes(utils);
+		ft_write_expanded(flag, trimmed, new_fd);
+		free(trimmed);
+		line = get_next_line(redir_node->fd);
+	}
+}
+
+/*static void	ft_expand_hdoc(t_dir *redir_node, t_utils *utils, int new_fd)
 {
 	char	*line;
 	char	*trimmed;
@@ -65,7 +98,8 @@ static void	ft_expand_hdoc(t_dir *redir_node, t_utils *utils, int new_fd)
 		free(trimmed);
 		line = get_next_line(redir_node->fd);
 	}
-}
+}*/
+
 
 void	ft_exp_hd(t_dir *redir_node, t_utils *utils)
 {

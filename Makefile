@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/02/27 11:32:13 by rbuitrag         ###   ########.fr        #
+#    Updated: 2025/02/27 12:28:34 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ CFILES =	main.c \
 			parser/redir.c \
 			parser/redir_utils.c \
 			parser/hdoc.c \
+			parser/hdoc_utils.c \
 			parser/read.c \
 			utils/init_env.c \
 			utils/env_export.c \

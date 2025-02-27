@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/27 11:30:55 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:28:09 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ void	ft_set_full_path(t_cmds *node_cmd, char *path);
 char	*ft_no_path(t_cmds *node_cmd);
 int		ft_init_cmd_node(t_cmds *node, int num);
 
-/*          STRUCT FUNCTIONS         */
 
 /*          REDIR FUNCTIONS         */
 t_dir	*ft_append_gthan_redir(char *file_name, int token, t_utils *utils, t_cmds *parser_nodes);
@@ -144,6 +143,12 @@ int		ft_sthan_hdoc_cmds(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
 int		ft_fork_hdoc(t_tokens **lexer_nodes, t_cmds *parser_nodes, t_dir *redir_node, t_utils *utils);
 int		ft_open_fd(char *filename, int mode);
 int		ft_read_to_file(char *stop, int cmds_amount, char *f_name);
+
+/*          AUX HEREDOC FUNCTIONS         */
+void	*ft_hdoc_error_handler(t_dir *redir, t_cmds *cmds);
+void	ft_free_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils);
+void	ft_cleanup_child_hdoc(t_tokens **lexer, t_cmds *cmds, t_utils *utils, t_dir *redir);
+int		ft_hdoc_quotes(t_tokens *lexer);
 
 
 /*          BUILTINS FUNCTION:S         */
