@@ -6,10 +6,9 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 08:31:20 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/21 09:08:51 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:25:09 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../inc/minishell.h"
 

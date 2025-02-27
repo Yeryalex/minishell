@@ -97,6 +97,7 @@ t_tokens	*ft_syntax(t_tokens *lexer, t_utils *utils)
 		|| !ft_check_syntax(lexer, APPEND) || !ft_check_syntax(lexer, H_DOC))
 	{
 		utils->exit_status = 2;
+		utils->redir_error = 1;
 		return (ft_free_tokens(&lexer), NULL);
 	}
 	return (lexer);

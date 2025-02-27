@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/27 14:28:10 by rbuitrag          #+#    #+#             */
+/*   Updated: 2025/02/27 15:35:39 by rbuitrag         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
@@ -28,7 +39,7 @@ int	ft_check_file(t_dir *node, t_utils *utils)
 	}
 	if (access(node->filename, R_OK) != 0)
 	{
-		ft_putstr_fd("minishell: ", 2);	
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(node->filename, 2);
 		ft_putstr_fd(": Permission denied\n", 2);
 		utils->redir_error = 1;
@@ -53,14 +64,15 @@ void	*ft_exit_redir(int error, t_dir *redir_node, t_utils *utils)
 	return (NULL);
 }
 
-t_dir	*ft_append_gthan_redir(char *file_name, int token, t_utils *utils, t_cmds *parser_nodes)
+t_dir	*ft_append_gthan_redir(char *file_name, int token,
+		t_utils *utils, t_cmds *parser_nodes)
 {
 	t_dir	*redir_node;
 	int		mode;
 
 	if (parser_nodes && parser_nodes->error_fd)
 		return (NULL);
-	if(utils->redir_error)
+	if (utils->redir_error)
 		return (NULL);
 	redir_node = (t_dir *)malloc(sizeof(t_dir));
 	if (!redir_node)
@@ -98,7 +110,6 @@ t_dir	*ft_sthan_redir(char *file_name, t_utils *utils, t_cmds *parser_nodes)
 	if (ft_check_file(redir_node, utils))
 	{
 		utils->redir_error = 1;
-		//ft_free_redir(redir_node);
 		return (redir_node);
 	}
 	else

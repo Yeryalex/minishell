@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   expanser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:15:39 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/24 19:50:30 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:12:30 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	ft_apply_status(char *temp_str, int *j, t_utils *utils, int *i)

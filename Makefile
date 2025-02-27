@@ -6,7 +6,7 @@
 #    By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 17:31:12 by yrodrigu          #+#    #+#              #
-#    Updated: 2025/02/26 17:11:03 by rbuitrag         ###   ########.fr        #
+#    Updated: 2025/02/27 16:18:27 by rbuitrag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = minishell
 HEADER = inc/minishell.h 
 LIBFT = inc/libft/libft.a
 
-CFLAGS = -Wall -Werror -Wextra  -g #-fsanitize=address -fsanitize=leak
+CFLAGS = -Wall -Werror -Wextra  -g -fsanitize=address -fsanitize=leak
 
 CFILES =	main.c \
 			lexer/prompt.c \
@@ -30,11 +30,13 @@ CFILES =	main.c \
 			lexer/quotes_utils.c \
 			lexer/token_syntax.c \
 			lexer/ft_norminette.c \
+			parser/init_cmd.c \
 			parser/parser.c \
 			parser/parser_utils.c \
 			parser/redir.c \
 			parser/redir_utils.c \
 			parser/hdoc.c \
+			parser/hdoc_utils.c \
 			parser/read.c \
 			utils/init_env.c \
 			utils/env_export.c \
@@ -47,6 +49,7 @@ CFILES =	main.c \
 			expanser/expanser.c \
 			expanser/utils_expanser.c \
 			expanser/expand_hdoc.c \
+			expanser/search_expanser.c \
 			executor/ft_executor.c\
 			executor/executor_utils.c\
 			builtins/echo.c\
@@ -55,6 +58,7 @@ CFILES =	main.c \
 			builtins/export.c\
 			builtins/x_utils.c\
 			builtins/x_utils2.c\
+			builtins/x_utils3.c\
 			builtins/unset.c\
 			builtins/cd.c\
 			builtins/exit.c\
