@@ -55,6 +55,8 @@ void	ft_set_full_path(t_cmds *node_cmd, char *path)
 	if (!node_cmd->full_path)
 	{
 		no_path = ft_no_path(node_cmd);
+		if (!no_path)
+			return ;
 		if (no_path)
 			node_cmd->full_path = ft_get_path(no_path, node_cmd->cmd_array[0]);
 		free(no_path);

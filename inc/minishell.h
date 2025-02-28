@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:32:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/27 16:20:22 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:19:46 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_utils
 	char			*temp_str;
 	char			**env_in_char;
 	char			*path_to_input;
+	int				path_changed;
 	struct s_utils	*next;
 	struct s_utils	*prev;
 }	t_utils;
@@ -262,6 +263,8 @@ void		ft_free_utils(t_utils *utils);
 void		ft_free_env(t_env *env);
 int			ft_print_syntax_error(t_tokens *temp);
 t_tokens	*ft_free_in_input(t_tokens *lexer, t_tokens *node);
-void		ft_auxiliar_free(t_cmds *cmd, char *input);
+void		ft_auxiliar_free(t_cmds *cmd, char *input, t_tokens *commands);
 void		ft_print_x(t_env *temp, int fd);
+void		write_error_fd(char *target, char *error, int fd);
+int			is_directory(t_cmds *parser_nodes);
 #endif

@@ -60,6 +60,7 @@ void	prompt_loop(t_utils *utils)
 	ft_control_c(utils);
 	while (1)
 	{
+		utils->path_to_input = ft_get_paths_from_env(utils->environ);
 		ft_init_signals(0);
 		if (utils->status == 0)
 			break ;
@@ -68,9 +69,8 @@ void	prompt_loop(t_utils *utils)
 			ft_handle_exit(utils, input, utils->env_in_char);
 		if (!ft_process_input(input, &commands, &cmd, utils))
 			continue ;
-		ft_free_tokens(&commands);
 		ft_executor(cmd, utils, utils->env_in_char);
-		ft_auxiliar_free(cmd, input);
+		ft_auxiliar_free(cmd, input, commands);
 		utils->cmds_amount++;
 	}
 	ft_free_array(utils->env_in_char);

@@ -23,6 +23,7 @@ void	init_utils(t_utils *utils, t_env *env)
 	utils->exit_status = 0;
 	utils->cmds_amount = 0;
 	utils->redir_error = 0;
+	utils->path_changed = 0;
 	utils->builtins[0] = "echo";
 	utils->builtins[1] = "cd";
 	utils->builtins[2] = "pwd";

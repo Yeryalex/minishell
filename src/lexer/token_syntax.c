@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 08:30:49 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/27 15:06:19 by yrodrigu         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:18:54 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,6 @@ int	ft_check_dot(t_tokens *lexer, t_utils *utils)
 		{
 			utils->exit_status = 2;
 			printf("Minishell: .: filename argument required\n");
-			return (0);
-		}
-		else if (S_ISDIR(path_stat.st_mode))
-		{
-			utils->exit_status = 1;
-			printf("Minishell: %s: is a directory\n", lexer->value);
 			return (0);
 		}
 	}
