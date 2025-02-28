@@ -6,7 +6,7 @@
 /*   By: rbuitrag <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:23:42 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/28 18:40:50 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:10:09 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static t_dir	*ft_fill_redirections(t_tokens **lexer,
 		&& (*lexer)->next->token != WORD)
 	{
 		utils->exit_status = 0;
+		utils->redir_error = 1;
 		return (NULL);
 	}
 	if (((*lexer)->token == STHAN) && (*lexer)->next->token == WORD)
