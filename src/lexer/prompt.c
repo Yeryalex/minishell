@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/28 14:18:02 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:43:17 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	ft_handle_exit(t_utils *utils, char *input, char **env)
 	ft_free_utils(utils);
 	rl_clear_history();
 	ft_putstr_fd("exit\n", 1);
-	exit(EXIT_SUCCESS);
+	exit(utils->exit_status);
 }
 
 static int	ft_process_input(char *input, t_tokens **commands,
