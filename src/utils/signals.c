@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:46:08 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/28 09:45:37 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/28 09:53:43 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_init_signals(int mode)
 		signal(SIGINT, handle_signal_child);
 		signal(SIGQUIT, handle_signal_child);
 	}
-	if (mode  == 0)
+	if (mode == 0)
 	{
 		signal(SIGINT, handle_signal);
 		signal(SIGQUIT, SIG_IGN);
