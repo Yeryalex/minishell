@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:08:28 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/27 13:08:36 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:15:15 by yrodrigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,24 @@ void	ft_exec_builtin(t_cmds *cmd, t_utils *utils, int fd)
 
 int	ft_verify_cmd(t_cmds *cmd, t_utils *utils)
 {
-	if (!ft_is_builtin(cmd, utils) && !cmd->full_path)
+	if (!ft_is_builtin(cmd, utils) && access(cmd->full_path, F_OK)
+		&& ft_find_key_env(utils->environ, "PATH"))
 	{
-		ft_putstr_fd("ADVICE:\nType export PATH=/usr/bin:/bin", 2);
-		ft_putstr_fd("to execute the commands\n", 2);
-		ft_putstr_fd(cmd->cmd_array[0], 2);
-		ft_putstr_fd(": Not such a file or directory\n", 2);
+		write_error_fd(cmd->cmd_array[0], ": command not found\n", 2);
 		utils->exit_status = 127;
 		return (1);
 	}
-	if (!ft_is_builtin(cmd, utils) && access(cmd->full_path, F_OK))
+	else if (!ft_is_builtin(cmd, utils) && access(cmd->full_path, F_OK))
 	{
-		ft_putstr_fd(cmd->cmd_array[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
+		write_error_fd(cmd->cmd_array[0],
+			": No such file or directory\n", 2);
 		utils->exit_status = 127;
+		return (1);
+	}
+	else if ((access(cmd->full_path, F_OK) == 0)
+		&& is_directory(cmd))
+	{
+		utils->exit_status = 126;
 		return (1);
 	}
 	if (cmd->redir_in && cmd->redir_in->fd == -1)
