@@ -118,7 +118,7 @@ int	ft_cd(char **cmd_array, t_env *env)
 		return (ft_cd_home(env));
 	else if (cmd_array[2])
 	{
-		perror("minishell: cd: too many arguments\n");
+		printf("minishell: cd: too many arguments\n");
 		return (1);
 	}
 	else if (cmd_array[1][0] == '-')

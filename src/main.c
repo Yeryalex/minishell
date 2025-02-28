@@ -43,7 +43,6 @@ static t_utils	*ft_init_minishell(char **env)
 	init_utils(utils, environ);
 	char_env = ft_list_to_char(utils->environ);
 	utils->env_in_char = char_env;
-	utils->path_to_input = ft_get_paths_from_env(utils->environ);
 	return (utils);
 }
 
