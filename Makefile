@@ -16,7 +16,7 @@ NAME = minishell
 HEADER = inc/minishell.h 
 LIBFT = inc/libft/libft.a
 
-CFLAGS = -Wall -Werror -Wextra  -g -fsanitize=address -fsanitize=leak
+CFLAGS = -Wall -Werror -Wextra  -g #-fsanitize=address -fsanitize=leak
 
 CFILES =	main.c \
 			lexer/prompt.c \

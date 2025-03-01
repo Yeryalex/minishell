@@ -44,7 +44,6 @@ static t_utils	*ft_init_minishell(char **env)
 	//char_env = ft_list_to_char(utils->environ);
 	//utils->env_in_char = char_env;
 	utils->env_in_char = ft_list_to_char(utils->environ);
-	//ft_free_array(char_env);
 	return (utils);
 }
 

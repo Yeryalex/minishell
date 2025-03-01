@@ -28,14 +28,15 @@ int	ft_print_syntax_error(t_tokens *temp)
 
 static void	ft_handle_exit(t_utils *utils, char *input)
 {
+	int		_exit;
+
+	_exit = utils->exit_status;
 	free(input);
-	//ft_free_env(utils->environ);
 	ft_free_array(utils->env_in_char);
-	if (utils->path_to_input)
-		free(utils->path_to_input);
+	ft_free_utils(utils);
 	rl_clear_history();
 	ft_putstr_fd("exit\n", 1);
-	exit(utils->exit_status);
+	exit(_exit);
 }
 
 static int	ft_process_input(char *input, t_tokens **commands,
@@ -72,6 +73,7 @@ void	prompt_loop(t_utils *utils)
 		if (!ft_process_input(input, &commands, &cmd, utils))
 			continue ;
 		ft_executor(cmd, utils, utils->env_in_char);
+		//ft_free_array(utils->env_in_char);
 		ft_auxiliar_free(cmd, input, commands);
 		utils->cmds_amount++;
 
