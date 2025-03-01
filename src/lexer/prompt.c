@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/28 22:21:23 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/03/01 07:55:09 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,8 @@ void	prompt_loop(t_utils *utils)
 		if (!ft_process_input(input, &commands, &cmd, utils))
 			continue ;
 		ft_executor(cmd, utils, utils->env_in_char);
-		//ft_free_array(utils->env_in_char);
 		ft_auxiliar_free(cmd, input, commands);
 		utils->cmds_amount++;
-
 	}
 	ft_free_array(utils->env_in_char);
 	rl_clear_history();
