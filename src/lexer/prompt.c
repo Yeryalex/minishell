@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:16:38 by rbuitrag          #+#    #+#             */
-/*   Updated: 2025/02/28 18:06:46 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/03/01 07:55:09 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,17 @@ int	ft_print_syntax_error(t_tokens *temp)
 	return (0);
 }
 
-static void	ft_handle_exit(t_utils *utils, char *input, char **env)
+static void	ft_handle_exit(t_utils *utils, char *input)
 {
+	int		_exit;
+
+	_exit = utils->exit_status;
 	free(input);
-	ft_free_array(env);
+	ft_free_array(utils->env_in_char);
+	ft_free_utils(utils);
 	rl_clear_history();
 	ft_putstr_fd("exit\n", 1);
-	exit(utils->exit_status);
+	exit(_exit);
 }
 
 static int	ft_process_input(char *input, t_tokens **commands,
@@ -62,10 +66,10 @@ void	prompt_loop(t_utils *utils)
 		ft_init_signals(0);
 		if (utils->status == 0)
 			break ;
+		utils->path_to_input = ft_get_paths_from_env(utils->environ);
 		input = read_input(utils->env_in_char, utils);
 		if (!input)
-			ft_handle_exit(utils, input, utils->env_in_char);
-		utils->path_to_input = ft_get_paths_from_env(utils->environ);
+			ft_handle_exit(utils, input);
 		if (!ft_process_input(input, &commands, &cmd, utils))
 			continue ;
 		ft_executor(cmd, utils, utils->env_in_char);

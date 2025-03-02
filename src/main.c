@@ -6,7 +6,7 @@
 /*   By: rbuitrag <rbuitrag@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:33:52 by yrodrigu          #+#    #+#             */
-/*   Updated: 2025/02/28 11:36:16 by rbuitrag         ###   ########.fr       */
+/*   Updated: 2025/03/01 07:41:14 by rbuitrag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static t_utils	*ft_init_minishell(char **env)
 {
 	t_env	*environ;
 	t_utils	*utils;
-	char	**char_env;
 
 	utils = malloc(sizeof(t_utils));
 	if (!utils)
@@ -41,8 +40,7 @@ static t_utils	*ft_init_minishell(char **env)
 	if (!environ)
 		return (free(utils), NULL);
 	init_utils(utils, environ);
-	char_env = ft_list_to_char(utils->environ);
-	utils->env_in_char = char_env;
+	utils->env_in_char = ft_list_to_char(utils->environ);
 	return (utils);
 }
 
